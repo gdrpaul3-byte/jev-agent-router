@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-09-24T08:21:25.877Z",
+  "createdAt": "2026-09-24T08:45:13.034Z",
   "scope": "Reviewed allowlisted package; local secret values and personal paths checked; keys and state excluded.",
   "files": [
     {
@@ -583,6 +583,11 @@
       "sha256": "412bb2fae528c864207b7f32eedc5c89c7fa2ba21903f6164c7ba0e896fd462e"
     },
     {
+      "path": "docs/COMPARISON.md",
+      "bytes": 9034,
+      "sha256": "9b5241d267633d69839e175ddb68b1d748b6d58c9aa7ce889b074e666527b2c0"
+    },
+    {
       "path": "docs/DEMO.en.md",
       "bytes": 4461,
       "sha256": "83fdae2f1c81a10a640eea84890a1e51bb32927274ddffc109ca5fdd284371fb"
@@ -669,8 +674,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 12832,
-      "sha256": "de324189869cede7e35761cadf9331ffe33fb7ed134dff33e028cec7be1f30ef"
+      "bytes": 17134,
+      "sha256": "42aaa709bda6bfe34d00f2c724f944e536a35a5bb2fcfc306c3ed8477de33a44"
     },
     {
       "path": "scripts/install-skill.mjs",

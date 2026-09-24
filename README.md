@@ -1,10 +1,29 @@
 # JEV Agent Router
 
-**Choose the next tool with JEV or an LLM, reuse exact results, and keep execution under the host's control.**
+**Reuse a decision, call JEV or ask an LLM. Inspect the handoff, cost and task result.**
 
-**JEV·LLM·캐시로 다음 도구를 선택하고, 실제 실행과 권한 검증은 호스트가 담당하는 로컬 라우터입니다.**
+**같은 판단은 재사용하고, 새 판단은 JEV·LLM 중에서 선택합니다. 업무 인계·비용·실행 결과까지 확인하는 로컬 라우터입니다.**
 
 [English installation](docs/INSTALL.en.md) · [한국어 설치 안내](docs/INSTALL.ko.md) · [Live demo guide](docs/DEMO.en.md) · [데모 안내](docs/DEMO.ko.md) · [Measured results](benchmarks/results/complex-missions-v1/RESULTS.md) · [Raw report](benchmarks/results/complex-missions-v1/report.json)
+
+## Why this repo / 이 저장소의 차별점
+
+**The distinguishing focus is the combination: JEV + LLM + cache selection, verifiable task handoffs, and published workflow evidence in one repository.** Bring your task, evidence and available workers or tools through a JSON CLI or Node API; your existing agent keeps control of execution. Optional skills teach Codex and Claude how to call the runtime.
+
+**차별점은 JEV·LLM·캐시 선택, 검증 가능한 업무 인계, 실제 업무 비교 근거를 한 저장소에 묶었다는 점입니다.** 기존 에이전트가 업무·근거·사용 가능한 담당과 도구를 전달하면 다음 경로를 권고합니다. 같은 JSON CLI·Node API를 사용하고, 실행은 기존 에이전트가 맡습니다.
+
+| What you gain / 얻는 것 | How it works and evidence / 구현과 근거 |
+|---|---|
+| **Reuse before paying again / 같은 판단의 재호출 줄이기** | A valid exact match returns without a new model call. Prompt-cache observations are tracked separately. Six published exact replays made **zero new API calls**. / 동일 입력·설정·범위·유효기간이 맞으면 결과를 재사용합니다. 프롬프트 캐시와 구분하며, 공개 실험의 정확 재생 6건은 새 호출이 0회였습니다. [Results / 결과](benchmarks/results/complex-missions-v1/RESULTS.md) |
+| **Choose the decision model / 판단 모델까지 선택하기** | Adaptive routing chooses JEV, Luna or Astra using host-supplied difficulty and scoped cost/cache observations, with bounded escalation when a model abstains. / 호스트가 지정한 난도와 비용·캐시 관측으로 판단 모델을 선택하고, 판단 보류 시 정해진 한도 안에서 상위 모델로 넘깁니다. [Policy / 정책](docs/adaptive-routing.md) |
+| **Validate before handing off / 오래된 인계와 중복 유료 호출 방지** | The separate durable task API checks the current input, committed ledger and handoff, rejects older known task revisions, and preserves interrupted calls for review. / 별도 업무 인계 API는 현재 입력·원장·인계 파일의 일치 여부와 최신 revision을 확인합니다. 결과 미상인 유료 호출을 자동 반복하지 않습니다. [Handoffs / 인계](docs/task-router.md) |
+| **Inspect the whole workflow / 완료·실패·전체 비용을 함께 비교** | No-JEV LLM controls, the same cache opportunities, completion checks, failed attempts and costs are published. Browser videos share the actual task-start zero and include decisions, waits and final extraction. / JEV 미사용 대조군과 같은 캐시 기회로 비교하며, 완료 검증·실패·비용을 공개합니다. 영상은 실제 업무 시작점을 맞추고 판단·대기·최종 추출을 포함합니다. [Video and all attempts / 영상과 모든 시도](benchmarks/results/browser-task-aligned-20260924/RESULTS.md) |
+
+**Use it when** your agent repeatedly chooses among known workers or tools and you want to compare decision cost, reuse and outcomes before expanding automation. The adaptive live experiment used JEV for every fresh routing call; warm-Luna selection and Astra escalation are implemented and mock-tested. Claude browser integration and Grok integration remain unverified. The durable handoff API and adaptive cache have distinct contracts; a recommendation does not execute a worker or grant permission.
+
+**이런 경우에 적합합니다:** 정해진 담당·도구 중 하나를 반복해서 고르는 업무에서, 자동화 범위를 늘리기 전에 판단 비용·재사용·실제 결과를 확인하고 싶을 때입니다. 적응형 실측에서는 새 판단에 모두 JEV가 선택됐으며, Luna 캐시 선택·Astra 위임은 모의 테스트로 검증했습니다. Claude 브라우저·Grok 실기 검증은 남아 있습니다. 적응형 캐시와 업무 인계 API의 계약은 별개이고, 추천만으로 작업이 실행되거나 권한이 생기지는 않습니다.
+
+[Compared with TypeSafe Mario, Jev Codex Router, Typesafe MCP, Newsjack and Canny / 관련 저장소와의 용도 비교](docs/COMPARISON.md). The comparison explains scope and shared ideas; it makes no claim that these features are exclusive or that this project outperforms those repositories.
 
 ## What this does
 
