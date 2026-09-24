@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "comparisonHash": "6c2d6b775d88e9492906f96d1e41b6043019657b534ed6b9a5bbdcff64a654c1",
+  "fps": 25,
+  "width": 2560,
+  "height": 1000,
+  "totalSeconds": 33.96,
+  "panels": [
+    {
+      "arm": "astra",
+      "jevUsed": false,
+      "clipSeconds": 31.96,
+      "sourceFrames": 799,
+      "measuredTaskSeconds": 26.690935999999997,
+      "providerUsd": 0.1424,
+      "sourceSha256": "0a01e0c0ac88e1af2f2c913ae85494a6f79cd80fd2ec3244006f1c232360b282",
+      "heldSeconds": 2
+    },
+    {
+      "arm": "jev",
+      "jevUsed": true,
+      "clipSeconds": 19.48,
+      "sourceFrames": 487,
+      "measuredTaskSeconds": 12.711077899999998,
+      "providerUsd": 0.01801461,
+      "sourceSha256": "d0e5c1f07b2fe3e850c3b698c1de4e63a2bb6859ca26c3963b6992327d884b0a",
+      "heldSeconds": 14.48
+    }
+  ],
+  "alignment": "Both complete source clips begin at replay t=0. Exact task-start frame alignment is unknown.",
+  "clock": "Replay seconds, capped at each source clip end; measured task seconds are separate static labels.",
+  "speed": 1,
+  "cuts": false,
+  "finalPresentationTailSeconds": 2,
+  "sources": [
+    "astra/video.mp4",
+    "jev/video.mp4"
+  ],
+  "sourceScope": "Previously reviewed full browser recordings; no new model calls.",
+  "fullDecodePassed": true,
+  "final": {
+    "width": 2560,
+    "height": 1000,
+    "avg_frame_rate": "25/1",
+    "duration": "33.960000",
+    "nb_read_frames": "849"
+  },
+  "sha256": "789dfd0c58e2f6d7f1da8f9400dc17313dbeab1f7cf9725f927617cf56759f60",
+  "files": {
+    "video": "comparison.mp4",
+    "poster": "poster.png",
+    "review": "review.png"
+  },
+  "visualReviewRequired": true
+}

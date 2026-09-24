@@ -4,6 +4,20 @@
 
 **Status: both measured tasks passed; all video frames were decoded and sampled frames were visually reviewed.** In this one-run-per-arm pilot, task time was 26.69 seconds for Astra and 12.71 seconds for JEV + Astra. See the [bilingual results and evidence](../benchmarks/results/browser-playwright-20260924/RESULTS.md).
 
+## Watch both arms together
+
+[Play the side-by-side comparison](../benchmarks/results/browser-playwright-20260924/comparison/comparison.mp4): **NO JEV — Astra** on the left and **WITH JEV — JEV + Astra** on the right. The complete original clips start together at replay zero and run at 1× speed. The moving counters show **video replay time**, while the measured task times are separate fixed labels. The exact task-start frame offsets are unknown, so this edit does not align task starts.
+
+Each counter stops when its original clip ends, and that panel holds its last frame with an end label. After the longer clip ends, both panels remain visible for a two-second presentation tail. The resulting video is 33.96 seconds long; the original clips remain unchanged. This file-only edit makes no new API calls.
+
+To reproduce the composition from the repository root, install `ffmpeg` and `ffprobe` on `PATH`, choose an installed font with Korean glyphs, and replace the quoted placeholders below. The output directory must not already exist.
+
+```sh
+node -- benchmarks/render-browser-comparison.mjs --root benchmarks/results/browser-playwright-20260924 --output-dir "<new-output-dir>" --font "<path-to-Korean-font>"
+```
+
+The renderer verifies source hashes and frame counts, then writes the combined MP4, a poster, a review sheet and edit metadata. Inspect the rendered video and review sheet before publishing another composition.
+
 ## Scope and comparison
 
 This pilot opens a **new, visible Chrome window through Playwright**, using a fresh browser context for each arm and a 1600 × 900 viewport. Playwright `recordVideo` records the actual browser viewport. It does not attach to the user's original Chrome tab or use the native CUA backend from the earlier diagnostics.
@@ -104,7 +118,7 @@ Inspect the contact sheet and actual playback manually. Pixel variation alone pr
 
 The observed task-time ratio was **2.10×**, and the JEV arm's combined accounted API cost was **87.35% lower** ($0.01801461 versus $0.1424). These describe this pair only. Including setup and cleanup, total process times were **37.861897 s / 24.969471 s** (1.52×). The pair cost **$0.16041461 across 14 POSTs**; including the earlier diagnostics, this browser investigation accounted for **$1.009991966 across 37 POSTs**. These totals do not include unrelated earlier product experiments.
 
-Both reports preserve comparison hash `6c2d6b775d88e9492906f96d1e41b6043019657b534ed6b9a5bbdcff64a654c1`. Initial navigation and the four popup closes are included in setup. Browser navigation plus decisions took 23.210010 s / 9.889564 s; final extraction took 3.474656 s / 2.815943 s. Minor differences between summed substeps and the outer task interval are host validation/measurement overhead. The current offline suite passed **778 tests**; that does not expand the live pilot's scope.
+Both reports preserve comparison hash `6c2d6b775d88e9492906f96d1e41b6043019657b534ed6b9a5bbdcff64a654c1`. Initial navigation and the four popup closes are included in setup. Browser navigation plus decisions took 23.210010 s / 9.889564 s; final extraction took 3.474656 s / 2.815943 s. Minor differences between summed substeps and the outer task interval are host validation/measurement overhead. The original browser-run verification passed **778 offline tests**; that does not expand the live pilot's scope.
 
 Video QA decoded **799 frames / 31.96 seconds** for Astra and **487 frames / 19.48 seconds** for JEV, both at 1600 × 900. All frames passed the nonblack luminance check, no black intervals were detected, and each five-frame sample contained five distinct images. Sampled frames were visually reviewed, including a denser JEV navigation storyboard; they showed the public site without accounts, keys or unrelated applications. This does not claim that a reviewer watched every frame. Both videos preserve the entire recorded stream at 1× with no cuts, including visible loading, popup preparation and waits. The first encoded frame's offset is unknown: report offsets are estimates, video duration is not the task timer, and no exact task-time overlay is inferred from them.
 
@@ -116,7 +130,7 @@ One run per arm supports a demonstration of this task, not a general speedup or 
 
 The first free five-click preflight of this new backend failed before the observation-transport fix and made **zero paid API calls**. Diagnosis found that the HSMU page had replaced `window.Map` with a non-native function: `get` existed but `set` did not. On that page, Playwright transport of returned objects/arrays produced `undefined`, while a JSON-string return crossed the boundary correctly.
 
-DOM/heading capture now returns JSON text and applies bounded parsing plus strict validation in the host. The focused checks, including regressions that failed before the fix, passed **52 tests**. This fixes the observed data-transport problem; it does not establish completion of the new measured task.
+DOM/heading capture now returns JSON text and applies bounded parsing plus strict validation in the host. The focused checks, including regressions that failed before the fix, passed **52 tests**. Those tests verify the observed data-transport fix; the successful measured tasks have separate reports above.
 
 The browser-native recording from the diagnostic was **11.6 seconds / 290 frames**, and its actual contact sheet was checked for visible content. Recording the browser viewport replaces the unreliable desktop `gdigrab` capture. This diagnostic is capture evidence, not a successful task result, and it does not repair or verify the original personal-tab/CUA connection.
 

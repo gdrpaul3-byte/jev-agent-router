@@ -26,9 +26,13 @@ On 2026-09-24, **both approaches completed five model-selected clicks, visited t
 | Astra + Astra | 26.69 s | 37.86 s | $0.14240000 |
 | JEV + Astra | 12.71 s | 24.97 s | $0.01801461 |
 
-[Watch Astra](benchmarks/results/browser-playwright-20260924/astra/video.mp4) · [Watch JEV + Astra](benchmarks/results/browser-playwright-20260924/jev/video.mp4) · [Reports and limitations / 결과와 한계](benchmarks/results/browser-playwright-20260924/RESULTS.md) · [Reproduce](docs/BROWSER-DEMO.en.md) · [재현 방법](docs/BROWSER-DEMO.ko.md)
+[▶ Play side-by-side / 나란히 동시 재생](benchmarks/results/browser-playwright-20260924/comparison/comparison.mp4) · [Reports and original videos / 결과와 원본 영상](benchmarks/results/browser-playwright-20260924/RESULTS.md) · [Reproduce](docs/BROWSER-DEMO.en.md) · [재현 방법](docs/BROWSER-DEMO.ko.md)
 
-[![Actual JEV browser recording](benchmarks/results/browser-playwright-20260924/jev/poster.png)](benchmarks/results/browser-playwright-20260924/jev/video.mp4)
+[![Play both recordings together: NO JEV on the left, WITH JEV on the right / 두 영상 동시 재생](benchmarks/results/browser-playwright-20260924/comparison/poster.png)](benchmarks/results/browser-playwright-20260924/comparison/comparison.mp4)
+
+**One video, one play button:** left = **NO JEV**, right = **WITH JEV**. The top counters show replay seconds; separately measured task times and API costs stay visible. Both full clips start together at 1×. At each clip's end its counter stops and the final frame is held with an explicit label. The edit ends with a two-second presentation tail. Exact task-start frame alignment is unknown.
+
+**하나의 영상으로 동시에 재생됩니다.** 왼쪽은 **JEV 미사용**, 오른쪽은 **JEV 사용**입니다. 위쪽에는 재생 경과 초와 별도 실측 업무 시간·비용을 표시합니다. 원본의 처음부터 1배속으로 함께 재생하고, 먼저 끝난 쪽은 종료 표시와 함께 마지막 화면을 유지합니다. 마지막에는 2초간 결과 화면을 유지합니다. 재생 초는 실제 업무 시작 시점에 맞춘 초시계가 아닙니다.
 
 In this **one-run-per-arm pilot**, JEV + Astra took 52.4% less task time and used 87.3% less accounted provider cost. This is a bounded, host-authored route, not a general browser-agent benchmark. Cost combines OpenRouter-reported credits with JEV's input-token list-price estimate; final extraction is included, host inference and fees are excluded. Full videos retain initial loading, popup preparation and waits at 1× speed. All frames were decoded and sampled frames were visually checked. Earlier failures and their $0.849577356 cost remain in the [diagnostic ledger](benchmarks/results/browser-playwright-20260924/diagnostics/summary.json).
 
@@ -38,19 +42,21 @@ In this **one-run-per-arm pilot**, JEV + Astra took 52.4% less task time and use
 
 On 2026-09-24, two Korean **synthetic** missions covered scholarship allocation and public-grant selection. Each had a base case and changed evidence. Every arm selected local evidence and used **Astra for final structured synthesis**. All arms received the same exact-cache and prompt-cache opportunities.
 
-| Arm | Core checks, fresh workflows | Strict checks including citations | Mean fresh workflow time | Cost of 4 fresh workflows |
-| --- | ---: | ---: | ---: | ---: |
-| Astra routing + Astra synthesis | 4/4 | 4/4 | 12.996 s | $0.26512300 |
-| Luna routing + Astra synthesis | 4/4 | 4/4 | 12.735 s | $0.21389040 |
-| Adaptive routing + Astra synthesis | 4/4 | 3/4 | 11.196 s | $0.21446232 |
+| Arm / 방식 | JEV used? / JEV 사용? | Core checks, fresh workflows | Strict checks including citations | Mean fresh workflow time | Cost of 4 fresh workflows |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Astra routing + Astra synthesis | No / 아니요 | 4/4 | 4/4 | 12.996 s | $0.26512300 |
+| Luna routing + Astra synthesis | No / 아니요 | 4/4 | 4/4 | 12.735 s | $0.21389040 |
+| Adaptive (JEV in this run / 이번 실행은 JEV) + Astra | Yes / 예 | 4/4 | 3/4 | 11.196 s | $0.21446232 |
 
-The adaptive arm selected JEV for every fresh routing call in this run. Its automatic warm-Luna selection and Astra escalation are covered by mock tests, not demonstrated by these live results. The adaptive arm had the lowest observed mean time; Luna + Astra had the lowest observed total cost. These are descriptive results from four fresh workflows per arm, not evidence of general superiority.
+The adaptive arm selected JEV for every fresh routing call in this run. Adaptive routing can choose JEV, Luna or Astra; it does not always use JEV. Its automatic warm-Luna selection and Astra escalation are covered by mock tests, not demonstrated by these live results. The adaptive arm had the lowest observed mean time; Luna + Astra had the lowest observed total cost. These are descriptive results from four fresh workflows per arm, not evidence of general superiority.
+
+**JEV 사용 여부:** Astra·Luna 대조군은 JEV를 사용하지 않았습니다. 적응형은 이번 실행의 새 자료 선택 호출에 모두 JEV를 사용하고 최종 산출물은 Astra가 작성했습니다. 적응형은 조건에 따라 Luna·Astra도 선택할 수 있으므로 항상 JEV를 쓰는 방식은 아닙니다. 정확 결과 재생에는 새 모델 호출이 없습니다.
 
 There were **12 fresh workflows, 6 exact replays, and 36 actual POST requests**. Each exact replay added zero model requests and zero provider cost. Changed evidence caused new synthesis; unchanged routing subtasks could reuse their own exact result. The total **$0.69347572** combines JEV input list-price estimates with OpenRouter-reported credit charges. It excludes host inference, funding fees, taxes, and downstream tools; it is not a card bill.
 
 The one strict failure was a final-step citation-set mismatch. An independent agent review found that the supplied citations supported that step, but the **frozen score remains 11/12 strict, 12/12 core**. The fixtures are agent-authored development cases, not a human-validated benchmark. See the [full conditions](benchmarks/results/complex-missions-v1/RESULTS.md), [interpretation](benchmarks/results/complex-missions-v1/INTERPRETATION.md), [frozen manifest](benchmarks/results/complex-missions-v1/report.json.manifest.json), and [verification record](benchmarks/results/complex-missions-v1/verification.json).
 
-Current release verification: **778 automated tests passed, zero failures**. The original synthetic run records 718 tests before inference and 722 after the first router refinements. Run `npm run test:all` to verify your installed revision.
+Current release verification: **780 automated tests passed, zero failures**. The original synthetic run records 718 tests before inference and 722 after the first router refinements. Run `npm run test:all` to verify your installed revision.
 
 A read-only live progress dashboard and bilingual recording instructions are included. The synthetic results above come from their preserved API report; the real Chrome recordings are a separate experiment linked earlier in this README.
 

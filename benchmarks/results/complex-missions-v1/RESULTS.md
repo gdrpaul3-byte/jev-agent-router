@@ -6,11 +6,15 @@
 
 ## 전체 결과
 
-| 방식 | 핵심 판단 | 인용 포함 엄격 통과 | 새 업무 평균 시간 | 새 업무 비용 합계 | 실제 POST | 정확 재생 |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Astra만 사용 | 4/4 | 4/4 | 12.996초 | $0.26512300 | 12 | 2 |
-| Luna + Astra | 4/4 | 4/4 | 12.735초 | $0.21389040 | 12 | 2 |
-| 적응형 선택 + Astra | 4/4 | 3/4 | 11.196초 | $0.21446232 | 12 | 2 |
+| 방식 / Arm | JEV 사용? / JEV used? | 핵심 판단 | 인용 포함 엄격 통과 | 새 업무 평균 시간 | 새 업무 비용 합계 | 실제 POST | 정확 재생 |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Astra만 사용 / Astra only | 아니요 / No | 4/4 | 4/4 | 12.996초 | $0.26512300 | 12 | 2 |
+| Luna + Astra | 아니요 / No | 4/4 | 4/4 | 12.735초 | $0.21389040 | 12 | 2 |
+| 적응형(이번 실행은 JEV) + Astra / Adaptive (JEV in this run) + Astra | 예 / Yes | 4/4 | 3/4 | 11.196초 | $0.21446232 | 12 | 2 |
+
+적응형은 이번 실행의 새 자료 선택 호출에 모두 JEV를 사용했고 최종 작성은 Astra가 수행했다. Astra·Luna 대조군은 JEV를 사용하지 않았다. 적응형은 조건에 따라 Luna·Astra도 선택할 수 있어 항상 JEV를 쓰는 방식은 아니다. 아래 정확 재생 행에는 JEV를 포함한 새 모델 호출이 없다.
+
+The adaptive arm used JEV for every fresh routing call in this run and Astra for final synthesis. The Astra and Luna controls did not use JEV. Adaptive routing may select Luna or Astra under other conditions; it does not always use JEV. Exact-replay rows below made no new model calls, including JEV calls.
 
 핵심 판단에는 구조·선정·계산·마감·승인·선행 조건을 포함한다. 인용까지 포함한 엄격 결과도 함께 공개하며, 인용 누락을 완전한 성공으로 바꾸지 않는다. 평균은 기본형과 변경형을 합친 소규모 기술 통계다. 오류가 있는 방식의 시간을 성공 처리 속도로 해석하지 않는다.
 

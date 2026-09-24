@@ -35,6 +35,18 @@ Raw evidence is preserved without changing answers or timing: [Astra report](ast
 
 ## Watch and inspect / 영상과 검토 근거
 
+### One synchronized video / 하나의 동시 비교 영상
+
+[![Play side-by-side: NO JEV / WITH JEV · 동시 재생](comparison/poster.png)](comparison/comparison.mp4)
+
+**[▶ Play both together / 두 영상 동시에 재생](comparison/comparison.mp4)** · [Edit metadata / 편집 기록](comparison/comparison.json) · [Timer and end-state checks / 초 표시·종료 장면 확인](comparison/review.png)
+
+Left is **NO JEV — Astra decisions + Astra extraction**; right is **WITH JEV — JEV decisions + Astra extraction**. This single 2560 × 1000 MP4 starts both complete clips together at 1×. The top counters show **video replay seconds**, separately from the static measured task times and API costs. Exact task-start frame alignment is unknown. No source footage is cut or sped up. After its clip ends, each counter stops and the last frame is held with an explicit label: Astra holds for 2.00 seconds and JEV for 14.48 seconds. Total edited duration is 33.96 seconds, including a final two-second presentation tail. No new API calls were made.
+
+왼쪽은 **JEV 미사용 — Astra 판단·추출**, 오른쪽은 **JEV 사용 — JEV 판단·Astra 추출**입니다. 2560 × 1000 단일 MP4에서 두 원본을 처음부터 1배속으로 동시에 재생합니다. 상단의 움직이는 숫자는 **영상 재생 경과 초**이며, 별도 실측 업무 시간과 API 비용도 고정 표시합니다. 실제 업무 시작 프레임을 정확히 맞춘 영상은 아닙니다. 원본 구간 삭제나 배속은 없습니다. 먼저 끝난 쪽은 시계가 멈추고 종료 표시와 함께 마지막 화면을 유지합니다. 유지 구간은 Astra 2.00초, JEV 14.48초이며, 마지막 2초의 결과 표시를 포함한 전체 길이는 33.96초입니다. 추가 API 호출은 없습니다.
+
+### Individual originals / 개별 원본
+
 | Astra + Astra | JEV + Astra |
 |---|---|
 | [![Astra recording preview / Astra 녹화 미리보기](astra/poster.png)](astra/video.mp4) | [![JEV recording preview / JEV 녹화 미리보기](jev/poster.png)](jev/video.mp4) |
@@ -96,6 +108,6 @@ Four free preflights, including failures, are preserved: [1](preflight-1/report.
 
 ## Reproduce and interpret / 재현과 해석
 
-See [English instructions](../../../docs/BROWSER-DEMO.en.md) / [한국어 실행 방법](../../../docs/BROWSER-DEMO.ko.md). The current offline suite passed **778 tests**. This does not prove production readiness for arbitrary tasks or Claude/Grok integration. The site, finite route and scoring were authored/selected by this project; the model did not discover an unrestricted new workflow. One sequential run per arm is not an independent or statistically conclusive benchmark.
+See [English instructions](../../../docs/BROWSER-DEMO.en.md) / [한국어 실행 방법](../../../docs/BROWSER-DEMO.ko.md). The original browser-run verification passed **778 offline tests**; the current release test count is in the repository README. This does not prove production readiness for arbitrary tasks or Claude/Grok integration. The site, finite route and scoring were authored/selected by this project; the model did not discover an unrestricted new workflow. One sequential run per arm is not an independent or statistically conclusive benchmark.
 
-[영어 실행 방법](../../../docs/BROWSER-DEMO.en.md) / [한국어 실행 방법](../../../docs/BROWSER-DEMO.ko.md)을 제공합니다. 현재 오프라인 테스트는 **778개 통과**했습니다. 임의 업무의 운영 준비나 Claude/Grok 연동을 입증하지 않습니다. 사이트·유한 경로·채점 기준은 이 프로젝트가 선택·작성했으며 모델이 제한 없는 새 업무 경로를 발견한 실험이 아닙니다. 방식별 한 번의 순차 실행은 독립적이거나 통계적으로 결론을 낼 수 있는 벤치마크가 아닙니다.
+[영어 실행 방법](../../../docs/BROWSER-DEMO.en.md) / [한국어 실행 방법](../../../docs/BROWSER-DEMO.ko.md)을 제공합니다. 원본 브라우저 실험 당시 검증은 **오프라인 테스트 778개 통과**였으며, 현재 릴리스의 테스트 수는 저장소 README에 기록합니다. 임의 업무의 운영 준비나 Claude/Grok 연동을 입증하지 않습니다. 사이트·유한 경로·채점 기준은 이 프로젝트가 선택·작성했으며 모델이 제한 없는 새 업무 경로를 발견한 실험이 아닙니다. 방식별 한 번의 순차 실행은 독립적이거나 통계적으로 결론을 낼 수 있는 벤치마크가 아닙니다.
