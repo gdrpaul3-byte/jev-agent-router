@@ -19,9 +19,9 @@
 | **Validate before handing off / 오래된 인계와 중복 유료 호출 방지** | The separate durable task API checks the current input, committed ledger and handoff, rejects older known task revisions, and preserves interrupted calls for review. / 별도 업무 인계 API는 현재 입력·원장·인계 파일의 일치 여부와 최신 revision을 확인합니다. 결과 미상인 유료 호출을 자동 반복하지 않습니다. [Handoffs / 인계](docs/task-router.md) |
 | **Inspect the whole workflow / 완료·실패·전체 비용을 함께 비교** | No-JEV LLM controls, the same cache opportunities, completion checks, failed attempts and costs are published. Browser videos share the actual task-start zero and include decisions, waits and final extraction. / JEV 미사용 대조군과 같은 캐시 기회로 비교하며, 완료 검증·실패·비용을 공개합니다. 영상은 실제 업무 시작점을 맞추고 판단·대기·최종 추출을 포함합니다. [Video and all attempts / 영상과 모든 시도](benchmarks/results/browser-task-aligned-20260924/RESULTS.md) |
 
-**Use it when** your agent repeatedly chooses among known workers or tools and you want to compare decision cost, reuse and outcomes before expanding automation. The adaptive live experiment used JEV for every fresh routing call; warm-Luna selection and Astra escalation are implemented and mock-tested. The Claude in Chrome path was live-tested on two local fixtures ([results](benchmarks/results/claude-chrome-live-20260924/RESULTS.md)); Grok integration remains unverified. The durable handoff API and adaptive cache have distinct contracts; a recommendation does not execute a worker or grant permission.
+**Use it when** your agent repeatedly chooses among known workers or tools and you want to compare decision cost, reuse and outcomes before expanding automation. The adaptive live experiment used JEV for every fresh routing call; warm-Luna selection and Astra escalation are implemented and mock-tested. The Claude in Chrome path was live-tested on two local fixtures ([results](benchmarks/results/claude-chrome-live-20260924/RESULTS.md)); on three real public-site tasks it completed 0 of 7 attempts while Opus 5.5 alone completed 6 of 6 ([A/B](benchmarks/results/claude-ab-20260925/RESULTS.md)). Grok integration remains unverified. The durable handoff API and adaptive cache have distinct contracts; a recommendation does not execute a worker or grant permission.
 
-**이런 경우에 적합합니다:** 정해진 담당·도구 중 하나를 반복해서 고르는 업무에서, 자동화 범위를 늘리기 전에 판단 비용·재사용·실제 결과를 확인하고 싶을 때입니다. 적응형 실측에서는 새 판단에 모두 JEV가 선택됐으며, Luna 캐시 선택·Astra 위임은 모의 테스트로 검증했습니다. Claude in Chrome 경로는 로컬 예제 두 개로 실제 검증했고([결과](benchmarks/results/claude-chrome-live-20260924/RESULTS.md)), Grok 실기 검증은 남아 있습니다. 적응형 캐시와 업무 인계 API의 계약은 별개이고, 추천만으로 작업이 실행되거나 권한이 생기지는 않습니다.
+**이런 경우에 적합합니다:** 정해진 담당·도구 중 하나를 반복해서 고르는 업무에서, 자동화 범위를 늘리기 전에 판단 비용·재사용·실제 결과를 확인하고 싶을 때입니다. 적응형 실측에서는 새 판단에 모두 JEV가 선택됐으며, Luna 캐시 선택·Astra 위임은 모의 테스트로 검증했습니다. Claude in Chrome 경로는 로컬 예제 두 개로 실제 검증했지만([결과](benchmarks/results/claude-chrome-live-20260924/RESULTS.md)), 실사이트 과제 3종에서는 Opus 5.5 단독 6/6 완료, Opus 5.5 + JEV 0/7 완료였습니다([비교](benchmarks/results/claude-ab-20260925/RESULTS.md)). Grok 실기 검증은 남아 있습니다. 적응형 캐시와 업무 인계 API의 계약은 별개이고, 추천만으로 작업이 실행되거나 권한이 생기지는 않습니다.
 
 [Compared with TypeSafe Mario, Jev Codex Router, Typesafe MCP, Newsjack and Canny / 관련 저장소와의 용도 비교](docs/COMPARISON.md). The comparison explains scope and shared ideas; it makes no claim that these features are exclusive or that this project outperforms those repositories.
 
@@ -31,7 +31,7 @@ A host such as Codex or Claude supplies a task, current evidence, and a finite l
 
 - **Adaptive routing:** reuse a valid exact result; otherwise select JEV, Luna, or Astra using host-supplied difficulty and scoped cost/cache observations. A semantic abstention can escalate once to Astra within the configured limits.
 - **Durable task routing:** shadow comparison, active local handoff files, and an offline handoff reader that checks the committed ledger against the current input.
-- **Bounded browser helpers:** adapters for a host's existing Codex browser session and a Claude in Chrome decision/authorization/verification bridge with a session ledger. The Claude path was **live-tested** with Claude Code and the Claude in Chrome extension on two local fixtures; see [Claude in Chrome](#claude-code--claude-in-chrome).
+- **Bounded browser helpers:** adapters for a host's existing Codex browser session and a Claude in Chrome decision/authorization/verification bridge with a session ledger. The Claude path was **live-tested** with Claude Code and the Claude in Chrome extension on two local fixtures, but **did not complete real public-site tasks** in a pre-registered A/B; see [Claude in Chrome](#claude-code--claude-in-chrome).
 - **Accounting:** record calls, observed token usage, provider cost estimates or reported credit charges, cache reuse, and uncertain outcomes. Unknown costs remain `null`.
 
 This is a local Node.js runtime with optional host skills, not a replacement for Codex, Claude, or their browser tools. A skill tells the host how to use the runtime; installing it does not install API credits or establish a browser connection.
@@ -69,6 +69,17 @@ This is a local Node.js runtime with optional host skills, not a replacement for
 | Korean notice search: type → search → filter → open the 2026 notice | completed, first attempt | 4 | 5 | $0.000576 | 249 s |
 
 The wall clock is mostly Claude's own tool round trips (about 30–60 s per action); no speed advantage is claimed. Development attempts before a four-round review stopped at the confidence gate or a timing window and are listed with their reasons in [the live results](benchmarks/results/claude-chrome-live-20260924/RESULTS.md). The review checked the bridge against the installed extension's source; see [the contract and known limitations](docs/claude-chrome.md).
+
+**Real-site A/B (2026-09-25): Opus 5.5 alone 6/6, Opus 5.5 + JEV 0/7.** Three pre-registered tasks on public sites (a GitHub repository in English, a scholarship notice and the earlier ordered-visit task on a Korean university site), two attempts per arm plus one extra JEV attempt, graded from transcripts and ledgers:
+
+| Arm (same model and rules) | Completed | Mean time | Mean Opus cost (API list price) | JEV cost |
+| --- | ---: | ---: | ---: | ---: |
+| Opus 5.5 only, Claude in Chrome tools | 6/6 | 80 s | $0.44 | — |
+| Opus 5.5 + JEV bridge | 0/7 | 277 s | $1.28 | $0.0026 for 12 requests |
+
+The bridge stopped because writing one observation of a text-heavy page took 72–76 s (beyond its 60 s windows), a hover menu closed before authorization, JEV chose the right step at confidence 0.73 (gate 0.75), and screenshots timed out while Chrome was minimized. Every JEV-arm click was ledger-authorized with no misclick, while Opus alone made four harmless wrong clicks. In Claude Code the host still reads every page, so JEV adds host cost here; prefer Claude alone for real sites until these limits are addressed. [Results, all attempts and protocol](benchmarks/results/claude-ab-20260925/RESULTS.md)
+
+**실사이트 비교(2026-09-25): Opus 5.5 단독 6/6, Opus 5.5 + JEV 0/7.** 사전 등록한 공개 사이트 과제 3종을 조건별 2회(JEV 추가 1회) 실행하고 대화 기록과 원장으로 채점했습니다. 텍스트가 많은 페이지의 관측 기록(72~76초)이 60초 기한을 넘기고, 드롭다운 메뉴가 승인 전에 닫히고, 올바른 판단의 확신도가 0.73으로 기준에 못 미쳤습니다. 이 구성에서는 Claude가 여전히 모든 페이지를 읽으므로 JEV가 비용을 줄이지 못합니다. [결과·모든 시도·프로토콜](benchmarks/results/claude-ab-20260925/RESULTS.md)
 
 ## Measured synthetic workflow comparison
 
@@ -129,7 +140,7 @@ See [adaptive routing](docs/adaptive-routing.md), [task routing and handoffs](do
 
 호스트가 업무·현재 근거·실제로 사용할 수 있는 도구 목록을 전달하면, 라우터가 다음 경로를 권고합니다. 동일 입력 결과를 재사용하고, 새 판단은 업무 난도와 최근 비용·캐시 관측에 따라 JEV/Luna/Astra 중에서 선택합니다. 모델은 임의의 도구나 실행 권한을 만들 수 없습니다.
 
-**스킬과 실행 엔진은 별개입니다.** 스킬은 Codex·Claude에게 이 저장소의 명령을 사용하는 절차를 알려 줍니다. Node 실행 엔진과 API 키는 로컬에 따로 준비해야 하며, 스킬 설치만으로 브라우저·봇이 연결되거나 선택된 업무가 자동 실행되지는 않습니다. Claude in Chrome 경로는 Claude Code가 호스트가 되어 로컬 예제 두 개를 실제로 완료했습니다. Claude 전용 스킬은 `--agent claude --skill claude-chrome`으로 설치합니다.
+**스킬과 실행 엔진은 별개입니다.** 스킬은 Codex·Claude에게 이 저장소의 명령을 사용하는 절차를 알려 줍니다. Node 실행 엔진과 API 키는 로컬에 따로 준비해야 하며, 스킬 설치만으로 브라우저·봇이 연결되거나 선택된 업무가 자동 실행되지는 않습니다. Claude in Chrome 경로는 Claude Code가 호스트가 되어 로컬 예제 두 개를 실제로 완료했지만, 실사이트 비교에서는 완료하지 못했습니다([비교](benchmarks/results/claude-ab-20260925/RESULTS.md)). Claude 전용 스킬은 `--agent claude --skill claude-chrome`으로 설치합니다.
 
 위 실험에서는 새 업무 12건의 핵심 판단·계산·마감·승인 조건이 모두 맞았고, 인용까지 포함한 엄격 검사는 11/12였습니다. 정확 재생 6건의 추가 호출·비용은 0이었습니다. 적응형이 이번 평균 시간은 가장 짧았지만 비용은 Luna+Astra가 조금 더 낮았습니다. 이 작은 합성 평가를 모든 실제 업무의 정확도·속도·비용 우월성으로 일반화하지 않습니다.
 

@@ -6,6 +6,8 @@ This bridge keeps the TypeSafe direct API. Claude Code reads and operates the ex
 
 The loop is host-assisted: every action needs several Claude tool calls, so one action took about 30–60 s in the live runs. No speed advantage is claimed.
 
+**Real-site A/B (2026-09-25): not recommended over Claude alone.** On three pre-registered public-site tasks (a GitHub repository and two Korean university pages), Opus 5.5 alone completed 6 of 6 attempts (mean 80 s, $0.44 at API list price) and Opus 5.5 + this bridge completed 0 of 7 (mean 277 s, $1.28). The stops came from text-heavy pages, hover menus, the confidence gate and a minimized Chrome window; see [Real-site limitations](#real-site-limitations-2026-09-25) and [the A/B results](../benchmarks/results/claude-ab-20260925/RESULTS.md). JEV's own cost was $0.0026 for 12 requests; Claude still reads every page, so in this setup JEV adds host cost instead of saving it.
+
 ## What the live test changed
 
 The first live run used the earlier contract (a host-written JSON envelope and a stateless CLI). It showed that Claude could not reliably satisfy that contract from the real tool output, so the bridge now includes:
@@ -141,6 +143,9 @@ Adapt labels only from current observed elements. This example is illustrative, 
 ## Known Claude in Chrome issues (2026-09-24, Windows)
 
 - Screenshots occasionally timed out after 30 s; afterwards the tab's viewport stayed shrunk (157×77, then 16×8), so `read_page` listed nothing. A new tab (`tabs_create_mcp`) restored 1920×889.
+- On 2026-09-25 the timeouts followed the Chrome window being minimized or the group's tab not being the active tab; the collapsed viewport equalled the scaled screenshot size (157×73 at scale 0.1, 314×155 at 0.2). Keep the window visible and the Claude tab active while a session runs.
+- `tabs_create_mcp` can create a tab outside the MCP tab group; closing the group's last tab then removes the group, and later calls report that no group exists. Use `tabs_context_mcp {createIfEmpty:true}` instead.
+- `get_page_text` takes the largest element of the first matching selector (`article`, `main`, `.content`, …) and does not fall back to `body`; a page with an empty matching container returns "No text content found" although text is visible.
 - `read_page` does not show `disabled`; clicking a disabled control usually ends with `NO_OBSERVABLE_PROGRESS`, but a page whose content keeps changing can make it look like progress.
 - The built-in browser pane of the Claude desktop app prints the same `read_page` grammar but uses string tab IDs and origin-only tab metadata; it is not supported by this bridge.
 
@@ -155,6 +160,15 @@ These were reproduced during the review and are accepted, documented residual ri
 - **Envelope input.** `--input` envelopes (including `observe` output fed back) skip the ref binding check; use `--raw`.
 - **Unobservable pages.** A page whose main text is under 10 characters (`PAGE_TEXT_UNAVAILABLE`), and a value-named field whose value ends in a backslash or repeats the `" [ref_` boundary (`READ_PAGE_UNPARSED`), cannot be used.
 - **Serializer drift.** The grammar and report formats come from extension 1.0.94. A different extension version may print something else; the bridge then stops instead of guessing.
+
+## Real-site limitations (2026-09-25)
+
+Found in the [real-site A/B](../benchmarks/results/claude-ab-20260925/RESULTS.md); none is fixed yet:
+
+- **Transcription time.** Claude writes each observation by re-typing the tool output. On a GitHub repository page (about 21 k characters) that took 72–76 s per observation, longer than the 60 s decide→authorize and authorize→verify windows, and it is billed as host output tokens. Small pages took 12–15 s.
+- **Hover and mega menus.** A menu opened by an authorized click can close before the next observation (about 30 s later), so the proposed link is gone and the proposal expires.
+- **Confidence gate.** JEV picked the correct next action at 0.73 on a real Korean menu, below the 0.75 gate, identically in two attempts.
+- **Viewport-only targets.** The `interactive` filter lists visible elements only and the bridge has no scroll action, so footer links and long lists are out of reach.
 
 ## Usage and verification
 

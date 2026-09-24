@@ -9,6 +9,8 @@ Claude is the host. JEV (TypeSafe) only proposes one host-authored action ID plu
 
 Claude가 호스트입니다. JEV는 호스트가 허용한 동작 ID와 관측된 ref 하나(또는 DONE)만 제안하고, 실제 클릭·입력은 Claude가 공식 Claude in Chrome 도구로 한 번 실행합니다. 로컬 CLI가 세션 원장으로 예산·기한·단일 대기 동작·검증을 강제합니다.
 
+**Real-site A/B (2026-09-25):** on three public-site tasks this loop completed 0 of 7 attempts while Claude alone completed 6 of 6, at about 3× the host cost (`<package>/benchmarks/results/claude-ab-20260925/RESULTS.md`). Use it only when the user asks for JEV or needs its ledger-authorized clicks, and tell them this result. It cannot finish on text-heavy pages (writing one GitHub-page observation took 72–76 s, beyond the 60 s windows), on hover menus that close before authorization, or while the Chrome window is minimized. 실사이트 비교에서 이 루프는 0/7, Claude 단독은 6/6이었습니다. 사용자가 JEV를 원할 때만 쓰고 이 결과를 알려 주세요.
+
 ## Runtime
 
 Installed paths (JSON values; quote them for the shell). Keep the checkout in place. Full contract: `<package>/docs/claude-chrome.md`.
@@ -114,9 +116,13 @@ The ledger remembers an input verified from the tool report and shows its value 
 
 ## 5. Known Claude in Chrome issues (2026-09-24, Windows)
 
-- A timed-out screenshot (30 s) can leave the tab's viewport shrunk (seen 157×77, then 16×8), so `read_page` shows nothing and a pending authorize may end with `STALE_TARGET`. Open a new tab with `tabs_create_mcp`, navigate, and start a new session.
+- A timed-out screenshot (30 s) can leave the tab's viewport shrunk (seen 157×77, then 16×8), so `read_page` shows nothing and a pending authorize may end with `STALE_TARGET`. Make sure the Chrome window is not minimized, open a new tab (`tabs_create_mcp`, or `tabs_context_mcp {createIfEmpty:true}` if the group is gone), navigate, and start a new session.
 - `read_page` does not report `disabled`, checkbox state or field values; a click on a disabled control usually ends with `NO_OBSERVABLE_PROGRESS`, but a page with live-updating controls can still look changed.
 - Keep screenshots out of the post-action observation; a slow screenshot can push verification past its 60 s window.
+- (2026-09-25) Screenshots time out and the viewport collapses to the scaled screenshot size while the Chrome window is minimized or the group's tab is not the active tab. Ask the user to keep the window visible and the Claude tab in front.
+- (2026-09-25) `tabs_create_mcp` can open a tab outside the MCP group; use `tabs_context_mcp {createIfEmpty:true}` after the group is empty.
+- (2026-09-25) A menu opened by an authorized click can close before the next observation; the proposal then expires. Hover-only menus are a poor fit.
+- (2026-09-25) `get_page_text` can report "No text content found" on a page with visible text when an empty `article`/`main`/`.content` container matches first (`PAGE_TEXT_UNAVAILABLE`).
 - Text of 6–8 digits, a card-like number, or a credential word (password, PIN, OTP, 비밀번호 …) typed into a field that the page names by its value makes that field look like a secret; it is omitted and the input cannot be verified. Pages whose elements or text mention showing or hiding a password have all text fields withheld.
 
 ## 6. Report

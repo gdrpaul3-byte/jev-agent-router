@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-09-24T17:02:23.253Z",
+  "createdAt": "2026-09-24T19:56:33.815Z",
   "scope": "Reviewed allowlisted package; local secret values and personal paths checked; keys and state excluded.",
   "files": [
     {
@@ -508,6 +508,36 @@
       "sha256": "aa6f26851762a913cedf17a70e644c1d3f96d3a389891c5dac4a386cb2279d35"
     },
     {
+      "path": "benchmarks/results/claude-ab-20260925/plans/github-results.json",
+      "bytes": 1538,
+      "sha256": "84d9e63f9153eee01d564b2d20b456b88bbee4cfb81252b53c7ecaf8af43e74b"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/plans/hsmu-directions.json",
+      "bytes": 2233,
+      "sha256": "7a38bf041e076ae11070d31d742bb4346c30072d8b10bc492e02436b2f9c3762"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/plans/hsmu-scholarship.json",
+      "bytes": 1434,
+      "sha256": "2ef6504c7dab048bb3f492adf4f03445ef0b6db910e58a9311f3fb98e672d608"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/protocol.json",
+      "bytes": 5304,
+      "sha256": "c3564afd6c32a41c2e1c62b324a14f17189b3d0e2c6862ece0b7a8c0ded07ed0"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/report.json",
+      "bytes": 27613,
+      "sha256": "0802764b9af4739d3d8324cfa65b3c2d462aaed016ec456f724b09a17ff3e32f"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/RESULTS.md",
+      "bytes": 8785,
+      "sha256": "23771aef49371e6c912ec73de05b3f9538e4e603b1ecd123e2d32713727baaa4"
+    },
+    {
       "path": "benchmarks/results/claude-chrome-live-20260924/report.json",
       "bytes": 13826,
       "sha256": "90bfb4b821032071d77bf1964ea89bcccf344b117e4e3d39c681396c50ec5e58"
@@ -589,8 +619,8 @@
     },
     {
       "path": "docs/claude-chrome.md",
-      "bytes": 23299,
-      "sha256": "c5111aca97134df53d9e6af1fc9b45bfc49825447b9dc933d8c902f354a6ec50"
+      "bytes": 25673,
+      "sha256": "73c1f853016d048942dbc144f1dda1f1c0ffdd8760984403dd79bed169e15064"
     },
     {
       "path": "docs/COMPARISON.md",
@@ -684,8 +714,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 19218,
-      "sha256": "c17d560f61bdfda26e7d2e69651847a3c78f7a05d6de8e3d1ea6bb6bf295a95b"
+      "bytes": 21575,
+      "sha256": "8ecbd9a3a72b38a90553bf30bf49fd4f447e0d11144655da5b6690efd03dd4de"
     },
     {
       "path": "scripts/install-skill.mjs",
@@ -699,8 +729,8 @@
     },
     {
       "path": "skills/jev-claude-chrome/SKILL.md",
-      "bytes": 13596,
-      "sha256": "1ef2428f097c2f0e962ec9a75961410cb9d85370230c2aa40d0f24d6c1313890"
+      "bytes": 15113,
+      "sha256": "8534ea486f185ea8053b6fb43c835f880ee8a07c20cf0a443ae897cec0466e3b"
     },
     {
       "path": "skills/jev-computer-use/SKILL.md",

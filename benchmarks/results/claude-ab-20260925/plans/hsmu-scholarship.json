@@ -1,0 +1,14 @@
+{
+  "plan": {
+    "goal": "화성의과학대학교 홈페이지 상단의 \"M\" 링크로 메뉴를 열고 \"장학\" 링크를 눌러 장학 게시판으로 이동한 뒤, 목록에서 제목이 정확히 \"[안내] 2026학년도 2학기 센터 핵심 역량 특강 챌린지\"인 공지를 눌러 본문에 \"2026-2학기 센터 핵심 역량 특강 챌린지 안내\"가 보이면 완료입니다. 다른 메뉴·공지·검색·첨부파일은 누르지 마세요.",
+    "allowedOrigins": ["https://www.hsmu.ac.kr"],
+    "maxSteps": 5,
+    "maxDurationMs": 900000,
+    "actions": [
+      { "id": "openMenu", "action": "click", "description": "홈페이지에서 장학 링크가 아직 보이지 않으면 상단의 M 링크로 메뉴를 연다.", "target": { "roles": ["link"], "nameEquals": "M" } },
+      { "id": "openBoard", "action": "click", "description": "M 메뉴가 열려 있으면 공지사항 아래의 장학 링크로 장학 게시판에 들어간다.", "target": { "roles": ["link"], "nameEquals": "장학" } },
+      { "id": "openNotice", "action": "click", "description": "장학 게시판 목록에서 정확히 이 제목의 공지 본문을 연다.", "target": { "roles": ["link"], "nameEquals": "[안내] 2026학년도 2학기 센터 핵심 역량 특강 챌린지" } }
+    ],
+    "completion": { "textIncludes": "2026-2학기 센터 핵심 역량 특강 챌린지 안내", "urlIncludes": "id=3700" }
+  }
+}
