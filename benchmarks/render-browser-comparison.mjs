@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// File-only presentation edit. No capture, browser operation, API call or task-time alignment.
+// File-only presentation edit. Task-clock mode requires timestamp-verified source clips.
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
@@ -14,6 +14,8 @@ export function comparisonTimeline(inputs) {
   if (!Array.isArray(inputs) || inputs.length !== 2) fail('INVALID_INPUT');
   const sharedHash = inputs[0]?.report?.protocol?.comparisonHash;
   if (!/^[a-f0-9]{64}$/.test(sharedHash ?? '')) fail('INVALID_PROTOCOL');
+  const taskAligned = inputs.every(input => input.media?.taskAlignment?.kind === 'browser-task-clock');
+  if (!taskAligned && inputs.some(input => input.media?.taskAlignment)) fail('MIXED_CLOCKS');
   const panels = inputs.map(({ report, media }, index) => {
     if (report?.arm !== ARMS[index] || report.status !== 'completed' || report.result?.passed !== true
       || report.protocol?.comparisonHash !== sharedHash || media?.validPixels !== true
@@ -22,16 +24,26 @@ export function comparisonTimeline(inputs) {
       || Math.abs(media.frames / FPS - media.durationSeconds) > 0.01
       || !Number.isFinite(report.timing?.taskDurationMs) || report.timing.taskDurationMs <= 0
       || report.result.cost?.complete !== true || !Number.isFinite(report.result.cost.accountedProviderUsd)) fail('INVALID_INPUT');
+    if (taskAligned && (report.taskClock?.status !== 'aligned'
+      || media.taskAlignment.sourceManifestSha256 !== report.taskClock.sha256
+      || !/^[a-f0-9]{64}$/.test(report.taskClock.sha256 ?? '')
+      || !Number.isFinite(media.taskAlignment.measuredTaskSeconds)
+      || Math.abs(media.taskAlignment.measuredTaskSeconds * 1000 - report.timing.taskDurationMs) > 0.001
+      || media.frames !== Math.ceil(report.timing.taskDurationMs / 40))) fail('INVALID_TASK_ALIGNMENT');
     return { arm: ARMS[index], jevUsed: index === 1, clipSeconds: media.durationSeconds, sourceFrames: media.frames,
       measuredTaskSeconds: report.timing.taskDurationMs / 1000, providerUsd: report.result.cost.accountedProviderUsd,
+      clockEndSeconds: taskAligned ? report.timing.taskDurationMs / 1000 : media.durationSeconds,
       sourceSha256: media.mp4Sha256 };
   });
   const totalSeconds = Math.max(...panels.map(panel => panel.clipSeconds)) + 2;
   return { comparisonHash: sharedHash, fps: FPS, width: 2560, height: 1000, totalSeconds,
     panels: panels.map(panel => ({ ...panel, heldSeconds: totalSeconds - panel.clipSeconds })),
-    alignment: 'Both complete source clips begin at replay t=0. Exact task-start frame alignment is unknown.',
-    clock: 'Replay seconds, capped at each source clip end; measured task seconds are separate static labels.',
-    speed: 1, cuts: false, finalPresentationTailSeconds: 2 };
+    taskAligned,
+    alignment: taskAligned ? 'Both t=0 points are the measured task start before initial model inference. Browser presentation timestamps map frames to this clock at 25fps.'
+      : 'Both complete source clips begin at replay t=0. Exact task-start frame alignment is unknown.',
+    clock: taskAligned ? 'Measured task elapsed seconds, capped at task completion including final extraction.'
+      : 'Replay seconds, capped at each source clip end; measured task seconds are separate static labels.',
+    speed: 1, cuts: taskAligned ? 'Setup and cleanup excluded; entire measured task retained.' : false, finalPresentationTailSeconds: 2 };
 }
 
 async function run(command, args, cwd) {
@@ -73,12 +85,12 @@ export async function renderComparison({ root, outputDir, font }) {
     const labels = {
       badge: index === 0 ? 'JEV 미사용  /  NO JEV' : 'JEV 사용  /  WITH JEV',
       model: index === 0 ? 'Astra 판단 + Astra 추출' : 'JEV 판단 + Astra 추출',
-      timer: '영상 재생 / Replay  %{eif:floor(t):d:2}.%{eif:mod(floor(t*10),10):d} s',
-      stopped: `영상 재생 / Replay  ${panel.clipSeconds.toFixed(2)} s  ·  END`,
+      timer: `${timeline.taskAligned ? '업무 경과 / Task' : '영상 재생 / Replay'}  %{eif:floor(t):d:2}.%{eif:mod(floor(t*10),10):d} s`,
+      stopped: `${timeline.taskAligned ? '업무 완료 / Done' : '영상 재생 / Replay'}  ${panel.clockEndSeconds.toFixed(2)} s  ·  END`,
       measured: `실측 업무 / Task ${panel.measuredTaskSeconds.toFixed(2)} s   |   API $${panel.providerUsd.toFixed(5)}`,
-      running: '원본 시작 동시 재생 · 1x / Both clips start together',
-      held: '클립 끝 · 마지막 화면 유지 / Clip ended · final frame held',
-      note: '초는 영상 기준 · 업무 실측은 준비/정리 제외 / Task excludes setup & cleanup',
+      running: timeline.taskAligned ? '실제 업무 시작 = 0초 · 1x / Task start aligned' : '원본 시작 동시 재생 · 1x / Both clips start together',
+      held: timeline.taskAligned ? '업무 완료 · 결과 화면 유지 / Task done · final frame held' : '클립 끝 · 마지막 화면 유지 / Clip ended · final frame held',
+      note: timeline.taskAligned ? '판단·대기·최종 추출 포함 / Includes decisions, waits & extraction' : '초는 영상 기준 · 업무 실측은 준비/정리 제외 / Task excludes setup & cleanup',
     };
     for (const [name, value] of Object.entries(labels)) await writeFile(join(output, `${prefix}-${name}.txt`), value, { flag: 'wx' });
     const text = (name, size, x, y, color = 'white', enable = '') =>
@@ -88,11 +100,11 @@ export async function renderComparison({ root, outputDir, font }) {
       `tpad=stop_mode=clone:stop_duration=${panel.heldSeconds.toFixed(6)},pad=1280:1000:0:200:color=0x0b1220,` +
       `drawbox=x=0:y=0:w=1280:h=6:color=${accent}:t=fill,` +
       text('badge', 36, 28, 21, accent) + ',' + text('model', 34, 28, 66) + ',' +
-      text('timer', 38, 28, 111, 'white', `lt(t,${panel.clipSeconds})`) + ',' +
-      text('stopped', 38, 28, 111, accent, `gte(t,${panel.clipSeconds})`) + ',' +
+      text('timer', 38, 28, 111, 'white', `lt(t,${panel.clockEndSeconds})`) + ',' +
+      text('stopped', 38, 28, 111, accent, `gte(t,${panel.clockEndSeconds})`) + ',' +
       text('measured', 25, 28, 164, '0xcbd5e1') + ',' +
-      text('running', 25, 28, 932, '0xcbd5e1', `lt(t,${panel.clipSeconds})`) + ',' +
-      text('held', 25, 28, 932, accent, `gte(t,${panel.clipSeconds})`) + ',' +
+      text('running', 25, 28, 932, '0xcbd5e1', `lt(t,${panel.clockEndSeconds})`) + ',' +
+      text('held', 25, 28, 932, accent, `gte(t,${panel.clockEndSeconds})`) + ',' +
       text('note', 23, 28, 969, '0x94a3b8') + `[p${index}]`);
   }
   filters.push(`[p0][p1]hstack=inputs=2,trim=duration=${timeline.totalSeconds.toFixed(6)},drawbox=x=1278:y=0:w=4:h=1000:color=0x64748b:t=fill[out]`);
@@ -106,12 +118,13 @@ export async function renderComparison({ root, outputDir, font }) {
   if (final?.width !== timeline.width || final.height !== timeline.height || final.avg_frame_rate !== '25/1'
     || Number(final.nb_read_frames) !== Math.round(timeline.totalSeconds * FPS)
     || Math.abs(Number(final.duration) - timeline.totalSeconds) > 0.01) fail('OUTPUT_TIMELINE_MISMATCH');
-  await run('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-nostdin', '-n', '-ss', '15', '-i', 'comparison.mp4', '-frames:v', '1', 'poster.png'], output);
-  const frames = [0, 250, 487, 500, 650, 799, Number(final.nb_read_frames) - 1];
+  await run('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-nostdin', '-n', '-ss', String(Math.min(10, timeline.totalSeconds / 2)), '-i', 'comparison.mp4', '-frames:v', '1', 'poster.png'], output);
+  const frames = [...new Set([0, Math.floor(timeline.totalSeconds * FPS / 4), Math.floor(timeline.totalSeconds * FPS / 2),
+    ...timeline.panels.flatMap(panel => [Math.max(0, Math.ceil(panel.clockEndSeconds * FPS) - 1), Math.ceil(panel.clockEndSeconds * FPS)]), Number(final.nb_read_frames) - 1])].sort((a,b) => a-b);
   await run('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-nostdin', '-n', '-i', 'comparison.mp4',
     '-vf', `select='${frames.map(frame => `eq(n,${frame})`).join('+')}',scale=1280:500,tile=2x4`, '-frames:v', '1', 'review.png'], output);
   const metadata = { schemaVersion: 1, ...timeline, sources: ARMS.map(arm => `${arm}/video.mp4`),
-    sourceScope: 'Previously reviewed full browser recordings; no new model calls.',
+    sourceScope: timeline.taskAligned ? 'Fresh benchmark recordings with browser presentation timestamps; editing makes no additional model calls.' : 'Previously reviewed full browser recordings; no new model calls.',
     fullDecodePassed: true, final, sha256: sha(await readFile(join(output, 'comparison.mp4'))),
     files: { video: 'comparison.mp4', poster: 'poster.png', review: 'review.png' }, visualReviewRequired: true };
   await writeFile(join(output, 'comparison.json'), JSON.stringify(metadata, null, 2) + '\n', { flag: 'wx' });

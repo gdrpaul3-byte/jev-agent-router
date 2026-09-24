@@ -2,9 +2,33 @@
 
 [한국어](BROWSER-DEMO.ko.md)
 
-**Status: both measured tasks passed; all video frames were decoded and sampled frames were visually reviewed.** In this one-run-per-arm pilot, task time was 26.69 seconds for Astra and 12.71 seconds for JEV + Astra. See the [bilingual results and evidence](../benchmarks/results/browser-playwright-20260924/RESULTS.md).
+## Align the measured task starts
 
-## Watch both arms together
+Use `--task-clock` for a new comparison in which both panels start at the measured task's zero: after shared browser preparation and before the first model inference. The task ends after final fact extraction and validation. Both panels retain all inference and waiting time at 1× speed. The new pair's outcomes and API costs belong in its [separate results](../benchmarks/results/browser-task-aligned-20260924/RESULTS.md), with a [task-start-aligned comparison video](../benchmarks/results/browser-task-aligned-20260924/comparison/comparison.mp4). The earlier pilot's numbers below are not measurements of the new pair.
+
+This mode records raw JPEG frames and their browser presentation timestamps in `task-clock/manifest.json`, linked by hash from the run report. Playwright defines the callback timestamp as milliseconds since the Unix epoch at browser presentation. [Playwright screencast reference](https://playwright.dev/docs/api/class-screencast#screencast-start-option-on-frame).
+
+The task renderer verifies the manifest, selected JPEG hashes, task boundaries and clock consistency. At each 40 ms output step, it uses the latest browser frame presented at or before that task time. The result is a **25 fps sample-and-hold presentation**, not proof that the browser supplied 25 fresh frames every second. Frame timing has 40 ms quantization; the clip end rounds up by less than 40 ms. Preparation and cleanup are excluded from this task-only presentation but retained in the original recording and raw capture evidence. Each task timer stops at its measured completion; the shorter panel holds its final frame, and the composition adds a two-second tail after the longer clip.
+
+Record a fresh preflight and both paid arms using the `--task-clock` commands below. Then render each successful run into a new directory:
+
+```sh
+node -- benchmarks/render-task-clock-video.mjs "<run-directory>" "<new-output-directory>"
+```
+
+This writes `task.mp4` and `alignment.json`. Run `inspect-browser-video.mjs` on that `task.mp4` into another new directory, and visually inspect the resulting video and contact sheet. For each `astra/` and `jev/` publication folder, retain the matching run report, inspected `video.mp4` and `media.json`; add the generated alignment metadata as `media.taskAlignment`. Keep its manifest hash and measured duration unchanged. A replay-only clip must not receive task-alignment metadata. Then compose the reviewed pair:
+
+```sh
+node -- benchmarks/render-browser-comparison.mjs --root benchmarks/results/browser-task-aligned-20260924 --output-dir "<new-comparison-directory>" --font "<path-to-Korean-font>"
+```
+
+`ffmpeg`, `ffprobe` and an installed font with Korean glyphs are required for rendering and inspection. These file-only steps make no model calls; recording new benchmark arms incurs new API costs, reported separately from the earlier pilot. Keep original recordings, raw capture manifests and failed attempts for audit.
+
+## Earlier pilot: original recordings
+
+**Historical result: both measured tasks passed; all video frames were decoded and sampled frames were visually reviewed.** In the earlier one-run-per-arm pilot, task time was 26.69 seconds for Astra and 12.71 seconds for JEV + Astra. See its [bilingual results and evidence](../benchmarks/results/browser-playwright-20260924/RESULTS.md).
+
+### Watch the earlier clips together
 
 [Play the side-by-side comparison](../benchmarks/results/browser-playwright-20260924/comparison/comparison.mp4): **NO JEV — Astra** on the left and **WITH JEV — JEV + Astra** on the right. The complete original clips start together at replay zero and run at 1× speed. The moving counters show **video replay time**, while the measured task times are separate fixed labels. The exact task-start frame offsets are unknown, so this edit does not align task starts.
 
@@ -58,7 +82,7 @@ The values are local validation labels, not hints supplied to the extractor. The
 
 A successful ordinary path is expected to use **7 API requests per arm**: five action decisions, one completion decision, and one final extraction. This is an expectation, not a guaranteed request count. Every actual attempted request, including failure or a permitted replan, remains in the report.
 
-## Run from the repository root
+## Record new task-clock runs from the repository root
 
 Use Node.js 24+, the installed Chrome channel and the dependencies described in [installation](INSTALL.en.md). Keep keys in the private `.env`; the Astra arm requires OpenRouter and the JEV arm also requires TypeSafe. The commands below start the isolated browser; they do not reuse an existing personal tab.
 
@@ -73,17 +97,17 @@ This supplies Playwright's recording encoder; Chrome is already installed separa
 Create a new preflight directory and inspect its report:
 
 ```sh
-node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --preflight --output-dir benchmarks/results/browser-pilot-preflight
+node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --preflight --task-clock --output-dir benchmarks/results/browser-task-clock-preflight
 ```
 
 Then run each arm against that same preflight report, using a **new output directory for every attempt**:
 
 ```sh
-node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --arm astra --env-file .env --preflight-report benchmarks/results/browser-pilot-preflight/report.json --output-dir benchmarks/results/browser-pilot-astra-1
-node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --arm jev --env-file .env --preflight-report benchmarks/results/browser-pilot-preflight/report.json --output-dir benchmarks/results/browser-pilot-jev-1
+node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --arm astra --task-clock --env-file .env --preflight-report benchmarks/results/browser-task-clock-preflight/report.json --output-dir benchmarks/results/browser-task-clock-astra-1
+node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --arm jev --task-clock --env-file .env --preflight-report benchmarks/results/browser-task-clock-preflight/report.json --output-dir benchmarks/results/browser-task-clock-jev-1
 ```
 
-The CLI freezes the source hashes and protocol in the preflight evidence and uses that evidence for the paid run. Keep the exact configuration and source version with the results. Restart the CLI when code changes; do not compare a fresh module with an old persistent-runtime closure.
+The CLI freezes the source hashes and protocol in the preflight evidence and uses that evidence for the paid run. The preflight and both arms must all use `--task-clock`; an earlier preflight without this option is not interchangeable. Keep the exact configuration and source version with the results. Restart the CLI when code changes; do not compare a fresh module with an old persistent-runtime closure.
 
 The default limits are **$2 expected-cost budget and 10 requests per arm**. The request limit bounds attempted POSTs; the cost guard is not a provider-enforced prepaid balance cap. The live arms incur API costs. Stop and retain an unsuccessful attempt rather than resetting its state or silently retrying until it passes.
 
@@ -109,7 +133,7 @@ node -- benchmarks/inspect-browser-video.mjs path/to/recorded-video.webm benchma
 
 Inspect the contact sheet and actual playback manually. Pixel variation alone proves neither correct work nor privacy. Verify the expected pages and task outcome against the run report, and check for account information, unrelated content or private paths. Preserve failures and original recordings locally; publish only reviewed video and sanitized evidence. Do not publish `.env`, credentials, raw personal-browser snapshots or private manifests.
 
-## Measured results
+## Earlier pilot's measured results
 
 | Arm | Navigation + 3 facts | Task interval | Setup/navigation/cleanup | Actual requests | OpenRouter credits | JEV estimate | Reviewed video |
 |---|---|---|---|---|---|---|---|

@@ -1,0 +1,33 @@
+{
+  "recordedOn": "2026-09-24",
+  "selectedCompletedPair": [
+    "astra-1",
+    "jev-2"
+  ],
+  "attempts": [
+    {
+      "name": "Astra attempt 1 / 1차",
+      "report": "astra/report.json",
+      "status": "completed",
+      "requests": 7,
+      "accountedProviderUsd": 0.1423
+    },
+    {
+      "name": "JEV attempt 1 / 1차",
+      "report": "diagnostics/jev-1/report.json",
+      "status": "failed",
+      "requests": 4,
+      "accountedProviderUsd": 0.0007663740000000001
+    },
+    {
+      "name": "JEV attempt 2 / 2차",
+      "report": "jev/report.json",
+      "status": "completed",
+      "requests": 7,
+      "accountedProviderUsd": 0.018018600000000003
+    }
+  ],
+  "totalRequests": 18,
+  "totalAccountedProviderUsd": 0.161084974,
+  "preflightRequests": 0
+}

@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "comparisonHash": "61af19c68b09f1dc5b1e8cbdfde82a21b0b20ac898ea66530806d412e0339d28",
+  "fps": 25,
+  "width": 2560,
+  "height": 1000,
+  "totalSeconds": 47.96,
+  "panels": [
+    {
+      "arm": "astra",
+      "jevUsed": false,
+      "clipSeconds": 45.96,
+      "sourceFrames": 1149,
+      "measuredTaskSeconds": 45.9347533,
+      "providerUsd": 0.1423,
+      "clockEndSeconds": 45.9347533,
+      "sourceSha256": "0a236395428798e17d8c953f31afc5a51789fc85a7147472eb7418ab083bd29f",
+      "heldSeconds": 2
+    },
+    {
+      "arm": "jev",
+      "jevUsed": true,
+      "clipSeconds": 16.92,
+      "sourceFrames": 423,
+      "measuredTaskSeconds": 16.897057200000003,
+      "providerUsd": 0.018018600000000003,
+      "clockEndSeconds": 16.897057200000003,
+      "sourceSha256": "396caac25b2afdbf525daf8b0f56fb9815afba39d2e123464820512a4479da12",
+      "heldSeconds": 31.04
+    }
+  ],
+  "taskAligned": true,
+  "alignment": "Both t=0 points are the measured task start before initial model inference. Browser presentation timestamps map frames to this clock at 25fps.",
+  "clock": "Measured task elapsed seconds, capped at task completion including final extraction.",
+  "speed": 1,
+  "cuts": "Setup and cleanup excluded; entire measured task retained.",
+  "finalPresentationTailSeconds": 2,
+  "sources": [
+    "astra/video.mp4",
+    "jev/video.mp4"
+  ],
+  "sourceScope": "Fresh benchmark recordings with browser presentation timestamps; editing makes no additional model calls.",
+  "fullDecodePassed": true,
+  "final": {
+    "width": 2560,
+    "height": 1000,
+    "avg_frame_rate": "25/1",
+    "duration": "47.960000",
+    "nb_read_frames": "1199"
+  },
+  "sha256": "7109638e1acfec0c83bc81ce10b30cf4b41aeb1f4bb32d9eeba07863669df546",
+  "files": {
+    "video": "comparison.mp4",
+    "poster": "poster.png",
+    "review": "review.png"
+  },
+  "visualReviewRequired": true
+}

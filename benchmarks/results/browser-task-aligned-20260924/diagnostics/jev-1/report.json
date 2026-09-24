@@ -1,0 +1,432 @@
+{
+  "schemaVersion": 1,
+  "mode": "benchmark",
+  "arm": "jev",
+  "status": "failed",
+  "reason": "LOW_CONFIDENCE",
+  "label": "Actual model-selected browser task; fresh isolated headed Chrome",
+  "protocol": {
+    "schemaVersion": 1,
+    "browser": {
+      "channel": "chrome",
+      "headless": false,
+      "browserVersion": "153.0.8010.53",
+      "freshContext": true,
+      "viewport": {
+        "width": 1600,
+        "height": 900
+      },
+      "recordVideoSize": {
+        "width": 1600,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "locale": "ko-KR",
+      "timezoneId": "Asia/Seoul",
+      "actionTimeoutMs": 30000,
+      "navigationTimeoutMs": 30000,
+      "ignoreHTTPSErrors": false
+    },
+    "maxRequests": 10,
+    "budgetUsd": 2,
+    "plan": {
+      "goal": "화성의과학대학교 홈페이지에서 순서대로 (1) 총장 인사말 페이지를 방문하고, (2) 총장 프로필 페이지를 방문한 뒤, (3) 오시는 길 페이지로 이동하세요. 처음 홈페이지의 H 링크로 메뉴를 열고 총장 인사말 링크를 누르세요. 인사말 페이지의 총장 인사말 버튼으로 하위 메뉴를 열어 총장 프로필 링크를 누르세요. 프로필을 방문한 후 오시는 길 링크로 이동하세요. 마지막 페이지에서 대중교통 안내와 셔틀버스 탑승요금이 나타나면 완료입니다. 이미지로 제공된 인사말·프로필 내용은 읽었다고 주장하지 마세요. 텍스트·URL·방문 기록으로 현재 단계를 판단하고 앞 단계를 건너뛰지 마세요.",
+      "actions": [
+        {
+          "id": "openMainMenu",
+          "action": "click",
+          "description": "처음 홈페이지에서 총장 인사말 링크가 아직 안 보이면 H 메뉴를 연다",
+          "target": {
+            "roles": [
+              "link"
+            ],
+            "nameEquals": "H"
+          }
+        },
+        {
+          "id": "openGreeting",
+          "action": "click",
+          "description": "첫 방문 페이지인 총장 인사말로 이동한다",
+          "target": {
+            "roles": [
+              "link"
+            ],
+            "nameEquals": "총장 인사말"
+          }
+        },
+        {
+          "id": "openProfileMenu",
+          "action": "click",
+          "description": "총장 인사말 페이지에 도착한 뒤 총장 프로필 링크를 보기 위해 현재 페이지 제목 버튼으로 하위 메뉴를 연다",
+          "target": {
+            "roles": [
+              "button"
+            ],
+            "nameEquals": "총장 인사말"
+          }
+        },
+        {
+          "id": "openProfile",
+          "action": "click",
+          "description": "총장 인사말을 방문한 뒤 두 번째 페이지인 총장 프로필로 이동한다",
+          "target": {
+            "roles": [
+              "link"
+            ],
+            "nameEquals": "총장 프로필"
+          }
+        },
+        {
+          "id": "openDirections",
+          "action": "click",
+          "description": "총장 인사말과 총장 프로필을 순서대로 방문한 뒤 마지막 오시는 길로 이동한다",
+          "target": {
+            "roles": [
+              "link"
+            ],
+            "nameEquals": "오시는 길"
+          }
+        }
+      ],
+      "completion": {
+        "urlIncludes": "/web/contents/HSMU10401000.do",
+        "textIncludes": [
+          "대중교통 이용 시",
+          "탑승요금"
+        ]
+      },
+      "allowedOrigins": [
+        "https://www.hsmu.ac.kr"
+      ],
+      "maxSteps": 8,
+      "maxDurationMs": 240000,
+      "verificationTimeoutMs": 30000,
+      "maxStaleReplans": 2
+    },
+    "expectedFacts": {
+      "seoulStationBus": "5101",
+      "mainPhone": "031-369-9100~1",
+      "shuttleFare": "무료"
+    },
+    "preparation": "Close up to eight freshly observed homepage promotional popup close links before the task timer; record all preparation.",
+    "target": "playwright-dom-with-coherent-visible-headings",
+    "taskClock": {
+      "enabled": true,
+      "api": "page.screencast.start.onFrame",
+      "timestampBasis": "browser-presentation-unix-epoch-ms",
+      "size": {
+        "width": 1600,
+        "height": 900
+      },
+      "quality": 90,
+      "maxClockDriftMs": 50,
+      "taskStart": "Before inference budget creation and task runner; after preparation and ready observation.",
+      "taskEnd": "After task runner including final extraction; before screenshot and capture shutdown.",
+      "initialObservation": "Retry only incoherent read-only preparation snapshots, up to 20 attempts or 5 seconds; no click or model retry."
+    },
+    "models": {
+      "astra": "openai/gpt-6-astra",
+      "jev": "jev-1.13.0",
+      "finalExtraction": "openai/gpt-6-astra"
+    },
+    "sourceHashes": {
+      "benchmarks/record-hsmu-playwright.mjs": "34fb30b4461e6a79baa990ba48ff5b9d819e5c460492fbbba364de2f288dd07d",
+      "benchmarks/hsmu-browser-setup.mjs": "140b52a8711419b3f44b8c07071fed46ecbdd958c3d808008eb3409f668a0674",
+      "benchmarks/hsmu-browser-compare.mjs": "0df663a14df6bcbf6182d7ad873b26aa8691c54958de6ef7f498a8210ba5edce",
+      "benchmarks/browser-llm-decider.mjs": "362155eb8952f229c2ea1318a3ac8733f540513cd55fa4973b21877cf0ee4fc0",
+      "src/playwright.mjs": "98951da306d325725c0d6022319f004dbc6658d55e217258ad5a9fce4d0e4e70",
+      "src/goal.mjs": "64f35d5740451d02b45a288af3b55fc0eb9a1e0cf9d886099b11055187b50d80",
+      "src/decider.mjs": "ea6a729a1315109b8750f53cfd0d7ba152040d2f674110ea20ee15d189671d6b",
+      "src/observation.mjs": "ece78d470a4ccc2a700bff0b49476ef3e230e466c0b40494c6885c2bb7beee25",
+      "src/cua.mjs": "3150ed8cf7ec0476d44ff7602a0eb91e41790a498e733d43bd0da45ce4c4fb46",
+      "src/structured-llm.mjs": "abe1c6aa6bfcdac6dfc2bd5c48de3efa54a9731ae5456e650fe22aa54505bbc1",
+      "src/inference-budget.mjs": "b9ec71c09fdd6fc6a4fc985f3049c14b31427856b9954e283a1c2cdebe420d7d",
+      "benchmarks/task-clock-capture.mjs": "393fe20b8a8ee06b2aeb8a9c287ba0d20b47a62345740e9e4fdf8ab70926dc51"
+    },
+    "comparisonHash": "61af19c68b09f1dc5b1e8cbdfde82a21b0b20ac898ea66530806d412e0339d28",
+    "runHash": "f6780cb8a2705c3f64005c9893ca071c4e8c315623f4d639739cb64ab304c7c2"
+  },
+  "requests": 4,
+  "result": {
+    "schemaVersion": 1,
+    "status": "needs_host",
+    "arm": "jev",
+    "passed": false,
+    "reason": "LOW_CONFIDENCE",
+    "navigation": {
+      "status": "needs_host",
+      "reason": "LOW_CONFIDENCE",
+      "completedSteps": 3,
+      "durationMs": 8601.7727,
+      "metrics": {
+        "observations": 7,
+        "observationMs": 952.4969999999958,
+        "decisions": 4,
+        "decisionMs": 2723.6388000000024,
+        "actions": 3,
+        "actionMs": 4918.135599999994,
+        "staleReplans": 0
+      },
+      "replans": [],
+      "steps": [
+        {
+          "index": 0,
+          "actionId": "openMainMenu",
+          "ref": 2,
+          "status": "observed_after_action",
+          "actionMs": 280.53309999999874
+        },
+        {
+          "index": 1,
+          "actionId": "openGreeting",
+          "ref": 5,
+          "status": "observed_after_action",
+          "actionMs": 4111.569699999998
+        },
+        {
+          "index": 2,
+          "actionId": "openProfileMenu",
+          "ref": 208,
+          "status": "observed_after_action",
+          "actionMs": 526.0327999999972
+        }
+      ]
+    },
+    "visits": [
+      {
+        "id": "greeting",
+        "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+        "urlVerified": true,
+        "headingVerified": true,
+        "observedOrder": 1
+      },
+      {
+        "id": "profile",
+        "url": "https://www.hsmu.ac.kr/web/contents/HSMU10502000.do",
+        "urlVerified": false,
+        "headingVerified": false,
+        "observedOrder": null
+      },
+      {
+        "id": "directions",
+        "url": "https://www.hsmu.ac.kr/web/contents/HSMU10401000.do",
+        "urlVerified": false,
+        "headingVerified": false,
+        "observedOrder": null
+      }
+    ],
+    "validation": {
+      "initialHomeVerified": true,
+      "visitedInOrder": false,
+      "facts": {
+        "seoulStationBus": false,
+        "mainPhone": false,
+        "shuttleFare": false
+      },
+      "imageContentsRead": false
+    },
+    "facts": null,
+    "sourceUrl": null,
+    "extraction": null,
+    "decisionStats": {
+      "calls": 4,
+      "inputTokens": 18247,
+      "lastLatencyMs": 239.8640000000014,
+      "errors": 1
+    },
+    "decisionAttempts": [],
+    "timings": {
+      "totalMs": 8605.200700000001,
+      "navigationMs": 8601.7727,
+      "extractionMs": 0
+    },
+    "requests": 4,
+    "requestEvidence": [
+      {
+        "index": 1,
+        "model": "jev-1.13.0",
+        "requestBytes": 12516,
+        "reservedUsd": 0.0008697360000000001,
+        "estimatedProviderUsd": 0.000176274,
+        "reportedProviderUsd": null,
+        "upstreamInferenceCostUsd": null,
+        "isByok": null,
+        "costComplete": true,
+        "httpStatus": 200,
+        "latencyMs": 1547.6687000000002,
+        "error": null
+      },
+      {
+        "index": 2,
+        "model": "jev-1.13.0",
+        "requestBytes": 14255,
+        "reservedUsd": 0.0009427740000000001,
+        "estimatedProviderUsd": 0.000212226,
+        "reportedProviderUsd": null,
+        "upstreamInferenceCostUsd": null,
+        "isByok": null,
+        "costComplete": true,
+        "httpStatus": 200,
+        "latencyMs": 249.3884999999991,
+        "error": null
+      },
+      {
+        "index": 3,
+        "model": "jev-1.13.0",
+        "requestBytes": 12926,
+        "reservedUsd": 0.000886956,
+        "estimatedProviderUsd": 0.00018215400000000002,
+        "reportedProviderUsd": null,
+        "upstreamInferenceCostUsd": null,
+        "isByok": null,
+        "costComplete": true,
+        "httpStatus": 200,
+        "latencyMs": 661.018500000002,
+        "error": null
+      },
+      {
+        "index": 4,
+        "model": "jev-1.13.0",
+        "requestBytes": 13609,
+        "reservedUsd": 0.000915642,
+        "estimatedProviderUsd": 0.00019572,
+        "reportedProviderUsd": null,
+        "upstreamInferenceCostUsd": null,
+        "isByok": null,
+        "costComplete": true,
+        "httpStatus": 200,
+        "latencyMs": 237.40179999999964,
+        "error": null
+      }
+    ],
+    "cost": {
+      "complete": true,
+      "estimatedProviderUsd": 0.0007663740000000001,
+      "reportedProviderUsd": 0,
+      "knownUsageUsd": 0.0007663740000000001,
+      "accountedProviderUsd": 0.0007663740000000001,
+      "cashChargeUsd": null,
+      "scope": "JEV list-price estimate plus OpenRouter credit charge; upstream cost is not added; excludes host inference, fees and tax."
+    },
+    "globalAccounting": {
+      "requests": 4,
+      "maxRequests": 10,
+      "budgetUsd": 2,
+      "hardPrepaidCap": false,
+      "accountedProviderUsd": 0.0007663740000000001,
+      "knownUsageUsd": 0.0007663740000000001,
+      "estimatedProviderUsd": 0.0007663740000000001,
+      "reportedProviderUsd": 0,
+      "complete": true,
+      "blockedReason": null,
+      "cashChargeUsd": null,
+      "pricingVerifiedOn": "2026-09-24",
+      "scope": "OpenRouter reported credit charge plus JEV input list-price estimate; excludes funding fees, tax and host inference"
+    }
+  },
+  "verification": null,
+  "preparation": {
+    "closedPopupIds": [
+      "pop_175",
+      "pop_172",
+      "pop_199",
+      "pop_200"
+    ],
+    "modelRequests": 0,
+    "includedInTaskTimer": false
+  },
+  "events": [
+    {
+      "stage": "launching",
+      "elapsedMs": 665.2275999999999
+    },
+    {
+      "stage": "preparation-popup-close",
+      "elapsedMs": 9897.7286,
+      "popupId": "pop_175",
+      "count": 1
+    },
+    {
+      "stage": "preparation-popup-close",
+      "elapsedMs": 10194.3624,
+      "popupId": "pop_172",
+      "count": 2
+    },
+    {
+      "stage": "preparation-popup-close",
+      "elapsedMs": 10313.361299999999,
+      "popupId": "pop_199",
+      "count": 3
+    },
+    {
+      "stage": "preparation-popup-close",
+      "elapsedMs": 10377.2996,
+      "popupId": "pop_200",
+      "count": 4
+    },
+    {
+      "stage": "ready",
+      "elapsedMs": 10557.881599999999,
+      "mode": "benchmark",
+      "arm": "jev"
+    },
+    {
+      "stage": "task-start",
+      "elapsedMs": 10559.7794
+    },
+    {
+      "stage": "browser-action",
+      "elapsedMs": 12997.7968
+    },
+    {
+      "stage": "browser-action",
+      "elapsedMs": 17498.144900000003
+    },
+    {
+      "stage": "browser-action",
+      "elapsedMs": 18850.7023
+    },
+    {
+      "stage": "task-finish",
+      "elapsedMs": 19166.8501,
+      "passed": false,
+      "requests": 4
+    }
+  ],
+  "taskClock": {
+    "file": "task-clock/manifest.json",
+    "sha256": "e9ec702e4bdd606468f150aee1c52e318857506cb84239fdf4a8b48fb29c3eb3",
+    "status": "aligned",
+    "reason": null,
+    "taskStart": {
+      "wallTimeMs": 1790237545742,
+      "monotonicMs": 10652.8648
+    },
+    "taskEnd": {
+      "wallTimeMs": 1790237554350,
+      "monotonicMs": 19261.3609
+    },
+    "durationMs": 8608.4961,
+    "clockDriftMs": 0.49610000000029686,
+    "frameCount": 105
+  },
+  "timing": {
+    "clock": "monotonic performance.now",
+    "setupMs": 10558.317799999999,
+    "cleanupMs": 9380.968,
+    "totalMs": 28547.7819,
+    "taskDurationMs": 8608.4961,
+    "taskStartOffsetMs": 8230.021799999999,
+    "taskEndOffsetMs": 16838.5179,
+    "contextCloseOffsetMs": 20086.104499999998,
+    "pageCreationDurationMs": 927.8154999999999,
+    "offsetBasis": "Estimates from newPage completion, not decoded video timestamps; first-frame encoding offset is unknown."
+  },
+  "video": {
+    "saved": true,
+    "file": "recording.webm",
+    "width": 1600,
+    "height": 900,
+    "originalUntrimmed": true
+  }
+}

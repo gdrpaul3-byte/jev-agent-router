@@ -2,9 +2,33 @@
 
 [English](BROWSER-DEMO.en.md)
 
-**현재 상태: 양쪽 측정 업무가 통과했고, 영상 모든 프레임을 디코딩한 뒤 표본 프레임을 시각 검토했습니다.** 방식별 한 번의 파일럿에서 업무 시간은 Astra 26.69초, JEV + Astra 12.71초였습니다. [영문·국문 결과와 근거](../benchmarks/results/browser-playwright-20260924/RESULTS.md)를 참고하세요.
+## 실측 업무 시작점을 맞춰 비교하기
 
-## 두 방식을 함께 보기
+새 비교에는 `--task-clock`을 사용합니다. 양쪽의 0초를 공통 브라우저 준비가 끝나고 첫 모델 추론이 시작되기 전의 실측 업무 시작점에 맞춥니다. 최종 사실 추출·검증 뒤에 업무가 끝나며, 그 사이 추론과 대기 시간을 모두 1배속으로 유지합니다. 새 실행의 성공 여부·API 비용은 [별도 결과](../benchmarks/results/browser-task-aligned-20260924/RESULTS.md)와 [업무 시작점을 맞춘 비교 영상](../benchmarks/results/browser-task-aligned-20260924/comparison/comparison.mp4)에서 확인합니다. 아래에 보존한 이전 파일럿 수치는 새 실행의 측정값이 아닙니다.
+
+이 모드는 원본 JPEG 프레임과 브라우저가 해당 화면을 표시한 시각을 `task-clock/manifest.json`에 기록하고, 실행 보고서가 그 해시를 참조합니다. Playwright는 콜백의 타임스탬프를 브라우저 표시 시점의 Unix epoch 기준 밀리초로 정의합니다. [Playwright screencast 공식 문서](https://playwright.dev/docs/api/class-screencast#screencast-start-option-on-frame).
+
+업무 영상 렌더러는 매니페스트, 선택된 JPEG 해시, 업무 시작·종료 시각과 시계 일관성을 검사합니다. 출력의 매 40ms 지점마다 그 업무 시각 이전에 마지막으로 표시된 브라우저 프레임을 사용합니다. 따라서 **표본 프레임을 유지해 만든 25fps 영상**이며, 브라우저가 매초 서로 다른 화면 25개를 연속 제공했다는 뜻은 아닙니다. 화면 시간은 40ms 단위로 표현하고 영상 끝은 40ms 미만만큼 올림됩니다. 준비·정리는 업무 비교 영상에서 제외하지만 원본 녹화와 원시 캡처 근거에 보존합니다. 각 타이머는 실측 업무 종료 때 멈추고, 짧은 쪽은 마지막 화면을 유지합니다. 긴 쪽까지 끝난 뒤 양쪽 화면을 2초 더 보여줍니다.
+
+아래의 `--task-clock` 명령으로 새 사전 검사와 양쪽 유료 실행을 기록한 다음, 성공한 실행을 각각 새 디렉터리에 렌더링합니다.
+
+```sh
+node -- benchmarks/render-task-clock-video.mjs "<run-directory>" "<new-output-directory>"
+```
+
+이 명령은 `task.mp4`와 `alignment.json`을 만듭니다. 해당 `task.mp4`에 `inspect-browser-video.mjs`를 실행해 또 다른 새 디렉터리에 검사 결과를 만들고, 완성 영상과 모음 이미지를 눈으로 확인합니다. 공개용 `astra/`·`jev/` 폴더에는 해당 실행 보고서, 검사된 `video.mp4`·`media.json`을 보존하고, 생성된 정렬 메타데이터를 `media.taskAlignment`에 넣습니다. 매니페스트 해시와 실측 시간은 바꾸지 않습니다. 단순 재생 영상에 업무 정렬 메타데이터를 붙이면 안 됩니다. 검토를 마친 양쪽 영상을 다음과 같이 합칩니다.
+
+```sh
+node -- benchmarks/render-browser-comparison.mjs --root benchmarks/results/browser-task-aligned-20260924 --output-dir "<new-comparison-directory>" --font "<path-to-Korean-font>"
+```
+
+렌더링·검사에는 `ffmpeg`·`ffprobe`와 설치된 한글 지원 글꼴이 필요합니다. 이 파일 처리 과정은 모델을 호출하지 않습니다. 새 벤치마크 실행에는 새 API 비용이 발생하므로 이전 파일럿과 별도로 보고합니다. 원본 녹화, 원시 캡처 매니페스트, 실패한 시도도 검토 근거로 보존합니다.
+
+## 이전 파일럿: 원본 녹화
+
+**이전 결과: 양쪽 측정 업무가 통과했고, 영상 모든 프레임을 디코딩한 뒤 표본 프레임을 시각 검토했습니다.** 방식별 한 번의 이전 파일럿에서 업무 시간은 Astra 26.69초, JEV + Astra 12.71초였습니다. 해당 실행의 [영문·국문 결과와 근거](../benchmarks/results/browser-playwright-20260924/RESULTS.md)를 참고하세요.
+
+### 이전 영상을 함께 보기
 
 [나란히 동시 비교 영상 재생](../benchmarks/results/browser-playwright-20260924/comparison/comparison.mp4): 왼쪽은 **JEV 미사용 — Astra**, 오른쪽은 **JEV 사용 — JEV + Astra**입니다. 원본 영상 전체가 재생 0초부터 함께 시작하고 1배속으로 진행합니다. 움직이는 초 표시는 **영상 재생 시간**이며, 실측 업무 시간은 별도의 고정 수치로 표시합니다. 영상에서 업무가 시작된 정확한 프레임 시차는 알 수 없으므로 업무 시작점을 맞춘 편집은 아닙니다.
 
@@ -58,7 +82,7 @@ node -- benchmarks/render-browser-comparison.mjs --root benchmarks/results/brows
 
 일반적인 성공 경로의 예상 API 호출은 **방식별 7회**입니다. 행동 선택 5회, 완료 판단 1회, 최종 추출 1회입니다. 보장되는 호출 수는 아니며 실패나 허용된 재계획을 포함한 실제 시도는 모두 보고서에 남깁니다.
 
-## 저장소 루트에서 실행
+## 저장소 루트에서 새 업무 시계 실행 기록
 
 Node.js 24 이상, 설치된 Chrome 채널, [설치 방법](INSTALL.ko.md)에 안내된 의존성이 필요합니다. 키는 비공개 `.env`에 둡니다. Astra 방식은 OpenRouter 키가 필요하고 JEV 방식은 TypeSafe 키도 필요합니다. 아래 명령은 독립 브라우저를 시작하며 기존 개인 탭을 재사용하지 않습니다.
 
@@ -73,17 +97,17 @@ npx playwright-core install ffmpeg
 새 사전 검사 디렉터리를 만들고 보고서를 확인합니다.
 
 ```sh
-node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --preflight --output-dir benchmarks/results/browser-pilot-preflight
+node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --preflight --task-clock --output-dir benchmarks/results/browser-task-clock-preflight
 ```
 
 같은 사전 검사 보고서를 사용하되, **각 시도마다 새 출력 디렉터리**를 지정합니다.
 
 ```sh
-node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --arm astra --env-file .env --preflight-report benchmarks/results/browser-pilot-preflight/report.json --output-dir benchmarks/results/browser-pilot-astra-1
-node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --arm jev --env-file .env --preflight-report benchmarks/results/browser-pilot-preflight/report.json --output-dir benchmarks/results/browser-pilot-jev-1
+node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --arm astra --task-clock --env-file .env --preflight-report benchmarks/results/browser-task-clock-preflight/report.json --output-dir benchmarks/results/browser-task-clock-astra-1
+node --use-system-ca -- benchmarks/record-hsmu-playwright.mjs --arm jev --task-clock --env-file .env --preflight-report benchmarks/results/browser-task-clock-preflight/report.json --output-dir benchmarks/results/browser-task-clock-jev-1
 ```
 
-CLI는 소스 해시와 프로토콜을 사전 검사 근거로 확정하고 유료 실행에 사용합니다. 정확한 설정·소스 버전을 결과와 함께 보존합니다. 코드가 바뀌면 CLI를 새로 시작하며, 새 모듈과 이전 영속 런타임의 클로저를 섞어서 비교하지 않습니다.
+CLI는 소스 해시와 프로토콜을 사전 검사 근거로 확정하고 유료 실행에 사용합니다. 사전 검사와 양쪽 방식에 모두 `--task-clock`을 지정해야 하며, 이 옵션 없이 만든 이전 사전 검사로 대체하지 않습니다. 정확한 설정·소스 버전을 결과와 함께 보존합니다. 코드가 바뀌면 CLI를 새로 시작하며, 새 모듈과 이전 영속 런타임의 클로저를 섞어서 비교하지 않습니다.
 
 기본 한도는 **방식별 예상 비용 $2, 요청 10회**입니다. 요청 한도는 시도한 POST를 제한하지만, 비용 검사는 공급자가 강제하는 선불 잔액 한도가 아닙니다. 실제 방식 실행에는 API 비용이 발생합니다. 실패하면 그 시도를 보존하고, 통과할 때까지 상태를 초기화하거나 조용히 재시도하지 않습니다.
 
@@ -109,7 +133,7 @@ node -- benchmarks/inspect-browser-video.mjs path/to/recorded-video.webm benchma
 
 모음 이미지와 실제 재생 화면을 직접 확인합니다. 픽셀 차이만으로 작업 성공이나 개인정보 보호가 입증되지는 않습니다. 실행 보고서와 대조하여 올바른 페이지·업무 결과인지 확인하고, 계정 정보·무관한 내용·개인 경로가 보이지 않는지 검사합니다. 실패와 원본 영상은 로컬에 보존하고, 검토한 영상과 정제한 근거만 공개합니다. `.env`, 키, 개인 브라우저 원본 스냅샷, 비공개 메타데이터는 공개하지 않습니다.
 
-## 실측 결과
+## 이전 파일럿의 실측 결과
 
 | 방식 | 이동·사실 3개 | 업무 시간 | 준비·최초 이동·정리 | 실제 요청 | OpenRouter 크레딧 | JEV 추정 | 검토된 영상 |
 |---|---|---|---|---|---|---|---|

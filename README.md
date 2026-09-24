@@ -19,24 +19,24 @@ This is a local Node.js runtime with optional host skills, not a replacement for
 
 ## Actual Chrome task recordings / 실제 Chrome 작업 영상
 
-On 2026-09-24, **both approaches completed five model-selected clicks, visited three university pages in order, and correctly extracted all three requested facts**. These are actual Chrome viewport recordings from fresh isolated contexts, not a dashboard animation. Each approach made seven paid API requests and used Astra for final extraction.
+**Actual task starts aligned:** left **NO JEV — Astra**, right **WITH JEV — JEV + Astra**. Both timers start before the first model decision and include all waiting and final extraction. These are fresh recordings made on 2026-09-24, presented at 1× with 40 ms frame quantization.
 
-| Approach / 방식 | Task incl. extraction / 추출 포함 업무 | Including setup and cleanup / 준비·종료 포함 | Accounted provider cost / 공급자 비용 |
-| --- | ---: | ---: | ---: |
-| Astra + Astra | 26.69 s | 37.86 s | $0.14240000 |
-| JEV + Astra | 12.71 s | 24.97 s | $0.01801461 |
+**실제 업무 시작점을 0초로 맞췄습니다.** 왼쪽은 JEV 미사용, 오른쪽은 JEV 사용입니다. 첫 판단 전부터 마지막 추출까지 포함하고, 완료된 쪽의 시계만 멈춥니다. 준비·정리는 별도이며 영상 표시 단위는 0.04초입니다.
 
-[▶ Play side-by-side / 나란히 동시 재생](benchmarks/results/browser-playwright-20260924/comparison/comparison.mp4) · [Reports and original videos / 결과와 원본 영상](benchmarks/results/browser-playwright-20260924/RESULTS.md) · [Reproduce](docs/BROWSER-DEMO.en.md) · [재현 방법](docs/BROWSER-DEMO.ko.md)
+[▶ Play aligned comparison / 업무 시작 정렬 영상](benchmarks/results/browser-task-aligned-20260924/comparison/comparison.mp4) · [All attempts, cost and original videos / 모든 시도·비용·원본](benchmarks/results/browser-task-aligned-20260924/RESULTS.md) · [Reproduce](docs/BROWSER-DEMO.en.md) · [재현 방법](docs/BROWSER-DEMO.ko.md)
 
-[![Play both recordings together: NO JEV on the left, WITH JEV on the right / 두 영상 동시 재생](benchmarks/results/browser-playwright-20260924/comparison/poster.png)](benchmarks/results/browser-playwright-20260924/comparison/comparison.mp4)
+[![Task start aligned: NO JEV / WITH JEV](benchmarks/results/browser-task-aligned-20260924/comparison/poster.png)](benchmarks/results/browser-task-aligned-20260924/comparison/comparison.mp4)
 
-**One video, one play button:** left = **NO JEV**, right = **WITH JEV**. The top counters show replay seconds; separately measured task times and API costs stay visible. Both full clips start together at 1×. At each clip's end its counter stops and the final frame is held with an explicit label. The edit ends with a two-second presentation tail. Exact task-start frame alignment is unknown.
+| Completed run / 완주 실행 | JEV used? / JEV 사용? | Task / 업무 | Full run / 준비·정리 포함 | Provider cost / 비용 |
+|---|---|---:|---:|---:|
+| Astra attempt 1 / 1차 | No / 미사용 | 45.93 s | 85.52 s | $0.14230000 |
+| JEV attempt 2 / 2차 + Astra | Yes / 사용 | 16.90 s | 52.00 s | $0.01801860 |
 
-**하나의 영상으로 동시에 재생됩니다.** 왼쪽은 **JEV 미사용**, 오른쪽은 **JEV 사용**입니다. 위쪽에는 재생 경과 초와 별도 실측 업무 시간·비용을 표시합니다. 원본의 처음부터 1배속으로 함께 재생하고, 먼저 끝난 쪽은 종료 표시와 함께 마지막 화면을 유지합니다. 마지막에는 2초간 결과 화면을 유지합니다. 재생 초는 실제 업무 시작 시점에 맞춘 초시계가 아닙니다.
+**Attempt outcomes: Astra 1/1 completed, JEV 1/2 completed.** JEV's first attempt stopped at LOW_CONFIDENCE; the video selects the two completed runs. All 18 new requests, including failure, cost **$0.161084974** on the recorded provider accounting basis. This bounded pilot does not establish general speed or reliability. OpenRouter-reported costs and JEV token-price estimates exclude host inference, fees and tax.
 
-In this **one-run-per-arm pilot**, JEV + Astra took 52.4% less task time and used 87.3% less accounted provider cost. This is a bounded, host-authored route, not a general browser-agent benchmark. Cost combines OpenRouter-reported credits with JEV's input-token list-price estimate; final extraction is included, host inference and fees are excluded. Full videos retain initial loading, popup preparation and waits at 1× speed. All frames were decoded and sampled frames were visually checked. Earlier failures and their $0.849577356 cost remain in the [diagnostic ledger](benchmarks/results/browser-playwright-20260924/diagnostics/summary.json).
+**완주 횟수는 Astra 1/1, JEV 1/2입니다.** JEV 1차는 확신도 부족으로 중단됐으며, 영상에는 완주한 두 실행을 사용했습니다. 실패분을 포함한 새 호출 18회의 비용은 **$0.161084974**입니다. 이전 파일럿의 수치와 섞지 않았고, 이 소규모 결과를 일반적인 우위로 해석하지 않습니다.
 
-**이번 실제 브라우저 재시험은 양쪽 모두 성공했습니다.** 방식별 1회 측정에서 JEV+Astra의 업무 시간이 52.4%, 공급자 비용이 87.3% 작았습니다. 준비·종료까지 포함한 시간은 표의 별도 열로 공개합니다. 개인 Chrome 탭 대신 새 테스트 창을 사용했고, 영상은 배속·구간 삭제 없이 실제 로딩과 팝업 정리도 포함합니다. 이 결과를 모든 사이트·업무의 우위로 일반화하지 않습니다. 이전 검은 영상과 실행 실패의 기록·비용도 별도로 보존했습니다.
+[Earlier pilot and replay-only comparison / 이전 파일럿·재생 시작 정렬 영상](benchmarks/results/browser-playwright-20260924/RESULTS.md) remain available unchanged.
 
 ## Measured synthetic workflow comparison
 
@@ -56,7 +56,7 @@ There were **12 fresh workflows, 6 exact replays, and 36 actual POST requests**.
 
 The one strict failure was a final-step citation-set mismatch. An independent agent review found that the supplied citations supported that step, but the **frozen score remains 11/12 strict, 12/12 core**. The fixtures are agent-authored development cases, not a human-validated benchmark. See the [full conditions](benchmarks/results/complex-missions-v1/RESULTS.md), [interpretation](benchmarks/results/complex-missions-v1/INTERPRETATION.md), [frozen manifest](benchmarks/results/complex-missions-v1/report.json.manifest.json), and [verification record](benchmarks/results/complex-missions-v1/verification.json).
 
-Current release verification: **780 automated tests passed, zero failures**. The original synthetic run records 718 tests before inference and 722 after the first router refinements. Run `npm run test:all` to verify your installed revision.
+Current release verification: **794 automated tests passed, zero failures**. The original synthetic run records 718 tests before inference and 722 after the first router refinements. Run `npm run test:all` to verify your installed revision.
 
 A read-only live progress dashboard and bilingual recording instructions are included. The synthetic results above come from their preserved API report; the real Chrome recordings are a separate experiment linked earlier in this README.
 

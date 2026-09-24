@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-09-24T07:51:53.234Z",
+  "createdAt": "2026-09-24T08:21:25.877Z",
   "scope": "Reviewed allowlisted package; local secret values and personal paths checked; keys and state excluded.",
   "files": [
     {
@@ -144,8 +144,8 @@
     },
     {
       "path": "benchmarks/record-hsmu-playwright.mjs",
-      "bytes": 18336,
-      "sha256": "3a7ace8518c2c6bc89bb239aead2ee76d91598eeeb2d26ed1a795cea148320c7"
+      "bytes": 21773,
+      "sha256": "34fb30b4461e6a79baa990ba48ff5b9d819e5c460492fbbba364de2f288dd07d"
     },
     {
       "path": "benchmarks/record-window.mjs",
@@ -154,8 +154,8 @@
     },
     {
       "path": "benchmarks/render-browser-comparison.mjs",
-      "bytes": 9794,
-      "sha256": "e4f1726f6b5867a93a355171e94c861203b0a27fac7502a8494616852d73d76c"
+      "bytes": 11759,
+      "sha256": "258f66dc4c6dc048fb3b38b333a0f8db9b479975df500ae913622cadf891a8e8"
     },
     {
       "path": "benchmarks/render-complex-results.mjs",
@@ -176,6 +176,11 @@
       "path": "benchmarks/render-screenshot-video.mjs",
       "bytes": 8500,
       "sha256": "25f5d6a8cc79273270759926a06179167d009381e2a5b1ea1002af5b8b83bfa6"
+    },
+    {
+      "path": "benchmarks/render-task-clock-video.mjs",
+      "bytes": 6709,
+      "sha256": "4e65fa029a3154f9cd287a39877cd5ca11a50e668a746f9d2366de7c693f8ebe"
     },
     {
       "path": "benchmarks/results/browser-playwright-20260924/astra/contact-sheet.png",
@@ -358,6 +363,151 @@
       "sha256": "1f2a6f0d6822545faefd07ebf9b706c12281de48e51e39c48dde8d3243c3372a"
     },
     {
+      "path": "benchmarks/results/browser-task-aligned-20260924/accounting.json",
+      "bytes": 770,
+      "sha256": "d489d6cadb67472f6007a41ea51e27f9fe0047b3690236d4210a06769d61943a"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/astra/contact-sheet.png",
+      "bytes": 393948,
+      "sha256": "e76ef2177c72095ecbd6edc58c69a1aba7763b8e27175e33daa2b41f674bafaa"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/astra/media.json",
+      "bytes": 53368,
+      "sha256": "3287643eb0d64671970209e9bbe599b5970ea54288cc4ce1127143edbce7dc9d"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/astra/original.webm",
+      "bytes": 4062155,
+      "sha256": "c7171fa15d3c52d64aa95e4687b6e4928ca6bcdfe386bb85e85659d0c05c87ba"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/astra/poster.png",
+      "bytes": 150729,
+      "sha256": "49e562a6cfb2d36db09de239f07fca4295d442bfce2e48ae92ada8585eecf0bf"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/astra/protocol.json",
+      "bytes": 5760,
+      "sha256": "062fee01f3d0ec6e8fb86e0ffffe727c0eeab3a5e35980833228b10958bcaeb2"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/astra/report.json",
+      "bytes": 22574,
+      "sha256": "ea67abc39182d85b250075652b4c3e262e81bf9b7366ed0cbe9169be8ecf2db5"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/astra/task-clock/manifest.json",
+      "bytes": 38067,
+      "sha256": "7859f6f5db77def052169430eb4e7796fa8e21e549300abadadd88f44dda6469"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/astra/video.mp4",
+      "bytes": 954312,
+      "sha256": "0a236395428798e17d8c953f31afc5a51789fc85a7147472eb7418ab083bd29f"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/comparison/comparison.json",
+      "bytes": 1888,
+      "sha256": "9e0a3f28a574f3a1225b86a64d09f597a5ab890dd2abf2d65ab9b1ea4fbfba7f"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/comparison/comparison.mp4",
+      "bytes": 2078418,
+      "sha256": "7109638e1acfec0c83bc81ce10b30cf4b41aeb1f4bb32d9eeba07863669df546"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/comparison/poster.png",
+      "bytes": 704081,
+      "sha256": "58387485d14518c89169e1fdc782c9ebcb9f975897dd9b298e7ca3fa13b10133"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/comparison/review.png",
+      "bytes": 1309129,
+      "sha256": "3739a820e5f70e35d9cd1e6b94d79188dd5f0778db67890f7860f45c93f134b2"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/diagnostics/jev-1/original.webm",
+      "bytes": 1303065,
+      "sha256": "fbda074fc95a1f2c6181a12453cbc70c0912f52315adac01743c49b727154bda"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/diagnostics/jev-1/protocol.json",
+      "bytes": 5760,
+      "sha256": "6022e9e7ce3a626ecf23bf52bc55484a7c16ae6f7619f5f50bd84330fc54435b"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/diagnostics/jev-1/report.json",
+      "bytes": 13767,
+      "sha256": "953a67c62ee127531d1dd1f13888a8737b7296438ddd333456b42f467f758e74"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/diagnostics/jev-1/task-clock/manifest.json",
+      "bytes": 24139,
+      "sha256": "e9ec702e4bdd606468f150aee1c52e318857506cb84239fdf4a8b48fb29c3eb3"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/jev/contact-sheet.png",
+      "bytes": 271863,
+      "sha256": "a9383a60045fbd3e41ac08b866839dd555d29bc739beb7081d3d162e27059578"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/jev/media.json",
+      "bytes": 50440,
+      "sha256": "6cc3fd60fc49af1f66b512df7a0344001352c2d879b1a8506cc09f92ed486b19"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/jev/original.webm",
+      "bytes": 2598602,
+      "sha256": "e8a0217e76c5c94f1faa5a4310c46e48cc13c279b9df4b484c7084829553b58d"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/jev/poster.png",
+      "bytes": 151747,
+      "sha256": "c860501de0a8f5532a634054bd60582723d03ebd7304549538457c7737ac2d0e"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/jev/protocol.json",
+      "bytes": 5760,
+      "sha256": "6022e9e7ce3a626ecf23bf52bc55484a7c16ae6f7619f5f50bd84330fc54435b"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/jev/report.json",
+      "bytes": 16067,
+      "sha256": "d3bb19c1407c714f5a1347a518d0868f6edebd4d8998a1c185f84e43734ed88a"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/jev/task-clock/manifest.json",
+      "bytes": 42505,
+      "sha256": "9ff414cb4191a35ab28adf2b96d6ba963d69ef376a977291fb7ff06a31fac9e5"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/jev/video.mp4",
+      "bytes": 713015,
+      "sha256": "396caac25b2afdbf525daf8b0f56fb9815afba39d2e123464820512a4479da12"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/preflight-1/report.json",
+      "bytes": 8037,
+      "sha256": "750ffe809399019a7c13d5b3f8fb3c33219527b62f8ade455892daf5b70ff00e"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/preflight-2/report.json",
+      "bytes": 8006,
+      "sha256": "df35751b8bdbe56fea04562e6d6d3f1e8151eee857612a3ae70bc204e2bcaddb"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/preflight-3/report.json",
+      "bytes": 10353,
+      "sha256": "fa8b724192cce0c322af77f89b666d88ed8dc7d790c85c9b0ce949fb28a1e5d3"
+    },
+    {
+      "path": "benchmarks/results/browser-task-aligned-20260924/RESULTS.md",
+      "bytes": 6495,
+      "sha256": "aa6f26851762a913cedf17a70e644c1d3f96d3a389891c5dac4a386cb2279d35"
+    },
+    {
       "path": "benchmarks/results/complex-missions-v1/INTERPRETATION.md",
       "bytes": 3308,
       "sha256": "51479bc361a4d30324c74bee041c64efa8c481ff902e4da0bf5418771ff10e73"
@@ -388,6 +538,11 @@
       "sha256": "b34ea8c10ab8a93feda4be88bd1aa1ed84e2ff9b1b5ea8286281d9814f9ba7fb"
     },
     {
+      "path": "benchmarks/task-clock-capture.mjs",
+      "bytes": 9824,
+      "sha256": "393fe20b8a8ee06b2aeb8a9c287ba0d20b47a62345740e9e4fdf8ab70926dc51"
+    },
+    {
       "path": "benchmarks/task-router-cases.json",
       "bytes": 17633,
       "sha256": "75e1a439563f95c195ceb31ee031008dceab24a2406cc73362161e49b37e100b"
@@ -414,13 +569,13 @@
     },
     {
       "path": "docs/BROWSER-DEMO.en.md",
-      "bytes": 15340,
-      "sha256": "1d32466fe2cab9523c8b8f49127cddb570f60b74d0b2aebbcb3445d748fe0c65"
+      "bytes": 18622,
+      "sha256": "1f2c211f9b51adc6d8624dec1dd98f774aeae5b21ad615b914a12c73e10fbf7d"
     },
     {
       "path": "docs/BROWSER-DEMO.ko.md",
-      "bytes": 17498,
-      "sha256": "0fadb4a74d51ca43d86bcc852211e8ac5444b0d4d124623da0931c5ebece4707"
+      "bytes": 21302,
+      "sha256": "e83513db24c7044e51c62a8b7a06f2f5509b2e8262c970d63734bf4e08696111"
     },
     {
       "path": "docs/claude-chrome.md",
@@ -514,8 +669,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 13769,
-      "sha256": "e1144c435043abe11b79d6d11e1fadf7f834dc74165befdaa31de94eb8be09a1"
+      "bytes": 12832,
+      "sha256": "de324189869cede7e35761cadf9331ffe33fb7ed134dff33e028cec7be1f30ef"
     },
     {
       "path": "scripts/install-skill.mjs",
@@ -799,8 +954,8 @@
     },
     {
       "path": "test/record-hsmu-playwright.test.mjs",
-      "bytes": 12613,
-      "sha256": "d9ee3d2cb35e9c1516140a45c8bdf307ad782564ccdef9356debbf3d529f4c7f"
+      "bytes": 19238,
+      "sha256": "daa3a9ea087a67b1e9fd25dfad55ab7552804e70e3cdb49084f6176e11bf9013"
     },
     {
       "path": "test/record-window-quality.test.mjs",
@@ -809,8 +964,13 @@
     },
     {
       "path": "test/render-browser-comparison.test.mjs",
-      "bytes": 1779,
-      "sha256": "6afeab3c7d69a0d29188fde05670ad27ae4466f60e70ddfba9fe91a8e072e44b"
+      "bytes": 2823,
+      "sha256": "11860e7ab7d6216735f171dd8be85bf884e853bb976021ccdd906a6ee031f5b9"
+    },
+    {
+      "path": "test/render-task-clock-video.test.mjs",
+      "bytes": 1839,
+      "sha256": "c4af7fdc0d69b424d51efa7ad549e82ce87dc78691dbfa53729b6e5ffbe3ec71"
     },
     {
       "path": "test/router-batch.test.mjs",
@@ -861,6 +1021,11 @@
       "path": "test/system-ca-fetch.test.mjs",
       "bytes": 10074,
       "sha256": "8047f7ba224d538aa71a9a5ab978a42debe70758ca19f54f1f6b59dc9018bf09"
+    },
+    {
+      "path": "test/task-clock-capture.test.mjs",
+      "bytes": 8293,
+      "sha256": "fe83002c03c8b67bec7ca9bd4995b718359a8d1fe8e6535cbc7461cd9bdf099c"
     }
   ]
 }

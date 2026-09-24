@@ -1,0 +1,777 @@
+{
+  "schemaVersion": 1,
+  "status": "aligned",
+  "reason": null,
+  "width": 1600,
+  "height": 900,
+  "timestampBasis": "browser-presentation-unix-epoch-ms",
+  "captureApi": "page.screencast.start.onFrame",
+  "frameCadence": "Event-driven browser frames; unchanged screens use sample-and-hold during playback.",
+  "maxClockDriftMs": 50,
+  "taskStart": {
+    "wallTimeMs": 1790237545742,
+    "monotonicMs": 10652.8648
+  },
+  "taskEnd": {
+    "wallTimeMs": 1790237554350,
+    "monotonicMs": 19261.3609
+  },
+  "captureStarted": {
+    "wallTimeMs": 1790237537515,
+    "monotonicMs": 2425.8602
+  },
+  "captureStopped": {
+    "wallTimeMs": 1790237554645,
+    "monotonicMs": 19556.0802
+  },
+  "durationMs": 8608.4961,
+  "clockDriftMs": 0.49610000000029686,
+  "coverage": {
+    "initialFrameAtOrBeforeStart": true,
+    "activeThroughTaskEnd": true
+  },
+  "totalBytes": 8156338,
+  "frames": [
+    {
+      "file": "frames/000001.jpg",
+      "arrivalIndex": 1,
+      "timestampMs": 1790237538727.108,
+      "sha256": "333cf872e0229fcd9e08717749435928194e00aa548098624e62ecd8af8a2e74",
+      "bytes": 8834
+    },
+    {
+      "file": "frames/000002.jpg",
+      "arrivalIndex": 2,
+      "timestampMs": 1790237543248.453,
+      "sha256": "d74bd6f36a1c0a00374e38f2928e6c2a65574c3354c1c35036ff941089b1ddf7",
+      "bytes": 21669
+    },
+    {
+      "file": "frames/000004.jpg",
+      "arrivalIndex": 4,
+      "timestampMs": 1790237543568.372,
+      "sha256": "4da879e61b11aa5b7275a63ae0aaac8584dd466fdf2396266ad69c092facf073",
+      "bytes": 56260
+    },
+    {
+      "file": "frames/000005.jpg",
+      "arrivalIndex": 5,
+      "timestampMs": 1790237543605.624,
+      "sha256": "c22d7e48c99bc424e2af37b2ee1d3798a9a219602d4dedb6f57bcea9cdeb7ea7",
+      "bytes": 73984
+    },
+    {
+      "file": "frames/000003.jpg",
+      "arrivalIndex": 3,
+      "timestampMs": 1790237543647.678,
+      "sha256": "91a5c86b4c53e80194976fdd021525ce3583f107efb81dd313de3f4ec8f69fce",
+      "bytes": 90228
+    },
+    {
+      "file": "frames/000010.jpg",
+      "arrivalIndex": 10,
+      "timestampMs": 1790237543942.051,
+      "sha256": "d3de8fb5b49d2298b1486c21bcdeeafff600cb2794c24479ab2d6d1008cda85f",
+      "bytes": 97714
+    },
+    {
+      "file": "frames/000006.jpg",
+      "arrivalIndex": 6,
+      "timestampMs": 1790237543959.791,
+      "sha256": "e8aebdadc7ae2562f50d817a96c398d661d10c32996ee4b361edec493a506da3",
+      "bytes": 97779
+    },
+    {
+      "file": "frames/000007.jpg",
+      "arrivalIndex": 7,
+      "timestampMs": 1790237543974.2761,
+      "sha256": "d90f811369fdbac901c31d606e08a3bb8351df489eefd43097c30c4cae107d13",
+      "bytes": 97789
+    },
+    {
+      "file": "frames/000012.jpg",
+      "arrivalIndex": 12,
+      "timestampMs": 1790237544029.9138,
+      "sha256": "59cb3078a6e0cfc72481e975dd30bfbebb05c256aa12b4e86ff6458c5521ad9a",
+      "bytes": 98184
+    },
+    {
+      "file": "frames/000008.jpg",
+      "arrivalIndex": 8,
+      "timestampMs": 1790237544064.776,
+      "sha256": "59cb3078a6e0cfc72481e975dd30bfbebb05c256aa12b4e86ff6458c5521ad9a",
+      "bytes": 98184
+    },
+    {
+      "file": "frames/000009.jpg",
+      "arrivalIndex": 9,
+      "timestampMs": 1790237544125.784,
+      "sha256": "6634bf61a24c03b23309bc51ed284dbc672b685ac90a037a20d4c220dad16250",
+      "bytes": 94116
+    },
+    {
+      "file": "frames/000011.jpg",
+      "arrivalIndex": 11,
+      "timestampMs": 1790237544312.3938,
+      "sha256": "96c767dbf0465b69301408d23e2465def35cba81493811992b4a75797262c0ec",
+      "bytes": 146725
+    },
+    {
+      "file": "frames/000013.jpg",
+      "arrivalIndex": 13,
+      "timestampMs": 1790237544429.043,
+      "sha256": "29b7b2b04b8454e5fc450fa3e222605d19445017d6c47273576052d91608fcd6",
+      "bytes": 146988
+    },
+    {
+      "file": "frames/000016.jpg",
+      "arrivalIndex": 16,
+      "timestampMs": 1790237544443.981,
+      "sha256": "7c99fb414be98307c574d931e6b568fceee7d6d7e3f09abf921585a829ab316e",
+      "bytes": 146994
+    },
+    {
+      "file": "frames/000014.jpg",
+      "arrivalIndex": 14,
+      "timestampMs": 1790237544465.491,
+      "sha256": "2d2931d2bb6b89af7dd6212eef101a49d363a1850f232b5f8cc3583c3b3a0825",
+      "bytes": 147165
+    },
+    {
+      "file": "frames/000015.jpg",
+      "arrivalIndex": 15,
+      "timestampMs": 1790237544520.248,
+      "sha256": "650ace713aa30ef253c08a080a345230adc19ae081fb51796fcf680b481f0adc",
+      "bytes": 148533
+    },
+    {
+      "file": "frames/000023.jpg",
+      "arrivalIndex": 23,
+      "timestampMs": 1790237544818.295,
+      "sha256": "97c3d278ef4fd5ba8f8d4af4f6477e21222de62c3bae4022ac29a9938b153a2b",
+      "bytes": 133971
+    },
+    {
+      "file": "frames/000017.jpg",
+      "arrivalIndex": 17,
+      "timestampMs": 1790237544828.4048,
+      "sha256": "41b23e25fae64c6cf961c4223084a0d6cd092a41ef101eca476ba78d5917944c",
+      "bytes": 133965
+    },
+    {
+      "file": "frames/000018.jpg",
+      "arrivalIndex": 18,
+      "timestampMs": 1790237544875.821,
+      "sha256": "2230ef843ea934f1da7f525a104437a98a3312b15ad77e8d6b2a6e46a6b70669",
+      "bytes": 133981
+    },
+    {
+      "file": "frames/000019.jpg",
+      "arrivalIndex": 19,
+      "timestampMs": 1790237544888.9192,
+      "sha256": "b88eb35faba3b4d555dca2ffe344a6332aad89db5c525ab272aa643c504a3ab2",
+      "bytes": 133921
+    },
+    {
+      "file": "frames/000022.jpg",
+      "arrivalIndex": 22,
+      "timestampMs": 1790237544938.94,
+      "sha256": "82bbe9fc0955577d27cb94cdd66d6ad8d2b8a8dd415b283124a0663380cec43d",
+      "bytes": 133911
+    },
+    {
+      "file": "frames/000020.jpg",
+      "arrivalIndex": 20,
+      "timestampMs": 1790237544962.386,
+      "sha256": "edb8ae1c0405f1a6b1ff8c7a2b7a597ab7e06b53f8a6fccdcda78493c62f3a8b",
+      "bytes": 133932
+    },
+    {
+      "file": "frames/000021.jpg",
+      "arrivalIndex": 21,
+      "timestampMs": 1790237545051.853,
+      "sha256": "1ebc213095aea65ea8db459597c26d31ab246fd4dbfc5e5c5a43d5c58ee773c0",
+      "bytes": 133814
+    },
+    {
+      "file": "frames/000025.jpg",
+      "arrivalIndex": 25,
+      "timestampMs": 1790237545283.56,
+      "sha256": "ced71884543aaf5e74bb4465c34ab9575f84caccc29d0670af1977b2a263a1f3",
+      "bytes": 189195
+    },
+    {
+      "file": "frames/000024.jpg",
+      "arrivalIndex": 24,
+      "timestampMs": 1790237545292.864,
+      "sha256": "ced71884543aaf5e74bb4465c34ab9575f84caccc29d0670af1977b2a263a1f3",
+      "bytes": 189195
+    },
+    {
+      "file": "frames/000027.jpg",
+      "arrivalIndex": 27,
+      "timestampMs": 1790237545318.68,
+      "sha256": "ced71884543aaf5e74bb4465c34ab9575f84caccc29d0670af1977b2a263a1f3",
+      "bytes": 189195
+    },
+    {
+      "file": "frames/000026.jpg",
+      "arrivalIndex": 26,
+      "timestampMs": 1790237545371.85,
+      "sha256": "ab57e59e71a1a19814f09dd51309d64b452f42564b6d3a58f0a11c9be12148fa",
+      "bytes": 174380
+    },
+    {
+      "file": "frames/000029.jpg",
+      "arrivalIndex": 29,
+      "timestampMs": 1790237545747.586,
+      "sha256": "3faf724f834e954529d4a795a0fefeff6c8bf9caccb693eb5b4d80e11c797fbe",
+      "bytes": 42580
+    },
+    {
+      "file": "frames/000028.jpg",
+      "arrivalIndex": 28,
+      "timestampMs": 1790237545757.4612,
+      "sha256": "3dae72e9f18a7e118974068e5deed3a8d128bec024723aadcb83f6ec80a6d0c7",
+      "bytes": 42339
+    },
+    {
+      "file": "frames/000031.jpg",
+      "arrivalIndex": 31,
+      "timestampMs": 1790237546274.2468,
+      "sha256": "ecb7af5219955abbda9b8ef2d815509d8f70b5c9f7dac5616bd8ae366b68a861",
+      "bytes": 44266
+    },
+    {
+      "file": "frames/000032.jpg",
+      "arrivalIndex": 32,
+      "timestampMs": 1790237546282.9849,
+      "sha256": "947ef5f31f17d21d1ee53187a6f84a9c9a9fcfa0394951ef800118b1cc706f2b",
+      "bytes": 43811
+    },
+    {
+      "file": "frames/000030.jpg",
+      "arrivalIndex": 30,
+      "timestampMs": 1790237546306.33,
+      "sha256": "d9bf744bda2d00ca0de0d6db25b042a50f3ea0f1a271d74415a3da916847f1fa",
+      "bytes": 44043
+    },
+    {
+      "file": "frames/000033.jpg",
+      "arrivalIndex": 33,
+      "timestampMs": 1790237546394.392,
+      "sha256": "6c47992693ce51e940035f95707010eae3152b16656126e6691be8f699df574a",
+      "bytes": 43440
+    },
+    {
+      "file": "frames/000034.jpg",
+      "arrivalIndex": 34,
+      "timestampMs": 1790237546424.762,
+      "sha256": "7119ff26a93c0308b741b2691d3e5b4042928001883f6a3b6f6d4ff6be3d3d05",
+      "bytes": 43309
+    },
+    {
+      "file": "frames/000035.jpg",
+      "arrivalIndex": 35,
+      "timestampMs": 1790237546445.552,
+      "sha256": "741940096c1222571a8e8560f67b5bf816b1491e1d12f2538c980d0c0a8b1a65",
+      "bytes": 43099
+    },
+    {
+      "file": "frames/000037.jpg",
+      "arrivalIndex": 37,
+      "timestampMs": 1790237546842.203,
+      "sha256": "b67cd6d5b62b7e1e8a22cb100009969c28342b875d58487a56c019f690192be1",
+      "bytes": 29142
+    },
+    {
+      "file": "frames/000038.jpg",
+      "arrivalIndex": 38,
+      "timestampMs": 1790237546957.731,
+      "sha256": "cf79df460f78b94d26ee06a5da30a8f251638a74bc5af734bb1d494f20fc5815",
+      "bytes": 25971
+    },
+    {
+      "file": "frames/000036.jpg",
+      "arrivalIndex": 36,
+      "timestampMs": 1790237546995.412,
+      "sha256": "c07713bc1dd96e5466973ffba34008459db6c8a0f381008ef632a86f2666e474",
+      "bytes": 25887
+    },
+    {
+      "file": "frames/000039.jpg",
+      "arrivalIndex": 39,
+      "timestampMs": 1790237547041.496,
+      "sha256": "c914908330c5a5cca13338f14e191129a49c874b5733d909c35f33297e067160",
+      "bytes": 24357
+    },
+    {
+      "file": "frames/000040.jpg",
+      "arrivalIndex": 40,
+      "timestampMs": 1790237547135.198,
+      "sha256": "52ac96d9e30e7c2574211708b61b92481ddf84fa76bc197c9cc6bde288cce4ee",
+      "bytes": 22695
+    },
+    {
+      "file": "frames/000041.jpg",
+      "arrivalIndex": 41,
+      "timestampMs": 1790237547142.684,
+      "sha256": "b30cffb2166670ea94caa7e99bc5df09e5deb30d71e2758b49f1cea3aad197ce",
+      "bytes": 22361
+    },
+    {
+      "file": "frames/000042.jpg",
+      "arrivalIndex": 42,
+      "timestampMs": 1790237547172.294,
+      "sha256": "1549c8c996e3056addac87a01a0a125890f736e16190e3ea080247e485f734b9",
+      "bytes": 22087
+    },
+    {
+      "file": "frames/000043.jpg",
+      "arrivalIndex": 43,
+      "timestampMs": 1790237547306.626,
+      "sha256": "5e56d47575ca747f9625998b4554f0a91469ad7f4c5e0fe9ce74b8b58c4740bf",
+      "bytes": 21912
+    },
+    {
+      "file": "frames/000045.jpg",
+      "arrivalIndex": 45,
+      "timestampMs": 1790237547526.177,
+      "sha256": "3bbdb157c22d99f6ca30a5c8bfed21ec51193bb4ab9651240417e1bc2224ae99",
+      "bytes": 32478
+    },
+    {
+      "file": "frames/000044.jpg",
+      "arrivalIndex": 44,
+      "timestampMs": 1790237547595.667,
+      "sha256": "73b426e68a1e7c675b0828e8ca6f36ae8dca847958e15c3649c4e80777d6af1a",
+      "bytes": 32750
+    },
+    {
+      "file": "frames/000046.jpg",
+      "arrivalIndex": 46,
+      "timestampMs": 1790237547757.214,
+      "sha256": "e325307fe6ccd542fcbd551b0198e6301823d4bbbaf6d05462fce403c3767c80",
+      "bytes": 34716
+    },
+    {
+      "file": "frames/000049.jpg",
+      "arrivalIndex": 49,
+      "timestampMs": 1790237547905.376,
+      "sha256": "433a3d8033d0feb574a831f52ce422ea8aeee5f551722cedc0c783987e056f47",
+      "bytes": 38163
+    },
+    {
+      "file": "frames/000047.jpg",
+      "arrivalIndex": 47,
+      "timestampMs": 1790237547917.397,
+      "sha256": "2e74327c3c5cac7c690e24365f433bde7306a0c6223207c9cf5be3fa6e368b81",
+      "bytes": 38579
+    },
+    {
+      "file": "frames/000048.jpg",
+      "arrivalIndex": 48,
+      "timestampMs": 1790237547934.918,
+      "sha256": "5feed56ca68eab0f568c3bc608970ab37eaa38fc58a66c51692ebf93b957489d",
+      "bytes": 39007
+    },
+    {
+      "file": "frames/000052.jpg",
+      "arrivalIndex": 52,
+      "timestampMs": 1790237547990.607,
+      "sha256": "4f7f6f07f2a07316a3f469aee471231c1a1fff8909426a8e72dcdb2860f7b593",
+      "bytes": 40222
+    },
+    {
+      "file": "frames/000051.jpg",
+      "arrivalIndex": 51,
+      "timestampMs": 1790237548007.384,
+      "sha256": "fca03052da6fe3b508b42dfa377a027e5add8af5dcf2c400071a638e0e0936b1",
+      "bytes": 40536
+    },
+    {
+      "file": "frames/000050.jpg",
+      "arrivalIndex": 50,
+      "timestampMs": 1790237548042.325,
+      "sha256": "3ffac41656a5b1e1b19cf46d9dcf5f2266518b7265269b99bca8687a4c29952b",
+      "bytes": 40956
+    },
+    {
+      "file": "frames/000057.jpg",
+      "arrivalIndex": 57,
+      "timestampMs": 1790237548089.301,
+      "sha256": "6011e6c9ba688df87f5c25dd889c056dcc2819f47d87cc41ec4ff5a74cfc638d",
+      "bytes": 41368
+    },
+    {
+      "file": "frames/000053.jpg",
+      "arrivalIndex": 53,
+      "timestampMs": 1790237548105.5852,
+      "sha256": "2bb3f3a1f2f87bd8d0a851a645cce55aa4d520afe48efe1dac55f13322aae4d3",
+      "bytes": 41680
+    },
+    {
+      "file": "frames/000054.jpg",
+      "arrivalIndex": 54,
+      "timestampMs": 1790237548137.0698,
+      "sha256": "ca8b11974ec249e4f24b7187abcb05fba4bab3ba3ff1780affa1ebfb22e747d3",
+      "bytes": 42077
+    },
+    {
+      "file": "frames/000055.jpg",
+      "arrivalIndex": 55,
+      "timestampMs": 1790237548180.521,
+      "sha256": "d437352ef8f9ae70438a5bc67672264d45a587f7ec0c3a7b9fcfc4768d9f3015",
+      "bytes": 47209
+    },
+    {
+      "file": "frames/000058.jpg",
+      "arrivalIndex": 58,
+      "timestampMs": 1790237548185.284,
+      "sha256": "58d4382fd11141093be09c521e7c5f017bd75186ed699347dece6d78ac5030b6",
+      "bytes": 48601
+    },
+    {
+      "file": "frames/000056.jpg",
+      "arrivalIndex": 56,
+      "timestampMs": 1790237548235.281,
+      "sha256": "d13ea4dd84a78c61b37950890eec57fc444b3fe4821e468fa427cf911f922aa5",
+      "bytes": 59407
+    },
+    {
+      "file": "frames/000062.jpg",
+      "arrivalIndex": 62,
+      "timestampMs": 1790237548366.8188,
+      "sha256": "e5874749b1f5394da5f1be0655dfa828285f824268cd8dd0d66156951dff8449",
+      "bytes": 74079
+    },
+    {
+      "file": "frames/000059.jpg",
+      "arrivalIndex": 59,
+      "timestampMs": 1790237548380.9321,
+      "sha256": "c5493caa8df5214de5acd4d0aa8ba4a7780a402e4e5d1192281842cc03ac3ded",
+      "bytes": 74711
+    },
+    {
+      "file": "frames/000060.jpg",
+      "arrivalIndex": 60,
+      "timestampMs": 1790237548395.1409,
+      "sha256": "47289c54db83c116a28004b70340e297783c1e0868303dd5a770520122f08933",
+      "bytes": 75097
+    },
+    {
+      "file": "frames/000061.jpg",
+      "arrivalIndex": 61,
+      "timestampMs": 1790237548440.35,
+      "sha256": "9af1957ee9694a02d03be0250557541722b36c106ce0360fad67414576990af5",
+      "bytes": 72854
+    },
+    {
+      "file": "frames/000063.jpg",
+      "arrivalIndex": 63,
+      "timestampMs": 1790237548467.008,
+      "sha256": "ddbe32badbc6573739e25dc4e1429c7f07196c037164b0fd9c04fa18d2d77dbe",
+      "bytes": 77383
+    },
+    {
+      "file": "frames/000064.jpg",
+      "arrivalIndex": 64,
+      "timestampMs": 1790237548541.114,
+      "sha256": "4df7530db2e76f227e519e349e53d65145636e511d559cde55db320cd0ba4134",
+      "bytes": 83786
+    },
+    {
+      "file": "frames/000065.jpg",
+      "arrivalIndex": 65,
+      "timestampMs": 1790237548692.248,
+      "sha256": "47a67848e5361cf9ca72e157ed59d2623d74c0942d3a435ccec5eb9d87a1d645",
+      "bytes": 91733
+    },
+    {
+      "file": "frames/000071.jpg",
+      "arrivalIndex": 71,
+      "timestampMs": 1790237548708.38,
+      "sha256": "a76d7ddfa83103106da8f155e84a145a74075b99eb0cedad6091ef69ffa5577f",
+      "bytes": 91948
+    },
+    {
+      "file": "frames/000066.jpg",
+      "arrivalIndex": 66,
+      "timestampMs": 1790237548734.246,
+      "sha256": "626fa46bdb6449c2563dda2c5a0163a173d2300cbf0856dff76914552797004d",
+      "bytes": 92230
+    },
+    {
+      "file": "frames/000069.jpg",
+      "arrivalIndex": 69,
+      "timestampMs": 1790237548748.648,
+      "sha256": "28e7197085fbab14edd32581db4944bafdfd7cd623de7fd23713595b251fb949",
+      "bytes": 92633
+    },
+    {
+      "file": "frames/000067.jpg",
+      "arrivalIndex": 67,
+      "timestampMs": 1790237548774.341,
+      "sha256": "5b2bc9c75ffe1ce8945e25d141078077fef6e02be0736a7d321b2a8666c105ab",
+      "bytes": 93192
+    },
+    {
+      "file": "frames/000068.jpg",
+      "arrivalIndex": 68,
+      "timestampMs": 1790237548846.499,
+      "sha256": "020bd34b07b4323591e6daf66b6b9788792889d8cfaa6b018d0c11d76ce6a175",
+      "bytes": 90363
+    },
+    {
+      "file": "frames/000070.jpg",
+      "arrivalIndex": 70,
+      "timestampMs": 1790237548890.3552,
+      "sha256": "156e3d790fec018811a6aa63ec17be6d04f53237c9a57f01dc028ac34cea6a21",
+      "bytes": 90476
+    },
+    {
+      "file": "frames/000073.jpg",
+      "arrivalIndex": 73,
+      "timestampMs": 1790237548904.815,
+      "sha256": "3b90b470bf70c0fbc65faf0cd369f61e7fb39d4a728c9ca13670ae91e17e700d",
+      "bytes": 90657
+    },
+    {
+      "file": "frames/000072.jpg",
+      "arrivalIndex": 72,
+      "timestampMs": 1790237548949.982,
+      "sha256": "36abb27356ae248fc91396ab66ed2da91f6cd3612b28d677426f9597854c9231",
+      "bytes": 90741
+    },
+    {
+      "file": "frames/000074.jpg",
+      "arrivalIndex": 74,
+      "timestampMs": 1790237548983.284,
+      "sha256": "326d10b81489a3bbc6a2f5c6ce78e165e4ad84408ebf775e035eeece609b2836",
+      "bytes": 90813
+    },
+    {
+      "file": "frames/000077.jpg",
+      "arrivalIndex": 77,
+      "timestampMs": 1790237548999.814,
+      "sha256": "245d9935b8ff59263f2e87f9a4da2fd069d2cda296a2c10215576ce979b6e482",
+      "bytes": 90797
+    },
+    {
+      "file": "frames/000076.jpg",
+      "arrivalIndex": 76,
+      "timestampMs": 1790237549024.991,
+      "sha256": "adb68cf348ad356fac312d78027e3fd2b4aa05099c30f54c319198dd2d44b302",
+      "bytes": 90803
+    },
+    {
+      "file": "frames/000075.jpg",
+      "arrivalIndex": 75,
+      "timestampMs": 1790237549040.8289,
+      "sha256": "296b29365318c3daee30586cb3fd634e7907f4d72231be75cead92846bf1bc38",
+      "bytes": 90815
+    },
+    {
+      "file": "frames/000078.jpg",
+      "arrivalIndex": 78,
+      "timestampMs": 1790237549083.507,
+      "sha256": "9051f40a3dc0b0fe00fbc2b087585a88a9ff1f78c4d7aba40943289276a4ba87",
+      "bytes": 90830
+    },
+    {
+      "file": "frames/000080.jpg",
+      "arrivalIndex": 80,
+      "timestampMs": 1790237549128.189,
+      "sha256": "27cd07c357839f0c041e29a2bfcb5b5486e0d855c0660509ce287149efbb1ec5",
+      "bytes": 90816
+    },
+    {
+      "file": "frames/000081.jpg",
+      "arrivalIndex": 81,
+      "timestampMs": 1790237549141.509,
+      "sha256": "cdf06bd82d4e936fb4699ee214de177df96f70cc20ea28ff3c6a4087b3ca1ceb",
+      "bytes": 90825
+    },
+    {
+      "file": "frames/000079.jpg",
+      "arrivalIndex": 79,
+      "timestampMs": 1790237549158.822,
+      "sha256": "1f548fe10619ce7daa8fa66245334ae5f410f573859b6500054df260b8799a52",
+      "bytes": 93886
+    },
+    {
+      "file": "frames/000082.jpg",
+      "arrivalIndex": 82,
+      "timestampMs": 1790237549257.376,
+      "sha256": "1f548fe10619ce7daa8fa66245334ae5f410f573859b6500054df260b8799a52",
+      "bytes": 93886
+    },
+    {
+      "file": "frames/000084.jpg",
+      "arrivalIndex": 84,
+      "timestampMs": 1790237549275.209,
+      "sha256": "1f548fe10619ce7daa8fa66245334ae5f410f573859b6500054df260b8799a52",
+      "bytes": 93886
+    },
+    {
+      "file": "frames/000083.jpg",
+      "arrivalIndex": 83,
+      "timestampMs": 1790237549291.623,
+      "sha256": "1f548fe10619ce7daa8fa66245334ae5f410f573859b6500054df260b8799a52",
+      "bytes": 93886
+    },
+    {
+      "file": "frames/000085.jpg",
+      "arrivalIndex": 85,
+      "timestampMs": 1790237549324.915,
+      "sha256": "1f548fe10619ce7daa8fa66245334ae5f410f573859b6500054df260b8799a52",
+      "bytes": 93886
+    },
+    {
+      "file": "frames/000087.jpg",
+      "arrivalIndex": 87,
+      "timestampMs": 1790237549341.083,
+      "sha256": "1f548fe10619ce7daa8fa66245334ae5f410f573859b6500054df260b8799a52",
+      "bytes": 93886
+    },
+    {
+      "file": "frames/000086.jpg",
+      "arrivalIndex": 86,
+      "timestampMs": 1790237549358.194,
+      "sha256": "1f548fe10619ce7daa8fa66245334ae5f410f573859b6500054df260b8799a52",
+      "bytes": 93886
+    },
+    {
+      "file": "frames/000088.jpg",
+      "arrivalIndex": 88,
+      "timestampMs": 1790237549375.9402,
+      "sha256": "1f548fe10619ce7daa8fa66245334ae5f410f573859b6500054df260b8799a52",
+      "bytes": 93886
+    },
+    {
+      "file": "frames/000091.jpg",
+      "arrivalIndex": 91,
+      "timestampMs": 1790237552359.539,
+      "sha256": "ebdc0f063ba164e6a50cae14f6492bfb3bdcbbd12276cac13df229c57e85022f",
+      "bytes": 48211
+    },
+    {
+      "file": "frames/000089.jpg",
+      "arrivalIndex": 89,
+      "timestampMs": 1790237552407.8901,
+      "sha256": "10012820f041d2ca14095c1cfe3a4a88623e586494620651120868a9c2b807ae",
+      "bytes": 80773
+    },
+    {
+      "file": "frames/000090.jpg",
+      "arrivalIndex": 90,
+      "timestampMs": 1790237552423.6719,
+      "sha256": "9ad75a998647e98a6c57d777817b541d766e0366c77b9ec9c1476ce453c1ddb2",
+      "bytes": 61731
+    },
+    {
+      "file": "frames/000092.jpg",
+      "arrivalIndex": 92,
+      "timestampMs": 1790237552758.5051,
+      "sha256": "66d861c8afeef14d9161df62ecea776707d0f1027c92d4f8c42f844646fee8f0",
+      "bytes": 62875
+    },
+    {
+      "file": "frames/000093.jpg",
+      "arrivalIndex": 93,
+      "timestampMs": 1790237552816.894,
+      "sha256": "b48024abb69a36ce1db06a9284cda3242474edfbaf8e7d807d742b54f7e4b40d",
+      "bytes": 62785
+    },
+    {
+      "file": "frames/000094.jpg",
+      "arrivalIndex": 94,
+      "timestampMs": 1790237552907.295,
+      "sha256": "9bc4713292369379391103e120bee934b8b7a1a3f7fcd31102788cd7ad792f2b",
+      "bytes": 63057
+    },
+    {
+      "file": "frames/000097.jpg",
+      "arrivalIndex": 97,
+      "timestampMs": 1790237553833.569,
+      "sha256": "4d30264cd6f5af94ab5ef02859807c764697f0559e3d7f0b6958737fbd6812b2",
+      "bytes": 62973
+    },
+    {
+      "file": "frames/000095.jpg",
+      "arrivalIndex": 95,
+      "timestampMs": 1790237553851.099,
+      "sha256": "6ae38a5b4753ada12d2988e7314393e0c0ad983b48f400673182f9959f392249",
+      "bytes": 62976
+    },
+    {
+      "file": "frames/000096.jpg",
+      "arrivalIndex": 96,
+      "timestampMs": 1790237553877.412,
+      "sha256": "5b8c16218dddb3d0a763a1cb516f8ebeafadfdb50a5e115b41370aca38c7e963",
+      "bytes": 62959
+    },
+    {
+      "file": "frames/000098.jpg",
+      "arrivalIndex": 98,
+      "timestampMs": 1790237554042.5679,
+      "sha256": "e542e573fb549a394911122251269457a97a165094adc447b581848b2dac4b40",
+      "bytes": 63768
+    },
+    {
+      "file": "frames/000099.jpg",
+      "arrivalIndex": 99,
+      "timestampMs": 1790237554051.727,
+      "sha256": "7b0e0c33a1ae6c5fd01ffe64302917830b9fde8e0ad6c22a9ec27c023d4de3c8",
+      "bytes": 64025
+    },
+    {
+      "file": "frames/000102.jpg",
+      "arrivalIndex": 102,
+      "timestampMs": 1790237554081.1802,
+      "sha256": "84c2824700bd65b911b4bcbded77a520c3bfcafc53ee1037c1b2887c8c827b3a",
+      "bytes": 64109
+    },
+    {
+      "file": "frames/000100.jpg",
+      "arrivalIndex": 100,
+      "timestampMs": 1790237554114.1301,
+      "sha256": "a4bc900e7e6f5af913b58de736ce1eec716644209cbc495ed79c5eeb45e70c30",
+      "bytes": 63366
+    },
+    {
+      "file": "frames/000103.jpg",
+      "arrivalIndex": 103,
+      "timestampMs": 1790237554132.979,
+      "sha256": "da739d5dc80e6aeb5246aa09bc8c17fb93cd937b2c21e8b78671b9b8666aba79",
+      "bytes": 63050
+    },
+    {
+      "file": "frames/000101.jpg",
+      "arrivalIndex": 101,
+      "timestampMs": 1790237554232.446,
+      "sha256": "4c4b2a8994e7686ef4b5b8eabcd485d44d934ff92f1a2161a10c09554f265325",
+      "bytes": 62397
+    },
+    {
+      "file": "frames/000104.jpg",
+      "arrivalIndex": 104,
+      "timestampMs": 1790237554541.966,
+      "sha256": "62c506c434cf5732cbea92e3b2f83c52690e171ae6737410e8048d275cdba456",
+      "bytes": 66557
+    },
+    {
+      "file": "frames/000105.jpg",
+      "arrivalIndex": 105,
+      "timestampMs": 1790237554564.433,
+      "sha256": "566ff32940741a481396baab681551f246c07dbb46b2a12a785aad0e229fd1fa",
+      "bytes": 62402
+    }
+  ],
+  "delivery": {
+    "timestampRegressions": 34,
+    "maxBackstepMs": 282.47998046875,
+    "maxAllowedBackstepMs": 1000,
+    "manifestOrder": "Browser presentation timestamp, then original arrivalIndex; no frames discarded."
+  }
+}

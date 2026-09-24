@@ -36,17 +36,31 @@ function fixture({ iframeStage = -1 } = {}) {
   const context = { async newPage() { events.push(['new-page']); return page; }, async close() { events.push(['context-close']); } };
   const browser = { version: () => 'Chrome-test', async newContext(value) { options.context = value; return context; }, async close() { events.push(['browser-close']); } };
   const chromium = { async launch(value) { options.launch = value; return browser; } };
-  return { events, options, target, page, chromium, now: () => ++tick * 10 };
+  return { events, options, target, page, chromium, now: () => ++tick * 10, wallNow: () => 1800000000000 + tick * 10 };
+}
+
+function withTaskClock(f) {
+  f.page.screencast = {
+    async start(options) {
+      f.events.push(['capture-start']);
+      assert.deepEqual(options.size, { width: 1600, height: 900 });
+      options.onFrame({ data: Buffer.from([0xff, 0xd8, 0xff, 0xd9]), timestamp: f.wallNow(), viewportWidth: 1600, viewportHeight: 900 });
+    },
+    async stop() { assert.ok(!f.events.some(([name]) => name === 'context-close')); f.events.push(['capture-stop']); },
+  };
+  return f;
 }
 
 test('strict CLI separates deterministic preflight from paid arms and rejects unsafe or unknown options', async () => {
   const { parseRecordingArgs } = await subject();
   assert.equal(parseRecordingArgs(['--preflight', '--output-dir', 'out']).mode, 'preflight');
+  assert.equal(parseRecordingArgs(['--preflight', '--output-dir', 'out']).taskClock, false);
+  assert.equal(parseRecordingArgs(['--preflight', '--task-clock', '--output-dir', 'out']).taskClock, true);
   const paid = parseRecordingArgs(['--arm', 'jev', '--output-dir', 'out', '--env-file', 'local.env', '--preflight-report', 'ready.json']);
   assert.equal(paid.maxRequests, 10); assert.equal(paid.budgetUsd, 2);
   for (const args of [[], ['--preflight', '--arm', 'astra', '--output-dir', 'out'], ['--arm', 'foo', '--output-dir', 'out'],
     ['--preflight', '--output-dir', 'out', '--key', 'secret'], ['--preflight', '--output-dir', 'out', '--max-requests', '11'],
-    ['--preflight', '--output-dir', 'out', '--output-dir', 'other']]) assert.throws(() => parseRecordingArgs(args), /INVALID_ARGUMENTS/);
+    ['--preflight', '--output-dir', 'out', '--output-dir', 'other'], ['--preflight', '--task-clock', '--task-clock', '--output-dir', 'out']]) assert.throws(() => parseRecordingArgs(args), /INVALID_ARGUMENTS/);
 });
 
 test('coherent DOM heading evidence is real structured metadata; navigation drift rejects it', async () => {
@@ -61,6 +75,27 @@ test('coherent DOM heading evidence is real structured metadata; navigation drif
   assert.deepEqual(result.headingEvidence.headings, ['총장 인사말']); assert.ok(Object.isFrozen(result.headingEvidence));
   const drift = createHeadingEvidenceTarget({ evaluate: async () => ({ ...metadata, url: home }) }, { getObservation: async () => observation, click: async () => {} });
   await assert.rejects(drift.getObservation(), /INCOHERENT_OBSERVATION/);
+});
+
+test('initial settling retries only incoherent read-only snapshots within attempt and wall-time bounds', async () => {
+  const { readStableInitialObservation } = await subject();
+  let reads = 0, now = 0; const retries = [];
+  const stable = await readStableInitialObservation({ async getObservation() {
+    if (++reads < 3) throw new Error('INCOHERENT_OBSERVATION'); return { url: home };
+  } }, { now: () => now, wait: async ms => { now += ms; }, onRetry: value => retries.push(value.attempt) });
+  assert.equal(stable.url, home); assert.equal(reads, 3); assert.deepEqual(retries, [1, 2]);
+  reads = 0; now = 0;
+  await assert.rejects(readStableInitialObservation({ async getObservation() { reads++; throw new Error('INCOHERENT_OBSERVATION'); } },
+    { now: () => now, wait: async ms => { now += ms; } }), /INCOHERENT_OBSERVATION/);
+  assert.equal(reads, 20); assert.ok(now <= 5000);
+  reads = 0; now = 0;
+  await assert.rejects(readStableInitialObservation({ async getObservation() { reads++; now += 3000; throw new Error('INCOHERENT_OBSERVATION'); } },
+    { now: () => now, wait: async ms => { now += ms; } }), /INCOHERENT_OBSERVATION/);
+  assert.equal(reads, 2);
+  reads = 0;
+  await assert.rejects(readStableInitialObservation({ async getObservation() { reads++; throw new Error('IFRAMES_UNSUPPORTED'); } },
+    { wait: async () => assert.fail('No retry for another failure') }), /IFRAMES_UNSUPPORTED/);
+  assert.equal(reads, 1);
 });
 
 test('heading reads use bounded JSON primitives when the actual page transport drops objects', async () => {
@@ -116,6 +151,7 @@ test('preflight rehearses all five fresh unique refs without keys or model, save
   assert.deepEqual(f.options.context.viewport, { width: 1600, height: 900 });
   assert.deepEqual(f.options.context.recordVideo.size, { width: 1600, height: 900 });
   assert.equal(report.video.saved, true); assert.equal(report.video.file, 'recording.webm');
+  assert.equal(report.taskClock, undefined); assert.equal(report.protocol.taskClock, undefined);
   assert.equal(report.verification.visits.length, 3); assert.ok(report.verification.visits.every(v => v.headingVerified));
   assert.ok(report.timing.taskEndOffsetMs >= report.timing.taskStartOffsetMs);
   assert.ok(report.timing.setupMs > 0); assert.ok(report.timing.cleanupMs > 0);
@@ -124,6 +160,61 @@ test('preflight rehearses all five fresh unique refs without keys or model, save
   assert.ok(!JSON.stringify(report).includes(root));
   assert.equal(JSON.parse(await readFile(join(root, 'run', 'report.json'), 'utf8')).protocol.comparisonHash, report.protocol.comparisonHash);
   await assert.rejects(recordHsmuPlaywright({ mode: 'preflight', outputDir: join(root, 'run') }, { chromium: f.chromium }), /OUTPUT_EXISTS/);
+});
+
+test('opt-in task capture anchors actual runner time and is ready before any task or model inference', async t => {
+  const { recordHsmuPlaywright } = await subject(), root = await temporary(t), f = withTaskClock(fixture());
+  const preflight = await recordHsmuPlaywright({ mode: 'preflight', taskClock: true, outputDir: join(root, 'preflight-clock') }, {
+    chromium: f.chromium, createTarget: () => f.target, prepareHome, now: f.now, wallNow: f.wallNow,
+  });
+  assert.equal(preflight.status, 'completed'); assert.equal(preflight.taskClock.status, 'aligned');
+  assert.equal(preflight.taskClock.durationMs, preflight.timing.taskDurationMs);
+  assert.equal(preflight.taskClock.clockDriftMs, 0);
+  assert.ok(preflight.protocol.sourceHashes['benchmarks/task-clock-capture.mjs']);
+  assert.equal(preflight.protocol.taskClock.timestampBasis, 'browser-presentation-unix-epoch-ms');
+  assert.ok(f.events.findIndex(([name]) => name === 'capture-start') < f.events.findIndex(([name]) => name === 'goto'));
+  const manifest = JSON.parse(await readFile(join(root, 'preflight-clock', preflight.taskClock.file), 'utf8'));
+  assert.equal(manifest.coverage.initialFrameAtOrBeforeStart, true); assert.equal(manifest.coverage.activeThroughTaskEnd, true);
+  const paid = withTaskClock(fixture()); let invoked = false, stage = null;
+  const report = await recordHsmuPlaywright({ mode: 'benchmark', arm: 'astra', taskClock: true, outputDir: join(root, 'paid-clock') }, {
+    chromium: paid.chromium, createTarget: () => paid.target, prepareHome, now: paid.now, wallNow: paid.wallNow,
+    preflightReport: preflight, apiKeys: { openrouter: 'test-key' }, onStage: event => { stage = event.stage; },
+    runComparison: async ({ budget }) => {
+      invoked = true; assert.equal(stage, 'task-start'); assert.equal(budget.summary().requests, 0);
+      // Model work and final extraction remain inside the same measured interval.
+      for (let index = 0; index < 30; index++) paid.now();
+      return { passed: true, requests: 0 };
+    },
+  });
+  assert.equal(invoked, true); assert.equal(report.status, 'completed'); assert.equal(report.taskClock.status, 'aligned');
+  assert.ok(report.taskClock.durationMs >= 300); assert.equal(report.taskClock.durationMs, report.timing.taskDurationMs);
+  assert.ok(!JSON.stringify(report).includes(root));
+});
+
+test('unsupported opt-in capture blocks paid inference after matching preflight and keeps invalid evidence', async t => {
+  const { recordHsmuPlaywright } = await subject(), root = await temporary(t), f = withTaskClock(fixture());
+  const preflight = await recordHsmuPlaywright({ mode: 'preflight', taskClock: true, outputDir: join(root, 'ready') }, {
+    chromium: f.chromium, createTarget: () => f.target, prepareHome, now: f.now, wallNow: f.wallNow,
+  });
+  const paid = fixture();
+  const report = await recordHsmuPlaywright({ mode: 'benchmark', arm: 'astra', taskClock: true, outputDir: join(root, 'unsupported') }, {
+    chromium: paid.chromium, createTarget: () => paid.target, prepareHome, now: paid.now, wallNow: paid.wallNow,
+    preflightReport: preflight, apiKeys: { openrouter: 'test-key' }, runComparison: () => assert.fail('No paid inference without capture'),
+  });
+  assert.equal(report.status, 'failed'); assert.equal(report.reason, 'TASK_CLOCK_UNSUPPORTED'); assert.equal(report.requests, 0);
+  assert.equal(report.taskClock.status, 'invalid'); assert.equal(report.taskClock.taskStart, null);
+  assert.ok(!paid.events.some(([name]) => name === 'goto'));
+});
+
+test('wall-clock drift invalidates completed timing evidence instead of certifying task alignment', async t => {
+  const { recordHsmuPlaywright } = await subject(), root = await temporary(t), f = withTaskClock(fixture());
+  let drift = 0;
+  const report = await recordHsmuPlaywright({ mode: 'preflight', taskClock: true, outputDir: join(root, 'drift') }, {
+    chromium: f.chromium, createTarget: () => f.target, prepareHome, now: f.now, wallNow: () => f.wallNow() + drift,
+    onStage: event => { if (event.stage === 'task-start') drift = 100; },
+  });
+  assert.equal(report.status, 'failed'); assert.equal(report.reason, 'TASK_CLOCK_DRIFT'); assert.equal(report.taskClock.status, 'invalid');
+  assert.equal(report.verification.completedSteps, 5); assert.equal(report.video.saved, true);
 });
 
 test('visible iframe failure is kept as a zero-call diagnostic with raw recording and no retries', async t => {

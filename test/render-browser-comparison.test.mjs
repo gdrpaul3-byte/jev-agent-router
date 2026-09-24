@@ -28,3 +28,21 @@ test('refuses mismatched protocols, failed results, wrong arms and invalid media
     value => { value[1].media.validPixels = false; },
   ]) { const input = fixture(); change(input); assert.throws(() => comparisonTimeline(input)); }
 });
+
+test('task clocks require verified timestamp-based clips and stop at measured completion', () => {
+  const inputs = fixture();
+  for (const input of inputs) {
+    input.report.taskClock = { status: 'aligned', sha256: 'c'.repeat(64) };
+    input.media.frames = Math.ceil(input.report.timing.taskDurationMs / 40);
+    input.media.durationSeconds = input.media.frames / 25;
+    input.media.taskAlignment = { kind: 'browser-task-clock', sourceManifestSha256: 'c'.repeat(64), measuredTaskSeconds: input.report.timing.taskDurationMs / 1000 };
+  }
+  const plan = comparisonTimeline(inputs);
+  assert.equal(plan.taskAligned, true);
+  assert.deepEqual(plan.panels.map(panel => panel.clockEndSeconds), [26.690936, 12.7110779]);
+  assert.match(plan.alignment, /before initial model inference/);
+  inputs[0].media.taskAlignment.sourceManifestSha256 = 'd'.repeat(64);
+  assert.throws(() => comparisonTimeline(inputs), /INVALID_TASK_ALIGNMENT/);
+  delete inputs[0].media.taskAlignment;
+  assert.throws(() => comparisonTimeline(inputs), /MIXED_CLOCKS/);
+});
