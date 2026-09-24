@@ -1,0 +1,169 @@
+{
+  "runId": "astra-1",
+  "protocolSha256": "8f4929bb2feb0ade77e73c78745594973f813cda520a48d924b680542364d2fd",
+  "startedAtEpochMs": 1790229693016,
+  "endedAtEpochMs": 1790229696483,
+  "elapsedMs": 3466.6049999999814,
+  "verified": false,
+  "schemaVersion": 1,
+  "status": "needs_host",
+  "arm": "astra",
+  "passed": false,
+  "reason": "INVALID_RESPONSE",
+  "navigation": {
+    "status": "needs_host",
+    "reason": "INVALID_RESPONSE",
+    "completedSteps": 0,
+    "durationMs": 3464.596100000199,
+    "metrics": {
+      "observations": 1,
+      "observationMs": 447.12999999988824,
+      "decisions": 1,
+      "decisionMs": 3016.242099999916,
+      "actions": 0,
+      "actionMs": 0
+    },
+    "steps": []
+  },
+  "visits": [
+    {
+      "id": "greeting",
+      "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+      "urlVerified": false,
+      "headingVerified": false,
+      "observedOrder": null
+    },
+    {
+      "id": "profile",
+      "url": "https://www.hsmu.ac.kr/web/contents/HSMU10502000.do",
+      "urlVerified": false,
+      "headingVerified": false,
+      "observedOrder": null
+    },
+    {
+      "id": "directions",
+      "url": "https://www.hsmu.ac.kr/web/contents/HSMU10401000.do",
+      "urlVerified": false,
+      "headingVerified": false,
+      "observedOrder": null
+    }
+  ],
+  "validation": {
+    "initialHomeVerified": true,
+    "visitedInOrder": false,
+    "facts": {
+      "seoulStationBus": false,
+      "mainPhone": false,
+      "shuttleFare": false
+    },
+    "imageContentsRead": false
+  },
+  "facts": null,
+  "sourceUrl": null,
+  "extraction": null,
+  "decisionStats": {
+    "calls": 1,
+    "errors": 1,
+    "decisions": 1,
+    "lastLatencyMs": 3015.591800000053,
+    "inputTokens": 0,
+    "usage": {
+      "inputTokens": null,
+      "cachedInputTokens": null,
+      "cacheWriteTokens": null,
+      "outputTokens": null,
+      "reasoningTokens": null
+    },
+    "cost": {
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": null,
+      "knownUsageUsd": 0,
+      "complete": false,
+      "basis": "provider_reported_credit_charge",
+      "billingScope": "openrouter_account_credits",
+      "cashChargeUsd": null,
+      "scope": "OpenRouter account credits only; excludes possible BYOK upstream charges, funding fees, tax and host inference."
+    }
+  },
+  "decisionAttempts": [
+    {
+      "index": 1,
+      "status": "needs_host",
+      "reason": "INVALID_RESPONSE",
+      "actionId": null,
+      "ref": null,
+      "confidence": null,
+      "requests": 1,
+      "latencyMs": 3015.591800000053,
+      "requestedModel": "openai/gpt-6-astra",
+      "observedModel": null,
+      "observedProvider": null,
+      "observedServiceTier": null,
+      "httpStatus": 200,
+      "usage": {
+        "inputTokens": null,
+        "cachedInputTokens": null,
+        "cacheWriteTokens": null,
+        "outputTokens": null,
+        "reasoningTokens": null
+      },
+      "cost": {
+        "estimatedProviderUsd": null,
+        "reportedProviderUsd": null,
+        "knownUsageUsd": null,
+        "complete": false,
+        "basis": "provider_reported_credit_charge",
+        "billingScope": "openrouter_account_credits",
+        "upstreamInferenceCostUsd": null,
+        "isByok": null,
+        "cashChargeUsd": null
+      }
+    }
+  ],
+  "timings": {
+    "totalMs": 3466.6049999999814,
+    "navigationMs": 3464.596100000199,
+    "extractionMs": 0
+  },
+  "requests": 1,
+  "requestEvidence": [
+    {
+      "index": 1,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 20175,
+      "reservedUsd": 0.3801875,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.05646,
+      "upstreamInferenceCostUsd": 0.05646,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 2998.761400000192,
+      "error": null
+    }
+  ],
+  "cost": {
+    "complete": true,
+    "estimatedProviderUsd": 0,
+    "reportedProviderUsd": 0.05646,
+    "knownUsageUsd": 0.05646,
+    "accountedProviderUsd": 0.05646,
+    "cashChargeUsd": null,
+    "scope": "JEV list-price estimate plus OpenRouter credit charge; upstream cost is not added; excludes host inference, fees and tax."
+  },
+  "globalAccounting": {
+    "requests": 1,
+    "maxRequests": 40,
+    "budgetUsd": 5,
+    "hardPrepaidCap": false,
+    "accountedProviderUsd": 0.05646,
+    "knownUsageUsd": 0.05646,
+    "estimatedProviderUsd": 0,
+    "reportedProviderUsd": 0.05646,
+    "complete": true,
+    "blockedReason": null,
+    "cashChargeUsd": null,
+    "pricingVerifiedOn": "2026-09-24",
+    "scope": "OpenRouter reported credit charge plus JEV input list-price estimate; excludes funding fees, tax and host inference"
+  }
+}

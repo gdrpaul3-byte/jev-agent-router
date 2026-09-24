@@ -45,6 +45,51 @@ test('rejects a changed pre-action target without dispatch', async () => {
   assert.equal((await runGoalWorkflow(options(f))).reason, 'STALE_OBSERVATION'); assert.equal(f.clicks, 0);
 });
 
+test('bounded stale replans use fresh observations and refs without inventing action history', async () => {
+  let reads = 0, clicked = false; const clicks = [], histories = [];
+  const target = { async getObservation() {
+    reads++; return { url: `https://example.test/${clicked ? 'article' : 'start'}`, title: clicked ? 'Article' : 'Home',
+      text: clicked ? 'Verified article body' : reads === 1 ? 'Loading content' : 'Ready content',
+      elements: [{ ref: reads === 1 ? 2 : 3, role: 'button', name: 'Continue' }] };
+  }, async click(ref) { clicks.push(ref); assert.equal(ref, 3); clicked = true; } };
+  const decider = { async decide(input) {
+    histories.push(input.history.map(item => ({ ...item })));
+    return clicked ? { status: 'done', confidence: 1 } : { status: 'decided', actionId: 'open', ref: input.observation.elements[0].ref, confidence: 1 };
+  } };
+  const result = await runGoalWorkflow({ ...options({ target, decider }), maxStaleReplans: 2 });
+  assert.equal(result.status, 'completed'); assert.deepEqual(clicks, [3]); assert.equal(result.completedSteps, 1);
+  assert.equal(result.metrics.decisions, 3); assert.equal(result.metrics.staleReplans, 1);
+  assert.deepEqual(histories, [[], [], [{ actionId: 'open', ref: 3 }]]);
+  assert.deepEqual(result.replans, [{ index: 1, afterCompletedSteps: 0, actionId: 'open', rejectedRef: 2, reason: 'STALE_OBSERVATION', actionDispatched: false }]);
+});
+
+test('stale replans stop at two and never cross a changed URL or title', async () => {
+  for (const change of ['continual', 'url', 'title']) {
+    let reads = 0, decisions = 0, clicks = 0;
+    const target = { async getObservation() { reads++; return {
+      url: change === 'url' && reads > 1 ? 'https://example.test/other' : 'https://example.test/start',
+      title: change === 'title' && reads > 1 ? 'Other page' : 'Home', text: `Read ${reads}`,
+      elements: [{ ref: reads, role: 'button', name: 'Continue' }],
+    }; }, async click() { clicks++; } };
+    const decider = { async decide(input) { decisions++; return { status: 'decided', actionId: 'open', ref: input.observation.elements[0].ref, confidence: 1 }; } };
+    const result = await runGoalWorkflow({ ...options({ target, decider }), maxStaleReplans: 2 });
+    assert.equal(result.reason, 'STALE_OBSERVATION'); assert.equal(clicks, 0);
+    assert.equal(decisions, change === 'continual' ? 3 : 1); assert.equal(result.metrics.staleReplans, change === 'continual' ? 2 : 0);
+  }
+});
+
+test('stale replan option defaults off, is bounded, and never retries dispatch errors', async () => {
+  assert.equal(prepareGoalPlan({ goal: 'test', actions, completion }).maxStaleReplans, 0);
+  for (const maxStaleReplans of [-1, 3, 1.5]) assert.equal(prepareGoalPlan({ goal: 'test', actions, completion, maxStaleReplans }), null);
+  for (const dispatched of [false, true]) {
+    const f = fixture(); let clicks = 0;
+    f.target.click = async () => { clicks++; throw Object.assign(new Error('STALE_OBSERVATION'), { code: 'STALE_OBSERVATION', actionDispatched: dispatched }); };
+    const result = await runGoalWorkflow({ ...options(f), maxStaleReplans: 2 });
+    assert.equal(result.reason, 'ACTION_FAILED'); assert.equal(clicks, 1); assert.equal(result.metrics.decisions, 1);
+    assert.equal(result.metrics.staleReplans, 0); assert.deepEqual(result.replans, []);
+  }
+});
+
 test('preserves the native title and rejects a title-only pre-action change', async () => {
   let reads = 0, clicks = 0, observedTitle;
   const target = {

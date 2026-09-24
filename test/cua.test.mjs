@@ -467,7 +467,11 @@ test('verification expiry stops without retrying the physical action', async () 
   assert.equal(result.completedSteps, 0);
   assert.deepEqual(actions(f), [['click', 2]]);
   assert.equal(f.events.filter(([name]) => name === 'select').length, 1);
-  assert.ok(f.events.filter(([name]) => name === 'observe').length > 3);
+  assert.equal(result.steps[0].status, 'action_performed_unverified');
+  const clickIndex = f.events.findIndex(([name]) => name === 'click');
+  // Under concurrent load the first polling pause may consume the deadline.
+  // Require a real post-action check, not an incidental number of timer ticks.
+  assert.ok(f.events.slice(clickIndex + 1).some(([name]) => name === 'observe'));
 });
 
 test('abort during verification polling stops after one performed action', async () => {

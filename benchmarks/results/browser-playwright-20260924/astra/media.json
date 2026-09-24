@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "sourceFile": "recording.webm",
+  "sourceSha256": "ed47a20c5af3d304a129290aca2fa816ef2b063a62a4693a8abe991856adca86",
+  "width": 1600,
+  "height": 900,
+  "frames": 799,
+  "durationSeconds": 31.96,
+  "blackIntervals": [],
+  "nonBlackFrames": 799,
+  "meanLuma": 183.27018272841067,
+  "minLuma": 153.772,
+  "maxLuma": 236,
+  "sampleFrameIndices": [
+    39,
+    199,
+    399,
+    598,
+    782
+  ],
+  "posterFrameIndex": 399,
+  "distinctSampleFrames": 5,
+  "validPixels": true,
+  "visualReviewRequired": true,
+  "limitation": "Decoded pixels and sample differences do not prove task success or privacy; inspect the contact sheet and task report.",
+  "encoding": {
+    "cuts": false,
+    "speed": 1,
+    "padding": false,
+    "audio": false,
+    "crop": false
+  },
+  "mp4Sha256": "0a01e0c0ac88e1af2f2c913ae85494a6f79cd80fd2ec3244006f1c232360b282"
+}

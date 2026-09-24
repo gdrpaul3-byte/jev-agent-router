@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-24",
+  "comparisonHash": "6c2d6b775d88e9492906f96d1e41b6043019657b534ed6b9a5bbdcff64a654c1",
+  "independentReview": {
+    "protocolHashesRecomputed": true,
+    "equalComparisonProtocol": true,
+    "sourceHashesMatchedPublicFiles": 11,
+    "mp4HashesMatched": true,
+    "rawWebmHashesMatchedLocalOriginals": true,
+    "passedArms": 2,
+    "expectedFactsMatched": true
+  },
+  "videoReview": {
+    "allFramesDecoded": 1286,
+    "blackIntervals": 0,
+    "sampledFramesVisuallyReviewed": true,
+    "jevTransitionStoryboardReviewed": true,
+    "fullManualPlaybackClaimed": false,
+    "visibleContent": "Public university viewport only; no account chrome, credentials, other apps or private paths observed in reviewed frames",
+    "intentionalCuts": false,
+    "playbackSpeed": 1,
+    "rawOriginalsRetainedLocally": true,
+    "timingWarning": "Video offsets are estimates from page creation; exact first-frame alignment is unknown. Use monotonic report task timers."
+  },
+  "accounting": {
+    "newPairRequests": 14,
+    "newPairProviderUsd": 0.16041461,
+    "earlierNativeRequests": 23,
+    "earlierNativeProviderUsd": 0.849577356,
+    "allBrowserRequests": 37,
+    "allBrowserProviderUsd": 1.009991966,
+    "scope": "OpenRouter reported credits plus TypeSafe JEV input list-price estimates; host inference, fees and taxes excluded",
+    "notCardBill": true
+  },
+  "tests": {
+    "command": "node --test test/*.test.mjs benchmarks/*.test.mjs",
+    "passed": 778,
+    "failed": 0
+  }
+}

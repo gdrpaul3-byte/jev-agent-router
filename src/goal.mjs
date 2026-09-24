@@ -30,10 +30,11 @@ function safeDecisionDiagnostics(value, actions, elements) {
 
 export function prepareGoalPlan(options = {}) {
   try {
-    const { goal, actions, completion, maxSteps = 12, maxDurationMs = 60000, verificationTimeoutMs = Math.min(1000, maxDurationMs), allowedOrigins } = options;
+    const { goal, actions, completion, maxSteps = 12, maxDurationMs = 60000, verificationTimeoutMs = Math.min(1000, maxDurationMs), maxStaleReplans = 0, allowedOrigins } = options;
     const preparedActions = prepareGoalActions(actions);
     if (!positive(goal) || !preparedActions || !record(completion)
       || !Number.isSafeInteger(maxSteps) || maxSteps < 1 || maxSteps > 100
+      || !Number.isSafeInteger(maxStaleReplans) || maxStaleReplans < 0 || maxStaleReplans > 2
       || !Number.isFinite(maxDurationMs) || maxDurationMs <= 0 || maxDurationMs > 1200000
       || !Number.isFinite(verificationTimeoutMs) || verificationTimeoutMs < 0 || verificationTimeoutMs > maxDurationMs) return null;
     const copied = {};
@@ -51,7 +52,7 @@ export function prepareGoalPlan(options = {}) {
       if (!Array.isArray(allowedOrigins) || !allowedOrigins.length || !allowedOrigins.every(x => originOf(x) === x)) return null;
       origins = Object.freeze([...new Set(allowedOrigins)]);
     }
-    return Object.freeze({ goal, actions: preparedActions, completion: Object.freeze(copied), maxSteps, maxDurationMs, verificationTimeoutMs, ...(origins ? { allowedOrigins: origins } : {}) });
+    return Object.freeze({ goal, actions: preparedActions, completion: Object.freeze(copied), maxSteps, maxDurationMs, verificationTimeoutMs, maxStaleReplans, ...(origins ? { allowedOrigins: origins } : {}) });
   } catch { return null; }
 }
 
@@ -63,12 +64,12 @@ export function goalCompletionMatches(observation, completion) {
 
 /** Bounded local loop. The model selects only host-authored action IDs and observed refs. */
 export async function runGoalWorkflow(options = {}) {
-  const started = now(), steps = [], history = [];
-  const metrics = { observations: 0, observationMs: 0, decisions: 0, decisionMs: 0, actions: 0, actionMs: 0 };
+  const started = now(), steps = [], history = [], replans = [];
+  const metrics = { observations: 0, observationMs: 0, decisions: 0, decisionMs: 0, actions: 0, actionMs: 0, staleReplans: 0 };
   let completedSteps = 0;
   const finish = (reason, detail, diagnostics) => ({ status: reason ? 'needs_host' : 'completed', ...(reason ? { reason } : {}),
     ...(safeReason(detail) ? { detail } : {}), ...(diagnostics ? { diagnostics } : {}),
-    completedSteps, steps, metrics, durationMs: Math.max(0, now() - started) });
+    completedSteps, steps, replans, metrics, durationMs: Math.max(0, now() - started) });
   const plan = prepareGoalPlan(options), { target, decider, signal } = options;
   if (!plan || !target || (typeof target.getObservation !== 'function' && typeof target.getAXState !== 'function')
     || typeof decider?.decide !== 'function' || plan.actions.some(a => typeof target[a.action] !== 'function')) return finish('INVALID_PLAN');
@@ -166,7 +167,18 @@ export async function runGoalWorkflow(options = {}) {
       read = await observe();
       if (read.reason) return finish(read.reason, read.detail);
       const current = resolveStableTarget(observation, read.observation, element.ref);
-      if (!current || !matchesActionTarget(current, action)) return finish('STALE_OBSERVATION');
+      if (!current || !matchesActionTarget(current, action)) {
+        // Only a rejected pre-dispatch decision can be replaced. Never execute its
+        // old ref or append a success to history; a new decision must pass this guard.
+        const samePage = observation.url === read.observation.url
+          && typeof observation.title === 'string' && observation.title === read.observation.title;
+        if (!samePage || metrics.staleReplans >= plan.maxStaleReplans) return finish('STALE_OBSERVATION');
+        metrics.staleReplans++;
+        replans.push({ index: metrics.staleReplans, afterCompletedSteps: completedSteps,
+          actionId: action.id, rejectedRef: element.ref, reason: 'STALE_OBSERVATION', actionDispatched: false });
+        observation = read.observation;
+        continue;
+      }
       const before = progressFingerprint(read.observation);
       const completedBefore = goalCompletionMatches(read.observation, plan.completion);
       if (boundary()) return finish(boundary());

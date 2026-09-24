@@ -55,13 +55,16 @@ function captureDOM() {
     || attr(element, 'placeholder').trim()
     || (roleFor(element) === 'button' && typeof element.value === 'string' ? element.value : '');
 
-  if (!document.body) return { error: 'INVALID_OBSERVATION' };
+  // Some legacy pages replace globals used by Playwright's object serializer.
+  // A JSON primitive crosses that transport without changing any page globals.
+  const encode = value => JSON.stringify(value);
+  if (!document.body) return encode({ error: 'INVALID_OBSERVATION' });
   if (Array.from(document.querySelectorAll('iframe,frame')).some(frame => !hidden(frame))) {
-    return { error: 'IFRAMES_UNSUPPORTED' };
+    return encode({ error: 'IFRAMES_UNSUPPORTED' });
   }
   const text = document.body.innerText;
-  if (typeof text !== 'string') return { error: 'INVALID_OBSERVATION' };
-  if (text.length > 20000) return { error: 'OBSERVATION_TOO_LARGE' };
+  if (typeof text !== 'string') return encode({ error: 'INVALID_OBSERVATION' });
+  if (text.length > 20000) return encode({ error: 'OBSERVATION_TOO_LARGE' });
   const elements = [];
   const candidates = Array.from(document.querySelectorAll(selector));
   for (let ref = 0; ref < candidates.length; ref++) {
@@ -101,12 +104,12 @@ function captureDOM() {
       }),
     };
     if (Object.values(item).some(value => typeof value === 'string' && value.length > 20000)) {
-      return { error: 'OBSERVATION_TOO_LARGE' };
+      return encode({ error: 'OBSERVATION_TOO_LARGE' });
     }
     elements.push(item);
-    if (elements.length > 199) return { error: 'OBSERVATION_TOO_LARGE' };
+    if (elements.length > 199) return encode({ error: 'OBSERVATION_TOO_LARGE' });
   }
-  return { title: document.title, url: location.href, text, candidateCount: candidates.length, elements };
+  return encode({ title: document.title, url: location.href, text, candidateCount: candidates.length, elements });
 }
 
 class AdapterError extends Error {
@@ -190,7 +193,14 @@ export function createPlaywrightTarget(page) {
     let snapshot;
     try { snapshot = await page.evaluate(captureDOM); }
     catch (error) { throw sanitizedFailure(error, 'OBSERVATION_FAILED'); }
-    try { return validateSnapshot(snapshot); }
+    try {
+      if (typeof snapshot === 'string') {
+        if (snapshot.length > MAX_SNAPSHOT_LENGTH) throw fail('OBSERVATION_TOO_LARGE');
+        try { snapshot = JSON.parse(snapshot); } catch { throw fail('INVALID_OBSERVATION'); }
+      }
+      // Object-shaped results remain compatible with existing host adapters.
+      return validateSnapshot(snapshot);
+    }
     catch (error) { throw error instanceof AdapterError ? error : fail('INVALID_OBSERVATION'); }
   }
 

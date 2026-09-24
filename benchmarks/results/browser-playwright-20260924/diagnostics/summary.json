@@ -1,0 +1,71 @@
+{
+  "scope": "Earlier native CUA diagnostics; not the isolated Playwright experiment",
+  "recordingsValid": false,
+  "recordingsNote": "Desktop ABBA capture decoded as 614 black frames; never use as task demonstration. Raw black media retained locally.",
+  "effectiveVerificationTimeoutMs": 5000,
+  "staleReplans": 0,
+  "requests": null,
+  "totalAccountedProviderUsd": null,
+  "runs": [
+    {
+      "runId": "astra-1",
+      "passed": false,
+      "reason": "INVALID_RESPONSE",
+      "requests": 1,
+      "elapsedMs": 3466.6049999999814,
+      "costUsd": 0.05646,
+      "protocolSha256": "8f4929bb2feb0ade77e73c78745594973f813cda520a48d924b680542364d2fd",
+      "sourceSha256": "4275917e926f4f55c10660d6d8e48646e7d9b622a57393a1600a2001b2a88c2c"
+    },
+    {
+      "runId": "astra-2",
+      "passed": false,
+      "reason": "NO_OBSERVABLE_PROGRESS",
+      "requests": 5,
+      "elapsedMs": 37426.34560000012,
+      "costUsd": 0.23666,
+      "protocolSha256": "fe5466233b0928fc3d2ac835c26917331fcfb1ecb7186b3cbaff498a1d19912f",
+      "sourceSha256": "cbb1744290a7988c54ba4fc2a4427ee7c4755bed29f8f6b5121d4012e23f0367"
+    },
+    {
+      "runId": "astra-3",
+      "passed": true,
+      "reason": null,
+      "requests": 7,
+      "elapsedMs": 40061.67570000002,
+      "costUsd": 0.3512,
+      "protocolSha256": "fe5466233b0928fc3d2ac835c26917331fcfb1ecb7186b3cbaff498a1d19912f",
+      "sourceSha256": "cc8ab00e0d588ba559aee3da5ddd2fedb7b71a1b6f89bb7c148c910e39b2cdb9"
+    },
+    {
+      "runId": "jev-1",
+      "passed": false,
+      "reason": "STALE_OBSERVATION",
+      "requests": 3,
+      "elapsedMs": 10252.307699999772,
+      "costUsd": 0.00109851,
+      "protocolSha256": "fe5466233b0928fc3d2ac835c26917331fcfb1ecb7186b3cbaff498a1d19912f",
+      "sourceSha256": "24870cf9f0f55accbff09190cb6695794dbf00b5b9837c8d507d42393098054a"
+    },
+    {
+      "runId": "jev-2",
+      "passed": false,
+      "reason": "STALE_OBSERVATION",
+      "requests": 3,
+      "elapsedMs": 7895.890800000168,
+      "costUsd": 0.0010988460000000001,
+      "protocolSha256": "fe5466233b0928fc3d2ac835c26917331fcfb1ecb7186b3cbaff498a1d19912f",
+      "sourceSha256": "debb4e7a407ea59e19c34f0748c6f9a5504817652e3dce7ef41ba8c78180844c"
+    },
+    {
+      "runId": "astra-4",
+      "passed": false,
+      "reason": "NO_OBSERVABLE_PROGRESS",
+      "requests": 4,
+      "elapsedMs": 34817.50050000008,
+      "costUsd": 0.20305999999999996,
+      "protocolSha256": "fe5466233b0928fc3d2ac835c26917331fcfb1ecb7186b3cbaff498a1d19912f",
+      "sourceSha256": "253fdc55bf29c42317e99d874fa36d561ce02fb37cab5a19dce7c03c2daba794"
+    }
+  ]
+}

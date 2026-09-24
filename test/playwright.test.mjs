@@ -72,6 +72,33 @@ async function adapter(page) {
   return module.createPlaywrightTarget(page);
 }
 
+test('DOM capture survives a site transport that drops object results and keeps string results', async () => {
+  const f = fakePage(); const evaluate = f.page.evaluate;
+  f.page.evaluate = async callback => {
+    const result = await evaluate(callback);
+    return result !== null && typeof result === 'object' ? undefined : result;
+  };
+  const target = await adapter(f.page);
+  assert.equal((await target.getObservation()).elements[0].name, 'Continue');
+  await target.click(0); assert.deepEqual(f.actions(), [['click', 0]]);
+  f.state.frameCount = 1;
+  await assert.rejects(target.getObservation(), /IFRAMES_UNSUPPORTED/);
+});
+
+test('JSON transport rejects malformed and oversized data before dispatch, retaining object-fixture compatibility', async () => {
+  const f = fakePage(); const evaluate = f.page.evaluate;
+  f.page.evaluate = async callback => { const value = await evaluate(callback); return typeof value === 'string' ? JSON.parse(value) : value; };
+  const target = await adapter(f.page);
+  assert.equal((await target.getObservation()).title, 'Fixture');
+  for (const [value, reason] of [['{bad SECRET', 'INVALID_OBSERVATION'], ['x'.repeat(100001), 'OBSERVATION_TOO_LARGE'],
+    [JSON.stringify({ title: 'Invalid', url: 'https://example.test', text: '', candidateCount: 1, elements: [{ ref: '0' }] }), 'INVALID_OBSERVATION']]) {
+    f.page.evaluate = async () => value;
+    await assert.rejects(target.getObservation(), error => error.code === reason && !error.message.includes('SECRET'));
+    await assert.rejects(target.click(0), /OBSERVATION_REQUIRED/);
+  }
+  assert.deepEqual(f.actions(), []);
+});
+
 test('captures a parseable AX observation and maps refs to the original selector indexes', async () => {
   const f = fakePage([
     button('Hidden', { hidden: true }),

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "browser": {
+    "channel": "chrome",
+    "headless": false,
+    "browserVersion": "153.0.8010.53",
+    "freshContext": true,
+    "viewport": {
+      "width": 1600,
+      "height": 900
+    },
+    "recordVideoSize": {
+      "width": 1600,
+      "height": 900
+    },
+    "deviceScaleFactor": 1,
+    "locale": "ko-KR",
+    "timezoneId": "Asia/Seoul",
+    "actionTimeoutMs": 30000,
+    "navigationTimeoutMs": 30000,
+    "ignoreHTTPSErrors": false
+  },
+  "maxRequests": 10,
+  "budgetUsd": 2,
+  "plan": {
+    "goal": "화성의과학대학교 홈페이지에서 순서대로 (1) 총장 인사말 페이지를 방문하고, (2) 총장 프로필 페이지를 방문한 뒤, (3) 오시는 길 페이지로 이동하세요. 처음 홈페이지의 H 링크로 메뉴를 열고 총장 인사말 링크를 누르세요. 인사말 페이지의 총장 인사말 버튼으로 하위 메뉴를 열어 총장 프로필 링크를 누르세요. 프로필을 방문한 후 오시는 길 링크로 이동하세요. 마지막 페이지에서 대중교통 안내와 셔틀버스 탑승요금이 나타나면 완료입니다. 이미지로 제공된 인사말·프로필 내용은 읽었다고 주장하지 마세요. 텍스트·URL·방문 기록으로 현재 단계를 판단하고 앞 단계를 건너뛰지 마세요.",
+    "actions": [
+      {
+        "id": "openMainMenu",
+        "action": "click",
+        "description": "처음 홈페이지에서 총장 인사말 링크가 아직 안 보이면 H 메뉴를 연다",
+        "target": {
+          "roles": [
+            "link"
+          ],
+          "nameEquals": "H"
+        }
+      },
+      {
+        "id": "openGreeting",
+        "action": "click",
+        "description": "첫 방문 페이지인 총장 인사말로 이동한다",
+        "target": {
+          "roles": [
+            "link"
+          ],
+          "nameEquals": "총장 인사말"
+        }
+      },
+      {
+        "id": "openProfileMenu",
+        "action": "click",
+        "description": "총장 인사말 페이지에 도착한 뒤 총장 프로필 링크를 보기 위해 현재 페이지 제목 버튼으로 하위 메뉴를 연다",
+        "target": {
+          "roles": [
+            "button"
+          ],
+          "nameEquals": "총장 인사말"
+        }
+      },
+      {
+        "id": "openProfile",
+        "action": "click",
+        "description": "총장 인사말을 방문한 뒤 두 번째 페이지인 총장 프로필로 이동한다",
+        "target": {
+          "roles": [
+            "link"
+          ],
+          "nameEquals": "총장 프로필"
+        }
+      },
+      {
+        "id": "openDirections",
+        "action": "click",
+        "description": "총장 인사말과 총장 프로필을 순서대로 방문한 뒤 마지막 오시는 길로 이동한다",
+        "target": {
+          "roles": [
+            "link"
+          ],
+          "nameEquals": "오시는 길"
+        }
+      }
+    ],
+    "completion": {
+      "urlIncludes": "/web/contents/HSMU10401000.do",
+      "textIncludes": [
+        "대중교통 이용 시",
+        "탑승요금"
+      ]
+    },
+    "allowedOrigins": [
+      "https://www.hsmu.ac.kr"
+    ],
+    "maxSteps": 8,
+    "maxDurationMs": 240000,
+    "verificationTimeoutMs": 30000,
+    "maxStaleReplans": 2
+  },
+  "expectedFacts": {
+    "seoulStationBus": "5101",
+    "mainPhone": "031-369-9100~1",
+    "shuttleFare": "무료"
+  },
+  "target": "playwright-dom-with-coherent-visible-headings",
+  "models": {
+    "astra": "openai/gpt-6-astra",
+    "jev": "jev-1.13.0",
+    "finalExtraction": "openai/gpt-6-astra"
+  },
+  "sourceHashes": {
+    "benchmarks/record-hsmu-playwright.mjs": "b3b1ea3b9150ce9834913bb4999838e978b29cad9a0a33f884e0c068b5339ca9",
+    "benchmarks/hsmu-browser-compare.mjs": "30e80278591fdeaeac998661cb1e70918920950a488be9fa31323af14752ed4a",
+    "benchmarks/browser-llm-decider.mjs": "362155eb8952f229c2ea1318a3ac8733f540513cd55fa4973b21877cf0ee4fc0",
+    "src/playwright.mjs": "0c4b1b6236995ffe9f1fcfa69231210cd0d335693bcc78e4a1cac5e3f9621e9a",
+    "src/goal.mjs": "64f35d5740451d02b45a288af3b55fc0eb9a1e0cf9d886099b11055187b50d80",
+    "src/decider.mjs": "ea6a729a1315109b8750f53cfd0d7ba152040d2f674110ea20ee15d189671d6b",
+    "src/observation.mjs": "ece78d470a4ccc2a700bff0b49476ef3e230e466c0b40494c6885c2bb7beee25",
+    "src/cua.mjs": "3150ed8cf7ec0476d44ff7602a0eb91e41790a498e733d43bd0da45ce4c4fb46",
+    "src/structured-llm.mjs": "abe1c6aa6bfcdac6dfc2bd5c48de3efa54a9731ae5456e650fe22aa54505bbc1",
+    "src/inference-budget.mjs": "b9ec71c09fdd6fc6a4fc985f3049c14b31427856b9954e283a1c2cdebe420d7d"
+  },
+  "comparisonHash": "956e92c8666ec872d155fbeaf8481b7c5b7e7b41ef8770a8f0a023dc689fbef2",
+  "runHash": "228c79833b120cef7f36edc506204ac494e4f5d476c890118a8cae0956b7b745"
+}

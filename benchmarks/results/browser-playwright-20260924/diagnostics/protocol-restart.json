@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-24",
+  "order": [
+    "astra-2",
+    "jev-1",
+    "jev-2",
+    "astra-3"
+  ],
+  "site": "https://www.hsmu.ac.kr/web/main/index.do",
+  "backend": "native",
+  "plan": {
+    "goal": "화성의과학대학교 홈페이지에서 순서대로 (1) 총장 인사말 페이지를 방문하고, (2) 총장 프로필 페이지를 방문한 뒤, (3) 오시는 길 페이지로 이동하세요. 처음 홈페이지의 H 링크로 메뉴를 열고 총장 인사말 링크를 누르세요. 인사말 페이지의 총장 인사말 버튼으로 하위 메뉴를 열어 총장 프로필 링크를 누르세요. 프로필을 방문한 후 오시는 길 링크로 이동하세요. 마지막 페이지에서 대중교통 안내와 셔틀버스 탑승요금이 나타나면 완료입니다. 이미지로 제공된 인사말·프로필 내용은 읽었다고 주장하지 마세요. 텍스트·URL·방문 기록으로 현재 단계를 판단하고 앞 단계를 건너뛰지 마세요.",
+    "actions": [
+      {
+        "id": "openMainMenu",
+        "action": "click",
+        "description": "처음 홈페이지에서 총장 인사말 링크가 아직 안 보이면 H 메뉴를 연다",
+        "target": {
+          "roles": [
+            "link"
+          ],
+          "nameEquals": "H"
+        }
+      },
+      {
+        "id": "openGreeting",
+        "action": "click",
+        "description": "첫 방문 페이지인 총장 인사말로 이동한다",
+        "target": {
+          "roles": [
+            "link"
+          ],
+          "nameEquals": "총장 인사말"
+        }
+      },
+      {
+        "id": "openProfileMenu",
+        "action": "click",
+        "description": "총장 인사말 페이지에 도착한 뒤 총장 프로필 링크를 보기 위해 현재 페이지 제목 버튼으로 하위 메뉴를 연다",
+        "target": {
+          "roles": [
+            "button"
+          ],
+          "nameEquals": "총장 인사말"
+        }
+      },
+      {
+        "id": "openProfile",
+        "action": "click",
+        "description": "총장 인사말을 방문한 뒤 두 번째 페이지인 총장 프로필로 이동한다",
+        "target": {
+          "roles": [
+            "link"
+          ],
+          "nameEquals": "총장 프로필"
+        }
+      },
+      {
+        "id": "openDirections",
+        "action": "click",
+        "description": "총장 인사말과 총장 프로필을 순서대로 방문한 뒤 마지막 오시는 길로 이동한다",
+        "target": {
+          "roles": [
+            "link"
+          ],
+          "nameEquals": "오시는 길"
+        }
+      }
+    ],
+    "completion": {
+      "urlIncludes": "/web/contents/HSMU10401000.do",
+      "textIncludes": [
+        "대중교통 이용 시",
+        "탑승요금"
+      ]
+    },
+    "allowedOrigins": [
+      "https://www.hsmu.ac.kr"
+    ],
+    "maxSteps": 8,
+    "maxDurationMs": 240000,
+    "verificationTimeoutMs": 5000
+  },
+  "expectedFacts": {
+    "seoulStationBus": "5101",
+    "mainPhone": "031-369-9100~1",
+    "shuttleFare": "무료"
+  },
+  "models": {
+    "decisions": {
+      "astra": "openai/gpt-6-astra",
+      "jev": "jev-1.13.0"
+    },
+    "extraction": "openai/gpt-6-astra"
+  },
+  "cacheMode": "off",
+  "browserCache": "warm from unmetered navigation rehearsal",
+  "preflightPaidRequests": 0,
+  "budgetUsd": 5,
+  "maxRequests": 40,
+  "supersedes": "protocol.json",
+  "reason": "Response.json returned foreign-realm objects; parse response text inside the host realm, preserving strict validation and accounting.",
+  "sha256": "fe5466233b0928fc3d2ac835c26917331fcfb1ecb7186b3cbaff498a1d19912f"
+}

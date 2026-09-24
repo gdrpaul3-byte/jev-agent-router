@@ -17,7 +17,24 @@ A host such as Codex or Claude supplies a task, current evidence, and a finite l
 
 This is a local Node.js runtime with optional host skills, not a replacement for Codex, Claude, or their browser tools. A skill tells the host how to use the runtime; installing it does not install API credits or establish a browser connection.
 
-## Measured whole-workflow comparison
+## Actual Chrome task recordings / 실제 Chrome 작업 영상
+
+On 2026-09-24, **both approaches completed five model-selected clicks, visited three university pages in order, and correctly extracted all three requested facts**. These are actual Chrome viewport recordings from fresh isolated contexts, not a dashboard animation. Each approach made seven paid API requests and used Astra for final extraction.
+
+| Approach / 방식 | Task incl. extraction / 추출 포함 업무 | Including setup and cleanup / 준비·종료 포함 | Accounted provider cost / 공급자 비용 |
+| --- | ---: | ---: | ---: |
+| Astra + Astra | 26.69 s | 37.86 s | $0.14240000 |
+| JEV + Astra | 12.71 s | 24.97 s | $0.01801461 |
+
+[Watch Astra](benchmarks/results/browser-playwright-20260924/astra/video.mp4) · [Watch JEV + Astra](benchmarks/results/browser-playwright-20260924/jev/video.mp4) · [Reports and limitations / 결과와 한계](benchmarks/results/browser-playwright-20260924/RESULTS.md) · [Reproduce](docs/BROWSER-DEMO.en.md) · [재현 방법](docs/BROWSER-DEMO.ko.md)
+
+[![Actual JEV browser recording](benchmarks/results/browser-playwright-20260924/jev/poster.png)](benchmarks/results/browser-playwright-20260924/jev/video.mp4)
+
+In this **one-run-per-arm pilot**, JEV + Astra took 52.4% less task time and used 87.3% less accounted provider cost. This is a bounded, host-authored route, not a general browser-agent benchmark. Cost combines OpenRouter-reported credits with JEV's input-token list-price estimate; final extraction is included, host inference and fees are excluded. Full videos retain initial loading, popup preparation and waits at 1× speed. All frames were decoded and sampled frames were visually checked. Earlier failures and their $0.849577356 cost remain in the [diagnostic ledger](benchmarks/results/browser-playwright-20260924/diagnostics/summary.json).
+
+**이번 실제 브라우저 재시험은 양쪽 모두 성공했습니다.** 방식별 1회 측정에서 JEV+Astra의 업무 시간이 52.4%, 공급자 비용이 87.3% 작았습니다. 준비·종료까지 포함한 시간은 표의 별도 열로 공개합니다. 개인 Chrome 탭 대신 새 테스트 창을 사용했고, 영상은 배속·구간 삭제 없이 실제 로딩과 팝업 정리도 포함합니다. 이 결과를 모든 사이트·업무의 우위로 일반화하지 않습니다. 이전 검은 영상과 실행 실패의 기록·비용도 별도로 보존했습니다.
+
+## Measured synthetic workflow comparison
 
 On 2026-09-24, two Korean **synthetic** missions covered scholarship allocation and public-grant selection. Each had a base case and changed evidence. Every arm selected local evidence and used **Astra for final structured synthesis**. All arms received the same exact-cache and prompt-cache opportunities.
 
@@ -33,9 +50,9 @@ There were **12 fresh workflows, 6 exact replays, and 36 actual POST requests**.
 
 The one strict failure was a final-step citation-set mismatch. An independent agent review found that the supplied citations supported that step, but the **frozen score remains 11/12 strict, 12/12 core**. The fixtures are agent-authored development cases, not a human-validated benchmark. See the [full conditions](benchmarks/results/complex-missions-v1/RESULTS.md), [interpretation](benchmarks/results/complex-missions-v1/INTERPRETATION.md), [frozen manifest](benchmarks/results/complex-missions-v1/report.json.manifest.json), and [verification record](benchmarks/results/complex-missions-v1/verification.json).
 
-Current release verification: **734 automated tests passed, zero failures**. The original measured run records 718 tests before inference and 722 after the first router refinements. Run `npm run test:all` to verify your installed revision.
+Current release verification: **778 automated tests passed, zero failures**. The original synthetic run records 718 tests before inference and 722 after the first router refinements. Run `npm run test:all` to verify your installed revision.
 
-A read-only live progress dashboard and bilingual recording instructions are included. **No screen-recorded live demo has been published yet.** The measured results above come from the preserved API report.
+A read-only live progress dashboard and bilingual recording instructions are included. The synthetic results above come from their preserved API report; the real Chrome recordings are a separate experiment linked earlier in this README.
 
 ## Quick start
 

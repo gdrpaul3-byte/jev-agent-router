@@ -1,0 +1,339 @@
+{
+  "runId": "astra-4",
+  "protocolSha256": "fe5466233b0928fc3d2ac835c26917331fcfb1ecb7186b3cbaff498a1d19912f",
+  "startedAtEpochMs": 1790230226405,
+  "endedAtEpochMs": 1790230261223,
+  "elapsedMs": 34817.50050000008,
+  "verified": false,
+  "schemaVersion": 1,
+  "status": "needs_host",
+  "arm": "astra",
+  "passed": false,
+  "reason": "NO_OBSERVABLE_PROGRESS",
+  "navigation": {
+    "status": "needs_host",
+    "reason": "NO_OBSERVABLE_PROGRESS",
+    "completedSteps": 3,
+    "durationMs": 34814.71610000031,
+    "metrics": {
+      "observations": 9,
+      "observationMs": 12498.222499999683,
+      "decisions": 4,
+      "decisionMs": 13791.271200000774,
+      "actions": 4,
+      "actionMs": 8521.09109999938
+    },
+    "steps": [
+      {
+        "index": 0,
+        "actionId": "openMainMenu",
+        "ref": 9,
+        "status": "observed_after_action",
+        "actionMs": 864.5469999997877
+      },
+      {
+        "index": 1,
+        "actionId": "openGreeting",
+        "ref": 144,
+        "status": "observed_after_action",
+        "actionMs": 1044.3793999999762
+      },
+      {
+        "index": 2,
+        "actionId": "openProfileMenu",
+        "ref": 24,
+        "status": "observed_after_action",
+        "actionMs": 1230.8887999998406
+      },
+      {
+        "index": 3,
+        "actionId": "openProfile",
+        "ref": 61,
+        "status": "action_performed_unverified",
+        "actionMs": 5381.275899999775
+      }
+    ]
+  },
+  "visits": [
+    {
+      "id": "greeting",
+      "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+      "urlVerified": true,
+      "headingVerified": true,
+      "observedOrder": 1
+    },
+    {
+      "id": "profile",
+      "url": "https://www.hsmu.ac.kr/web/contents/HSMU10502000.do",
+      "urlVerified": false,
+      "headingVerified": false,
+      "observedOrder": null
+    },
+    {
+      "id": "directions",
+      "url": "https://www.hsmu.ac.kr/web/contents/HSMU10401000.do",
+      "urlVerified": false,
+      "headingVerified": false,
+      "observedOrder": null
+    }
+  ],
+  "validation": {
+    "initialHomeVerified": true,
+    "visitedInOrder": false,
+    "facts": {
+      "seoulStationBus": false,
+      "mainPhone": false,
+      "shuttleFare": false
+    },
+    "imageContentsRead": false
+  },
+  "facts": null,
+  "sourceUrl": null,
+  "extraction": null,
+  "decisionStats": {
+    "calls": 4,
+    "errors": 0,
+    "decisions": 4,
+    "lastLatencyMs": 2492.9833999997936,
+    "inputTokens": 19736,
+    "usage": {
+      "inputTokens": 19736,
+      "cachedInputTokens": 0,
+      "cacheWriteTokens": 0,
+      "outputTokens": 114,
+      "reasoningTokens": 0
+    },
+    "cost": {
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.20305999999999996,
+      "knownUsageUsd": 0.20305999999999996,
+      "complete": true,
+      "basis": "provider_reported_credit_charge",
+      "billingScope": "openrouter_account_credits",
+      "cashChargeUsd": null,
+      "scope": "OpenRouter account credits only; excludes possible BYOK upstream charges, funding fees, tax and host inference."
+    }
+  },
+  "decisionAttempts": [
+    {
+      "index": 1,
+      "status": "decided",
+      "reason": null,
+      "actionId": "openMainMenu",
+      "ref": 9,
+      "confidence": 1,
+      "requests": 1,
+      "latencyMs": 2604.3536999998614,
+      "requestedModel": "openai/gpt-6-astra",
+      "observedModel": "openai/gpt-6-astra",
+      "observedProvider": "OpenAI",
+      "observedServiceTier": "default",
+      "httpStatus": 200,
+      "usage": {
+        "inputTokens": 5513,
+        "cachedInputTokens": 0,
+        "cacheWriteTokens": 0,
+        "outputTokens": 29,
+        "reasoningTokens": 0
+      },
+      "cost": {
+        "estimatedProviderUsd": null,
+        "reportedProviderUsd": 0.05658,
+        "knownUsageUsd": 0.05658,
+        "complete": true,
+        "basis": "provider_reported_credit_charge",
+        "billingScope": "openrouter_account_credits",
+        "upstreamInferenceCostUsd": 0.05658,
+        "isByok": false,
+        "cashChargeUsd": null
+      }
+    },
+    {
+      "index": 2,
+      "status": "decided",
+      "reason": null,
+      "actionId": "openGreeting",
+      "ref": 144,
+      "confidence": 1,
+      "requests": 1,
+      "latencyMs": 5802.861599999946,
+      "requestedModel": "openai/gpt-6-astra",
+      "observedModel": "openai/gpt-6-astra",
+      "observedProvider": "OpenAI",
+      "observedServiceTier": "default",
+      "httpStatus": 200,
+      "usage": {
+        "inputTokens": 7223,
+        "cachedInputTokens": 0,
+        "cacheWriteTokens": 0,
+        "outputTokens": 28,
+        "reasoningTokens": 0
+      },
+      "cost": {
+        "estimatedProviderUsd": null,
+        "reportedProviderUsd": 0.07363,
+        "knownUsageUsd": 0.07363,
+        "complete": true,
+        "basis": "provider_reported_credit_charge",
+        "billingScope": "openrouter_account_credits",
+        "upstreamInferenceCostUsd": 0.07363,
+        "isByok": false,
+        "cashChargeUsd": null
+      }
+    },
+    {
+      "index": 3,
+      "status": "decided",
+      "reason": null,
+      "actionId": "openProfileMenu",
+      "ref": 24,
+      "confidence": 1,
+      "requests": 1,
+      "latencyMs": 2890.4279000000097,
+      "requestedModel": "openai/gpt-6-astra",
+      "observedModel": "openai/gpt-6-astra",
+      "observedProvider": "OpenAI",
+      "observedServiceTier": "default",
+      "httpStatus": 200,
+      "usage": {
+        "inputTokens": 3245,
+        "cachedInputTokens": 0,
+        "cacheWriteTokens": 0,
+        "outputTokens": 29,
+        "reasoningTokens": 0
+      },
+      "cost": {
+        "estimatedProviderUsd": null,
+        "reportedProviderUsd": 0.0339,
+        "knownUsageUsd": 0.0339,
+        "complete": true,
+        "basis": "provider_reported_credit_charge",
+        "billingScope": "openrouter_account_credits",
+        "upstreamInferenceCostUsd": 0.0339,
+        "isByok": false,
+        "cashChargeUsd": null
+      }
+    },
+    {
+      "index": 4,
+      "status": "decided",
+      "reason": null,
+      "actionId": "openProfile",
+      "ref": 61,
+      "confidence": 1,
+      "requests": 1,
+      "latencyMs": 2492.9833999997936,
+      "requestedModel": "openai/gpt-6-astra",
+      "observedModel": "openai/gpt-6-astra",
+      "observedProvider": "OpenAI",
+      "observedServiceTier": "default",
+      "httpStatus": 200,
+      "usage": {
+        "inputTokens": 3755,
+        "cachedInputTokens": 0,
+        "cacheWriteTokens": 0,
+        "outputTokens": 28,
+        "reasoningTokens": 0
+      },
+      "cost": {
+        "estimatedProviderUsd": null,
+        "reportedProviderUsd": 0.03895,
+        "knownUsageUsd": 0.03895,
+        "complete": true,
+        "basis": "provider_reported_credit_charge",
+        "billingScope": "openrouter_account_credits",
+        "upstreamInferenceCostUsd": 0.03895,
+        "isByok": false,
+        "cashChargeUsd": null
+      }
+    }
+  ],
+  "timings": {
+    "totalMs": 34817.50050000008,
+    "navigationMs": 34814.71610000031,
+    "extractionMs": 0
+  },
+  "requests": 4,
+  "requestEvidence": [
+    {
+      "index": 20,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 20177,
+      "reservedUsd": 0.3802125,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.05658,
+      "upstreamInferenceCostUsd": 0.05658,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 2589.815500000026,
+      "error": null
+    },
+    {
+      "index": 21,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 25943,
+      "reservedUsd": 0.4522875,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.07363,
+      "upstreamInferenceCostUsd": 0.07363,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 5792.379699999932,
+      "error": null
+    },
+    {
+      "index": 22,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13086,
+      "reservedUsd": 0.291575,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0339,
+      "upstreamInferenceCostUsd": 0.0339,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 2882.113099999726,
+      "error": null
+    },
+    {
+      "index": 23,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 14846,
+      "reservedUsd": 0.313575,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.03895,
+      "upstreamInferenceCostUsd": 0.03895,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 2393.1156000001356,
+      "error": null
+    }
+  ],
+  "cost": {
+    "complete": true,
+    "estimatedProviderUsd": 0,
+    "reportedProviderUsd": 0.20305999999999996,
+    "knownUsageUsd": 0.20305999999999996,
+    "accountedProviderUsd": 0.20305999999999996,
+    "cashChargeUsd": null,
+    "scope": "JEV list-price estimate plus OpenRouter credit charge; upstream cost is not added; excludes host inference, fees and tax."
+  },
+  "globalAccounting": {
+    "requests": 23,
+    "maxRequests": 40,
+    "budgetUsd": 5,
+    "hardPrepaidCap": false,
+    "accountedProviderUsd": 0.8495773560000001,
+    "knownUsageUsd": 0.8495773560000001,
+    "estimatedProviderUsd": 0.002197356,
+    "reportedProviderUsd": 0.84738,
+    "complete": true,
+    "blockedReason": null,
+    "cashChargeUsd": null,
+    "pricingVerifiedOn": "2026-09-24",
+    "scope": "OpenRouter reported credit charge plus JEV input list-price estimate; excludes funding fees, tax and host inference"
+  }
+}

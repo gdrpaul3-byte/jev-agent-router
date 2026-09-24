@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-09-24T05:32:11.828Z",
+  "createdAt": "2026-09-24T07:20:42.282Z",
   "scope": "Reviewed allowlisted package; local secret values and personal paths checked; keys and state excluded.",
   "files": [
     {
@@ -21,6 +21,11 @@
       "path": ".gitignore",
       "bytes": 112,
       "sha256": "9a4a7d7c7efa5dfd01627476ed3453c8d408e27998f4ff58842614487456a197"
+    },
+    {
+      "path": "benchmarks/browser-llm-decider.mjs",
+      "bytes": 14858,
+      "sha256": "362155eb8952f229c2ea1318a3ac8733f540513cd55fa4973b21877cf0ee4fc0"
     },
     {
       "path": "benchmarks/complex-mission-cases.mjs",
@@ -58,9 +63,24 @@
       "sha256": "5acf6538f38df92a87d586d34e678bae2b90dc0e2dffe3571e360b9891cb920d"
     },
     {
+      "path": "benchmarks/hsmu-browser-compare.mjs",
+      "bytes": 15916,
+      "sha256": "0df663a14df6bcbf6182d7ad873b26aa8691c54958de6ef7f498a8210ba5edce"
+    },
+    {
+      "path": "benchmarks/hsmu-browser-setup.mjs",
+      "bytes": 2253,
+      "sha256": "140b52a8711419b3f44b8c07071fed46ecbdd958c3d808008eb3409f668a0674"
+    },
+    {
       "path": "benchmarks/hsmu-run.mjs",
       "bytes": 4278,
       "sha256": "7950ed6009cb4e810ea0038845d4688cfdf754456c9d8509989dcb849a4d8855"
+    },
+    {
+      "path": "benchmarks/inspect-browser-video.mjs",
+      "bytes": 5088,
+      "sha256": "c4e082d56bc3ee1752200842f6e090d3fb11f7d5004c1a74fcae7d92503e1a80"
     },
     {
       "path": "benchmarks/live-demo-server.mjs",
@@ -123,9 +143,14 @@
       "sha256": "737926be5a253b55bdc19b8ce5828651e8714c17dc928ce53fb97edc2ee34d3a"
     },
     {
+      "path": "benchmarks/record-hsmu-playwright.mjs",
+      "bytes": 18336,
+      "sha256": "3a7ace8518c2c6bc89bb239aead2ee76d91598eeeb2d26ed1a795cea148320c7"
+    },
+    {
       "path": "benchmarks/record-window.mjs",
-      "bytes": 6366,
-      "sha256": "18b9bb5ad317c445da7f0c4c35266147edbd1444f173511684232d4e86fec555"
+      "bytes": 9667,
+      "sha256": "36e0ff5d6176e850191c8d89313893c526010cb6ed2523fda5e7c372afa2537d"
     },
     {
       "path": "benchmarks/render-complex-results.mjs",
@@ -146,6 +171,166 @@
       "path": "benchmarks/render-screenshot-video.mjs",
       "bytes": 8500,
       "sha256": "25f5d6a8cc79273270759926a06179167d009381e2a5b1ea1002af5b8b83bfa6"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/astra/contact-sheet.png",
+      "bytes": 357558,
+      "sha256": "cc6c5cc0d90e1ade6107aa6d72787f7b6b717f9653fd9d3da6b6476ccb7056a1"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/astra/media.json",
+      "bytes": 869,
+      "sha256": "c5b703781ce97beeb1a45649f2f608729364f266a1a3cd58b64e0a9d1bf0f65c"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/astra/poster.png",
+      "bytes": 176500,
+      "sha256": "622d68e0bad555c71952ff3b6cd36872fa905a1ec2c729b4d79196016f72ad88"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/astra/protocol.json",
+      "bytes": 5041,
+      "sha256": "f7f1b1316d311736fe8402ef63e1d7c90b1877aa3d769d4663b41a613b62444a"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/astra/report.json",
+      "bytes": 21393,
+      "sha256": "aadb13ad4751e1bd560eed8f61943df78a3ec771b255aed658c7c1b86248dc12"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/astra/video.mp4",
+      "bytes": 1679320,
+      "sha256": "0a01e0c0ac88e1af2f2c913ae85494a6f79cd80fd2ec3244006f1c232360b282"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/diagnostics/astra-1.json",
+      "bytes": 4651,
+      "sha256": "4275917e926f4f55c10660d6d8e48646e7d9b622a57393a1600a2001b2a88c2c"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/diagnostics/astra-2.json",
+      "bytes": 10881,
+      "sha256": "cbb1744290a7988c54ba4fc2a4427ee7c4755bed29f8f6b5121d4012e23f0367"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/diagnostics/astra-3.json",
+      "bytes": 13031,
+      "sha256": "cc8ab00e0d588ba559aee3da5ddd2fedb7b71a1b6f89bb7c148c910e39b2cdb9"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/diagnostics/astra-4.json",
+      "bytes": 9473,
+      "sha256": "253fdc55bf29c42317e99d874fa36d561ce02fb37cab5a19dce7c03c2daba794"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/diagnostics/jev-1.json",
+      "bytes": 4280,
+      "sha256": "24870cf9f0f55accbff09190cb6695794dbf00b5b9837c8d507d42393098054a"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/diagnostics/jev-2.json",
+      "bytes": 4305,
+      "sha256": "debb4e7a407ea59e19c34f0748c6f9a5504817652e3dce7ef41ba8c78180844c"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/diagnostics/protocol-original.json",
+      "bytes": 3464,
+      "sha256": "679654cd9f4097e8efa195d6ea3bccd7e7312520258211ad93eeef01dc30dbca"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/diagnostics/protocol-restart.json",
+      "bytes": 3646,
+      "sha256": "345bdb0328bfc05fbc1c22b341014d1113690ca769542952d3a11ec66204b5bf"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/diagnostics/summary.json",
+      "bytes": 2672,
+      "sha256": "8d8ac1f8e2641a04c84c605213d1d6794e3457f3dd7353ffbcf40dd57c08a8ff"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/jev/contact-sheet.png",
+      "bytes": 374646,
+      "sha256": "4d1ea210cdd6d297163b5c65b374c77ddbe57809d1dd64f82a3927dfdd7dec6f"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/jev/media.json",
+      "bytes": 868,
+      "sha256": "8a53eb64b158c86d348c04a0474e5d110d60ba48fe6062654c0944ee37f310f1"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/jev/poster.png",
+      "bytes": 323679,
+      "sha256": "107123c7ca6280b0183f64d1d21376191bcc88106b5ea5f695887820807672b5"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/jev/protocol.json",
+      "bytes": 5041,
+      "sha256": "36eda9a07a448ddca77146cfa5488b07313b6a6d48f29e2f18cfc249dd6b2325"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/jev/report.json",
+      "bytes": 14767,
+      "sha256": "7368b35dc7e55d550ba25730ed5d95db00f3be1d3de204baf803f7c06312b9d3"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/jev/transitions.png",
+      "bytes": 642582,
+      "sha256": "a309e109398bcbef81d81e217c98d872d4eeb9541d45f68223ead30d4426d2b0"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/jev/video.mp4",
+      "bytes": 1182699,
+      "sha256": "d0e5c1f07b2fe3e850c3b698c1de4e63a2bb6859ca26c3963b6992327d884b0a"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/preflight-1/protocol.json",
+      "bytes": 4791,
+      "sha256": "7b2510dce08816e90cac2f64d3529fd41c09908f7a211469d1aec566d295bf34"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/preflight-1/report.json",
+      "bytes": 6032,
+      "sha256": "116ba05d470eddef6eee01d3826c893f1456ac7354e87bb5530dc0bbe7cb67cf"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/preflight-2/protocol.json",
+      "bytes": 4791,
+      "sha256": "2ae8b4cae08bc766b531cc3d822ca1b55eecf0e1c0ab22061763fae56f94b62a"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/preflight-2/report.json",
+      "bytes": 6445,
+      "sha256": "a64d9612ae377e27d044512fe2c039a1cfac4c63107f2a6d3f82ebd5a63e81de"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/preflight-3/protocol.json",
+      "bytes": 5041,
+      "sha256": "712c57bde2389b9512a8520c8936d88b66291693644be91b3e166808290fee01"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/preflight-3/report.json",
+      "bytes": 7558,
+      "sha256": "8cf6daf8d52d52377f661956311a00d4d55c6ba8a091c0e22f6b4c60d3ebe4c7"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/preflight-4/protocol.json",
+      "bytes": 5041,
+      "sha256": "7b8f0a2b6618a55f501fe454ef495729f3dcc36473a8557a9f700db02a1cba6e"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/preflight-4/report.json",
+      "bytes": 9106,
+      "sha256": "f5fa535c047e08b0120fc280d4083411b7d10c1c1eeaebcdee2fc3838f95ade9"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/RESULTS.md",
+      "bytes": 14466,
+      "sha256": "f9dd4354ffee086c2720b018aac516f486c2cedb1429fd8271bef1b364051baf"
+    },
+    {
+      "path": "benchmarks/results/browser-playwright-20260924/verification.json",
+      "bytes": 1563,
+      "sha256": "1f2a6f0d6822545faefd07ebf9b706c12281de48e51e39c48dde8d3243c3372a"
     },
     {
       "path": "benchmarks/results/complex-missions-v1/INTERPRETATION.md",
@@ -173,6 +358,11 @@
       "sha256": "3cd10b0f1649f9dd1614e6d47b92b1719da34e1754940725ab9921f6f4476f40"
     },
     {
+      "path": "benchmarks/system-ca-fetch.mjs",
+      "bytes": 7821,
+      "sha256": "b34ea8c10ab8a93feda4be88bd1aa1ed84e2ff9b1b5ea8286281d9814f9ba7fb"
+    },
+    {
       "path": "benchmarks/task-router-cases.json",
       "bytes": 17633,
       "sha256": "75e1a439563f95c195ceb31ee031008dceab24a2406cc73362161e49b37e100b"
@@ -196,6 +386,16 @@
       "path": "docs/batch-routing.md",
       "bytes": 6171,
       "sha256": "8a96fe82960d1d2777f5f11b9e6ca8d40bb1a61845f4c71aa71c2a7600cf30c9"
+    },
+    {
+      "path": "docs/BROWSER-DEMO.en.md",
+      "bytes": 13880,
+      "sha256": "867749ce97b89a4c34d7751f5196bc842fd9461116adfae39321f3c4b300d627"
+    },
+    {
+      "path": "docs/BROWSER-DEMO.ko.md",
+      "bytes": 15756,
+      "sha256": "330046006cd15e1250799a759a41ffc0c3865642e4bbb37ff2d264e256d75509"
     },
     {
       "path": "docs/claude-chrome.md",
@@ -289,8 +489,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 9741,
-      "sha256": "1d0c95fb71dd12bfd81d73f53f374e40f8ab23cabb2bb834343cd8a9babbd6c6"
+      "bytes": 12238,
+      "sha256": "6c449b61ffeb19f10553786664f37e499bb2edca6ae76526aa063d6056faa80b"
     },
     {
       "path": "scripts/install-skill.mjs",
@@ -369,8 +569,8 @@
     },
     {
       "path": "src/goal.mjs",
-      "bytes": 14108,
-      "sha256": "10406c5182a8f5253ad7e26ca60597f1f2fd8efbd1f794b1a15a0df3bd0addf7"
+      "bytes": 14992,
+      "sha256": "64f35d5740451d02b45a288af3b55fc0eb9a1e0cf9d886099b11055187b50d80"
     },
     {
       "path": "src/index.mjs",
@@ -394,8 +594,8 @@
     },
     {
       "path": "src/playwright.mjs",
-      "bytes": 14241,
-      "sha256": "0c4b1b6236995ffe9f1fcfa69231210cd0d335693bcc78e4a1cac5e3f9621e9a"
+      "bytes": 14825,
+      "sha256": "98951da306d325725c0d6022319f004dbc6658d55e217258ad5a9fce4d0e4e70"
     },
     {
       "path": "src/router-batch.mjs",
@@ -436,6 +636,11 @@
       "path": "test/adaptive-router.test.mjs",
       "bytes": 24615,
       "sha256": "9bc9aafdb3ea552026d95f56514ea723eccd4b6997404714c6245b30c4268dea"
+    },
+    {
+      "path": "test/browser-llm-decider.test.mjs",
+      "bytes": 7954,
+      "sha256": "98dd6fb5bf242b3625fd0d9aea189d00db33a6a6ccb9b9d0fbcabc48ecfb3a55"
     },
     {
       "path": "test/browser-run.test.mjs",
@@ -484,8 +689,8 @@
     },
     {
       "path": "test/cua.test.mjs",
-      "bytes": 28982,
-      "sha256": "68e2f801af346e1aeddf3bab6b0e5311d82916f1082610763b9ef7d74e0b556d"
+      "bytes": 29290,
+      "sha256": "b9f1f3f4453bb679743869703f666ef1fe732973ecb3aea2769cdbda181d96e0"
     },
     {
       "path": "test/decider.test.mjs",
@@ -499,8 +704,18 @@
     },
     {
       "path": "test/goal.test.mjs",
-      "bytes": 15879,
-      "sha256": "d0fcbdbc6a7c0685de84fa87ccc0767dfa8633cb2591a4b2ff2997245915b0dd"
+      "bytes": 19221,
+      "sha256": "1d9d44dde351e9b80a36a2b9849e4b9e93d347e5592f0bea89a50d12c7a58f3f"
+    },
+    {
+      "path": "test/hsmu-browser-compare.test.mjs",
+      "bytes": 9746,
+      "sha256": "99ae01f2fd5fb30c87e3a0579e07d1363c5dffd6a63c53946f777528cd35df5f"
+    },
+    {
+      "path": "test/hsmu-browser-setup.test.mjs",
+      "bytes": 4651,
+      "sha256": "b28d45bc27d1bb3b58ef3cc90b6942ae4a9811f95a03e161c813d681bed80b87"
     },
     {
       "path": "test/inference-budget.test.mjs",
@@ -554,8 +769,18 @@
     },
     {
       "path": "test/playwright.test.mjs",
-      "bytes": 21175,
-      "sha256": "40da3195af0c2c8aa0f6964a06d59d5688768f4491f78d3d5f4ce72b9f527296"
+      "bytes": 22793,
+      "sha256": "4018379cfc7a2f47cde53b0680194f3e30006e75191b3bdfefec4c7265a9c94b"
+    },
+    {
+      "path": "test/record-hsmu-playwright.test.mjs",
+      "bytes": 12613,
+      "sha256": "d9ee3d2cb35e9c1516140a45c8bdf307ad782564ccdef9356debbf3d529f4c7f"
+    },
+    {
+      "path": "test/record-window-quality.test.mjs",
+      "bytes": 3327,
+      "sha256": "68d1d58e7d68a52b6e3a526810f737f98bfaa7a5271d0eeaebe8c8b6c3bb6864"
     },
     {
       "path": "test/router-batch.test.mjs",
@@ -601,6 +826,11 @@
       "path": "test/structured-llm.test.mjs",
       "bytes": 15646,
       "sha256": "77a32cb8f98b08fe7e5c8037e29b7157855a0f9cd1de7a6f297a9ba944df7ebf"
+    },
+    {
+      "path": "test/system-ca-fetch.test.mjs",
+      "bytes": 10074,
+      "sha256": "8047f7ba224d538aa71a9a5ab978a42debe70758ca19f54f1f6b59dc9018bf09"
     }
   ]
 }
