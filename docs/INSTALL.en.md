@@ -120,7 +120,7 @@ node -- scripts/install-skill.mjs --agent both --skill adaptive
 
 Use `--agent codex` or `--agent claude` for one host. Skills go under that user's `~/.codex/skills` and/or `~/.claude/skills`. The adaptive skill is named `jev-adaptive-router`. The installer copies `SKILL.md` with the checkout's resolved runtime and `.env` paths; it does **not** copy key contents or install a separate runtime. Keep that checkout available at the installed path.
 
-Other choices are `--skill task-router`, `--skill browser`, and `--skill all`. Omitting `--skill` preserves the browser-only installer behavior. Existing skills are not silently overwritten. For a compatible installation from the same checkout:
+Other choices are `--skill task-router`, `--skill browser`, `--skill claude-chrome`, and `--skill all`. `claude-chrome` (`jev-claude-chrome`) is installed for Claude only, because it drives the Claude in Chrome extension tools; `--skill all --agent both` therefore installs three skills for Codex and four for Claude. Omitting `--skill` preserves the browser-only installer behavior. Existing skills are not silently overwritten. For a compatible installation from the same checkout:
 
 ```sh
 node -- scripts/install-skill.mjs --agent both --skill adaptive --update
@@ -132,7 +132,19 @@ Start or reload your host session as needed to discover the skill, then ask it t
 
 > Use jev-adaptive-router to choose the next step from research or draft for this task. Start with offline preflight, keep evidence current, inspect the returned cost and approval fields, and use your existing tools only within my request.
 
-The host must be able to run local Node commands and read the task/config files. Skills do not connect remote bots. A working Claude login is separate from the router's API credentials. The Claude in Chrome bridge is implemented and mock-tested; an actual Claude browser execution test remains deferred.
+The host must be able to run local Node commands and read the task/config files. Skills do not connect remote bots. A working Claude login is separate from the router's API credentials.
+
+### Claude in Chrome
+
+```sh
+node -- scripts/install-skill.mjs --agent claude --skill claude-chrome
+```
+
+Start Claude Code with `claude --chrome` and check `/chrome`. Then ask, for example:
+
+> Use jev-claude-chrome on the tab showing my local demo at http://127.0.0.1:8776/: click Open library, then Read guide, until the page shows Workflow verified. Report every attempt and its JEV cost.
+
+The skill starts a private session ledger, observes the tab with the official extension tools, asks JEV for one host-approved action, executes it once and verifies it from a fresh read. It was live-tested on 2026-09-24 on two local fixtures; see [the results](../benchmarks/results/claude-chrome-live-20260924/RESULTS.md) and [the bridge contract](claude-chrome.md). Only `TYPESAFE_API_KEY` is needed for this path. Each action takes several Claude tool calls, so expect roughly 30–60 s per action; no speed advantage is claimed.
 
 ## 6. Optional durable handoff
 

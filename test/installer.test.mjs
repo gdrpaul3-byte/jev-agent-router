@@ -41,7 +41,7 @@ test('explicit update preserves both exact-runtime skills as exclusive backups',
       assert.match(skill, /createPlaywrightTarget/);
       assert.ok(!skill.includes('Local pre-upgrade note.'));
       assert.ok(!skill.includes('__JEV_'));
-      assert.deepEqual((await readdir(result.updated[index])).sort(), ['SKILL.md', 'SKILL.md.before-browser-v2']);
+      assert.deepEqual((await readdir(result.updated[index])).sort(), ['SKILL.md', 'SKILL.md.before-claude-chrome-v1']);
     }
   } finally { await rm(homeDirectory, { recursive: true, force: true }); }
 });
@@ -63,24 +63,26 @@ test('an existing backup is never overwritten and blocks both upgrades', async (
   try {
     const installed = (await installSkills({ homeDirectory })).installed;
     const originals = await Promise.all(installed.map(directory => readFile(join(directory, 'SKILL.md'), 'utf8')));
-    const backup = join(installed[1], 'SKILL.md.before-browser-v2'); await writeFile(backup, 'precious-backup');
+    const backup = join(installed[1], 'SKILL.md.before-claude-chrome-v1'); await writeFile(backup, 'precious-backup');
     await assert.rejects(installSkills({ homeDirectory, update: true }), /SKILL_BACKUP_ALREADY_EXISTS/);
     assert.equal(await readFile(backup, 'utf8'), 'precious-backup');
     for (let index = 0; index < installed.length; index++) assert.equal(await readFile(join(installed[index], 'SKILL.md'), 'utf8'), originals[index]);
-    await assert.rejects(access(join(installed[0], 'SKILL.md.before-browser-v2')), /ENOENT/);
+    await assert.rejects(access(join(installed[0], 'SKILL.md.before-claude-chrome-v1')), /ENOENT/);
   } finally { await rm(homeDirectory, { recursive: true, force: true }); }
 });
 
-test('browser update preserves the previous goal release backup', async () => {
+test('browser update preserves the previous goal and browser release backups', async () => {
   const homeDirectory = await mkdtemp(join(tmpdir(), 'jev-prior-release-'));
   try {
     const installed = (await installSkills({ homeDirectory })).installed;
     for (const directory of installed) await writeFile(join(directory, 'SKILL.md.before-goal-v1'), 'original-goal-backup');
+    for (const directory of installed) await writeFile(join(directory, 'SKILL.md.before-browser-v2'), 'browser-v2-backup');
     const result = await installSkills({ homeDirectory, update: true });
     assert.equal(result.updated.length, 2);
     for (const directory of installed) {
       assert.equal(await readFile(join(directory, 'SKILL.md.before-goal-v1'), 'utf8'), 'original-goal-backup');
-      assert.ok((await readFile(join(directory, 'SKILL.md.before-browser-v2'), 'utf8')).includes('JEV'));
+      assert.equal(await readFile(join(directory, 'SKILL.md.before-browser-v2'), 'utf8'), 'browser-v2-backup');
+      assert.ok((await readFile(join(directory, 'SKILL.md.before-claude-chrome-v1'), 'utf8')).includes('JEV'));
     }
   } finally { await rm(homeDirectory, { recursive: true, force: true }); }
 });

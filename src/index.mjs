@@ -10,6 +10,8 @@ export { parseAX } from './cua.mjs';
 export { createMeteredFetch, summarizeBilling } from './meter.mjs';
 export { createCodexTarget } from './codex-target.mjs';
 export { proposeClaudeChrome, authorizeClaudeChrome, verifyClaudeChromeAction } from './claude-chrome.mjs';
+export { normalizeClaudeObservation, parseReadPage, parseRefCheck, parseTabsContext, parsePageText, sensitiveElement, revealsPassword } from './claude-observation.mjs';
+export { startClaudeChromeSession, runClaudeChromeSession, unlockClaudeChromeSession } from './claude-chrome-session.mjs';
 export { prepareRouteRequest, decideRoute } from './router.mjs';
 export { decideRouteBatch } from './router-batch.mjs';
 export { runRoutingTask, readReadyHandoff } from './router-task.mjs';

@@ -1,0 +1,474 @@
+{
+  "kind": "claude_in_chrome_live_host_test",
+  "dateUtc": "2026-09-24",
+  "host": "Claude Code desktop app (Windows 11) driving the Claude in Chrome extension 1.0.94",
+  "model": "jev-1.13.0 via the TypeSafe direct API",
+  "fixtures": {
+    "T1": {
+      "name": "two-click demo",
+      "source": "examples/demo.html served by examples/demo-server.mjs",
+      "origin": "http://127.0.0.1:8776"
+    },
+    "T2": {
+      "name": "Korean notice search (typeText + 3 clicks)",
+      "source": "benchmarks/goal-fixture.mjs --port 8781; plan = benchmarks/goal-plan.mjs makeGoalPlan with Claude role names and maxDurationMs 600000",
+      "origin": "http://127.0.0.1:8781"
+    }
+  },
+  "attempts": [
+    {
+      "task": "T1",
+      "attempt": "dev-1",
+      "build": "development (before review)",
+      "planChange": null,
+      "startedAt": "2026-09-24T14:07:44.854Z",
+      "status": "needs_host",
+      "reason": "LOW_CONFIDENCE",
+      "history": [
+        "open-library"
+      ],
+      "pendingAtStop": null,
+      "jevRequests": 2,
+      "knownInputTokens": 2938,
+      "estimatedJevUsd": 0.000123396,
+      "wallClockSeconds": 62.5,
+      "notes": "Goal: 'Open the library, then read the guide in the local demo.' Step 2 chose read-guide below the 0.75 gate.",
+      "decisions": [
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "open-library",
+          "confidence": 0.91,
+          "inputTokens": 1464,
+          "latencyMs": 710
+        },
+        {
+          "status": "needs_host",
+          "reason": "LOW_CONFIDENCE",
+          "diagnostics": {
+            "head": "OPERATION",
+            "choice": "read-guide",
+            "confidence": 0.7,
+            "margin": 0.66
+          },
+          "inputTokens": 1474,
+          "latencyMs": 565
+        }
+      ]
+    },
+    {
+      "task": "T1",
+      "attempt": "dev-2",
+      "build": "development (before review)",
+      "planChange": null,
+      "startedAt": "2026-09-24T14:09:01.305Z",
+      "status": "needs_host",
+      "reason": "LOW_CONFIDENCE",
+      "history": [
+        "open-library"
+      ],
+      "pendingAtStop": null,
+      "jevRequests": 2,
+      "knownInputTokens": 2938,
+      "estimatedJevUsd": 0.000123396,
+      "wallClockSeconds": 74.2,
+      "notes": "Same plan; same stop.",
+      "decisions": [
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "open-library",
+          "confidence": 0.9,
+          "inputTokens": 1464,
+          "latencyMs": 575
+        },
+        {
+          "status": "needs_host",
+          "reason": "LOW_CONFIDENCE",
+          "diagnostics": {
+            "head": "OPERATION",
+            "choice": "read-guide",
+            "confidence": 0.65,
+            "margin": 0.58
+          },
+          "inputTokens": 1474,
+          "latencyMs": 620
+        }
+      ]
+    },
+    {
+      "task": "T1",
+      "attempt": "dev-3",
+      "build": "development (before review)",
+      "planChange": "Goal rewritten with the visible control labels and completion text: 'Click the Open library button, then click the Read guide button, until the page shows Workflow verified.'",
+      "startedAt": "2026-09-24T14:10:53.247Z",
+      "status": "completed",
+      "reason": null,
+      "history": [
+        "open-library",
+        "read-guide"
+      ],
+      "pendingAtStop": null,
+      "jevRequests": 3,
+      "knownInputTokens": 4395,
+      "estimatedJevUsd": 0.00018459,
+      "wallClockSeconds": 124.9,
+      "notes": null,
+      "decisions": [
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "open-library",
+          "confidence": 0.92,
+          "inputTokens": 1471,
+          "latencyMs": 604
+        },
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "read-guide",
+          "confidence": 0.84,
+          "inputTokens": 1481,
+          "latencyMs": 634
+        },
+        {
+          "status": "proposed",
+          "decision": "done",
+          "actionId": null,
+          "confidence": 0.92,
+          "inputTokens": 1443,
+          "latencyMs": 560
+        }
+      ]
+    },
+    {
+      "task": "T2",
+      "attempt": "dev-1",
+      "build": "development (before review)",
+      "planChange": null,
+      "startedAt": "2026-09-24T14:13:40.781Z",
+      "status": "needs_host",
+      "reason": "PROPOSAL_EXPIRED",
+      "history": [],
+      "pendingAtStop": {
+        "stage": "authorized",
+        "outcome": "unverified"
+      },
+      "jevRequests": 1,
+      "knownInputTokens": 2595,
+      "estimatedJevUsd": 0.00010899,
+      "wallClockSeconds": 144.4,
+      "notes": "form_input ran; a 30 s screenshot timeout pushed verify past the 60 s window then measured from the decision. The action was kept as unverified. The window is now measured from the authorization.",
+      "decisions": [
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "enter-query",
+          "confidence": 0.94,
+          "inputTokens": 2595,
+          "latencyMs": 649
+        }
+      ]
+    },
+    {
+      "task": "T2",
+      "attempt": "dev-2",
+      "build": "development (before review)",
+      "planChange": null,
+      "startedAt": "2026-09-24T14:17:46.181Z",
+      "status": "needs_host",
+      "reason": "LOW_CONFIDENCE",
+      "history": [
+        "enter-query"
+      ],
+      "pendingAtStop": null,
+      "jevRequests": 2,
+      "knownInputTokens": 5203,
+      "estimatedJevUsd": 0.000218526,
+      "wallClockSeconds": 66.1,
+      "notes": "Input verified from the form_input report. The next step chose submit-search below the gate (0.56) because read_page hides the field value.",
+      "decisions": [
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "enter-query",
+          "confidence": 0.96,
+          "inputTokens": 2595,
+          "latencyMs": 566
+        },
+        {
+          "status": "needs_host",
+          "reason": "LOW_CONFIDENCE",
+          "diagnostics": {
+            "head": "OPERATION",
+            "choice": "submit-search",
+            "confidence": 0.56,
+            "margin": 0.46
+          },
+          "inputTokens": 2608,
+          "latencyMs": 554
+        }
+      ]
+    },
+    {
+      "task": "T2",
+      "attempt": "dev-3",
+      "build": "development (before review)",
+      "planChange": null,
+      "startedAt": "2026-09-24T14:20:38.102Z",
+      "status": "completed",
+      "reason": null,
+      "history": [
+        "enter-query",
+        "submit-search",
+        "filter-library",
+        "open-notice"
+      ],
+      "pendingAtStop": null,
+      "jevRequests": 5,
+      "knownInputTokens": 13696,
+      "estimatedJevUsd": 0.000575232,
+      "wallClockSeconds": 228.6,
+      "notes": "First run with the verified input value shown to JEV (as a plain value at that time).",
+      "decisions": [
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "enter-query",
+          "confidence": 0.95,
+          "inputTokens": 2595,
+          "latencyMs": 888
+        },
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "submit-search",
+          "confidence": 0.94,
+          "inputTokens": 2626,
+          "latencyMs": 595
+        },
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "filter-library",
+          "confidence": 0.94,
+          "inputTokens": 2809,
+          "latencyMs": 602
+        },
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "open-notice",
+          "confidence": 0.94,
+          "inputTokens": 3085,
+          "latencyMs": 584
+        },
+        {
+          "status": "proposed",
+          "decision": "done",
+          "actionId": null,
+          "confidence": 0.84,
+          "inputTokens": 2581,
+          "latencyMs": 552
+        }
+      ]
+    },
+    {
+      "task": "T1",
+      "attempt": "final-1",
+      "build": "release (after four review rounds)",
+      "planChange": "Same goal as dev-3, maxDurationMs 360000.",
+      "startedAt": "2026-09-24T16:49:31.299Z",
+      "status": "completed",
+      "reason": null,
+      "history": [
+        "open-library",
+        "read-guide"
+      ],
+      "pendingAtStop": null,
+      "jevRequests": 3,
+      "knownInputTokens": 4395,
+      "estimatedJevUsd": 0.00018459,
+      "wallClockSeconds": 163.3,
+      "notes": "One screenshot timed out (30 s); the tab viewport shrank to 157x73 afterwards, when the listing was already empty.",
+      "decisions": [
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "open-library",
+          "confidence": 0.89,
+          "inputTokens": 1471,
+          "latencyMs": 677
+        },
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "read-guide",
+          "confidence": 0.83,
+          "inputTokens": 1481,
+          "latencyMs": 833
+        },
+        {
+          "status": "proposed",
+          "decision": "done",
+          "actionId": null,
+          "confidence": 0.93,
+          "inputTokens": 1443,
+          "latencyMs": 586
+        }
+      ]
+    },
+    {
+      "task": "T2",
+      "attempt": "final-1",
+      "build": "release (after four review rounds)",
+      "planChange": null,
+      "startedAt": "2026-09-24T16:52:28.694Z",
+      "status": "completed",
+      "reason": null,
+      "history": [
+        "enter-query",
+        "submit-search",
+        "filter-library",
+        "open-notice"
+      ],
+      "pendingAtStop": null,
+      "jevRequests": 5,
+      "knownInputTokens": 13716,
+      "estimatedJevUsd": 0.000576072,
+      "wallClockSeconds": 248.7,
+      "notes": "New tab after the viewport issue. Remembered input shown as valueSource tool_report: post-typing decision 0.89.",
+      "decisions": [
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "enter-query",
+          "confidence": 0.95,
+          "inputTokens": 2595,
+          "latencyMs": 591
+        },
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "submit-search",
+          "confidence": 0.89,
+          "inputTokens": 2646,
+          "latencyMs": 518
+        },
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "filter-library",
+          "confidence": 0.94,
+          "inputTokens": 2809,
+          "latencyMs": 565
+        },
+        {
+          "status": "proposed",
+          "decision": "decided",
+          "actionId": "open-notice",
+          "confidence": 0.95,
+          "inputTokens": 3085,
+          "latencyMs": 688
+        },
+        {
+          "status": "proposed",
+          "decision": "done",
+          "actionId": null,
+          "confidence": 0.84,
+          "inputTokens": 2581,
+          "latencyMs": 594
+        }
+      ]
+    }
+  ],
+  "probes": [
+    {
+      "id": "stateless-bridge",
+      "jevRequests": 3,
+      "knownInputTokens": 4195,
+      "estimatedJevUsd": 0.00017619,
+      "decisions": [
+        {
+          "status": "proposed",
+          "reason": null,
+          "actionId": "open-library",
+          "confidence": 0.93
+        },
+        {
+          "status": "proposed",
+          "reason": null,
+          "actionId": "open-library",
+          "confidence": 0.92
+        },
+        {
+          "status": "needs_host",
+          "reason": "LOW_CONFIDENCE",
+          "actionId": null,
+          "confidence": null
+        }
+      ],
+      "notes": "Earlier stateless CLI with a hand-built envelope. The first authorized ref click was reported as done but never reached the page (no screenshot since navigation); verify stopped with NO_OBSERVABLE_PROGRESS."
+    }
+  ],
+  "unrecordedRequests": {
+    "count": 25,
+    "notes": "Direct decider calls comparing goal wording, title/history variants and a shown field value (2026-09-24). Token usage was not recorded; at the observed 1,400–2,900 input tokens per request this is roughly USD 0.0015–0.003."
+  },
+  "routerRuns": [
+    {
+      "skill": "jev-adaptive-router",
+      "run": "live",
+      "status": "selected",
+      "routeId": "draft",
+      "provider": "jev",
+      "cacheHit": false,
+      "requests": 2,
+      "accountedProviderUsd": 0.004351164
+    },
+    {
+      "skill": "jev-adaptive-router",
+      "run": "exact replay",
+      "status": "selected",
+      "routeId": "draft",
+      "cacheHit": true,
+      "requests": 0,
+      "accountedProviderUsd": 0
+    },
+    {
+      "skill": "jev-task-router",
+      "run": "dry-run",
+      "status": "dry_run",
+      "requests": 0,
+      "estimatedJevUsd": 0
+    },
+    {
+      "skill": "jev-task-router",
+      "run": "shadow (live)",
+      "status": "shadow",
+      "recommendationId": "research",
+      "effectiveRouteId": "research",
+      "requests": 1,
+      "estimatedJevUsd": 0.00003423
+    },
+    {
+      "skill": "jev-task-router",
+      "run": "shadow replay",
+      "status": "shadow",
+      "recommendationId": "research",
+      "requests": 0,
+      "estimatedJevUsd": 0
+    }
+  ],
+  "totals": {
+    "sessionAttempts": 8,
+    "completed": 4,
+    "sessionJevRequests": 23,
+    "sessionInputTokens": 49876,
+    "sessionEstimatedJevUsd": 0.002094792,
+    "probeJevRequests": 3,
+    "probeEstimatedJevUsd": 0.00017619
+  },
+  "costScope": "TypeSafe list-price estimate from reported input tokens ($0.042 per million input tokens, output free). The adaptive-router figure combines a JEV estimate with OpenRouter-reported credits. Excludes Claude inference, credits and taxes.",
+  "excluded": "Claude's own inference, the four review workflows (26, 10, 6 and 4 agents, which used mocked JEV), and TypeSafe credits or taxes are not included."
+}
