@@ -1,0 +1,12 @@
+{
+  "strategy": "adaptive",
+  "difficulty": "routine",
+  "namespace": "local-assistant",
+  "scope": "internal-drafts",
+  "ttlSeconds": 300,
+  "maxCalls": 2,
+  "budgetUsd": 0.2,
+  "timeoutMs": 60000,
+  "maxOutputTokens": 1024,
+  "cacheMode": "prefix"
+}

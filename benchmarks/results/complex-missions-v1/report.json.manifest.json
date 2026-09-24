@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "status": "preflight",
+  "synthetic": true,
+  "humanValidated": false,
+  "datasetSha256": "8c726998e7a39e59188173285a4d85c7bd94e7e35150a98f1ba5b5905412e74d",
+  "plannedWorkflows": 18,
+  "distinctCases": 4,
+  "arms": [
+    "astra",
+    "luna",
+    "adaptive"
+  ],
+  "largestSynthesisRequestBytes": 15161,
+  "maxRequests": 80,
+  "budgetUsd": 5,
+  "liveMeasured": false,
+  "fixtureBytesSha256": "2d4f86a7d75d9ef560fe7e2417f85062aef0418071c42a818d239fdd0fd506be",
+  "frozenAt": "2026-09-24T03:15:58.514Z"
+}

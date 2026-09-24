@@ -1,0 +1,45 @@
+{
+  "task": {
+    "id": "briefing-001",
+    "revision": 1,
+    "request": "공개 자료를 근거로 JEV 업무 라우팅의 활용 방안과 한계를 정리한 내부 초안을 만들어 주세요.",
+    "progress": "자료 수집 전입니다. 최신 공식 문서와 실제 측정 결과가 더 필요합니다. 외부 게시 요청은 없습니다.",
+    "evidence": [
+      {
+        "id": "scope-001",
+        "text": "이번 산출물은 내부 검토용 초안이며, 비용 절감이나 속도 향상은 비교 측정 없이 단정하지 않습니다."
+      }
+    ]
+  },
+  "routes": [
+    {
+      "id": "research",
+      "description": "공식 공개 문서와 측정 자료를 읽어 누락된 근거를 수집합니다. 아직 근거가 충분하지 않을 때 선택합니다.",
+      "available": true,
+      "kind": "read",
+      "requiresApproval": false
+    },
+    {
+      "id": "draft",
+      "description": "이미 제공된 근거가 충분할 때 내부 검토용 초안을 작성합니다. 외부 전송이나 게시는 하지 않습니다.",
+      "available": true,
+      "kind": "draft",
+      "requiresApproval": false
+    },
+    {
+      "id": "review",
+      "description": "완성된 초안의 사실관계와 누락을 검토하거나, 모호한 업무 범위를 호스트에게 넘깁니다.",
+      "available": true,
+      "kind": "draft",
+      "requiresApproval": false
+    },
+    {
+      "id": "publish",
+      "description": "호스트가 승인한 최종 문서를 외부 서비스에 게시합니다. 승인 여부는 실행 시 호스트가 다시 확인해야 합니다.",
+      "available": false,
+      "kind": "write",
+      "requiresApproval": true
+    }
+  ],
+  "baselineRouteId": "research"
+}

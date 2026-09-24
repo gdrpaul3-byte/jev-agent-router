@@ -1,0 +1,9 @@
+{
+  "url": "http://127.0.0.1:8776/",
+  "goal": "Open the library view in the local demo",
+  "maxSteps": 1,
+  "maxDurationMs": 15000,
+  "steps": [
+    { "instruction": "Click the visible button labeled Open library.", "action": "click", "expect": { "textIncludes": "Choose an article" } }
+  ]
+}

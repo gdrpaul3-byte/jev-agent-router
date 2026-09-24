@@ -1,0 +1,15 @@
+{
+  "task": {
+    "id": "adaptive-demo-001",
+    "revision": 1,
+    "request": "제공한 근거를 이용해 내부 검토용 초안을 작성해 주세요.",
+    "progress": "자료 수집을 마쳤고 아직 초안을 작성하지 않았습니다.",
+    "evidence": [{ "id": "facts-001", "text": "동일 업무의 재실행은 정확히 일치하는 입력만 재사용하며, 외부 전송 승인은 요청하지 않았습니다." }]
+  },
+  "routes": [
+    { "id": "research", "description": "누락된 근거가 있을 때 공개 자료를 추가로 읽습니다.", "kind": "read", "available": true },
+    { "id": "draft", "description": "근거가 충분하면 내부 검토용 초안을 작성합니다.", "kind": "draft", "available": true },
+    { "id": "publish", "description": "최종 문서를 외부에 게시합니다. 호스트의 별도 실행 승인이 필요합니다.", "kind": "write", "available": false }
+  ],
+  "baselineRouteId": "draft"
+}

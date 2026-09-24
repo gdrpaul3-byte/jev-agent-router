@@ -1,0 +1,4810 @@
+{
+  "schemaVersion": 1,
+  "status": "complete",
+  "synthetic": true,
+  "humanValidated": false,
+  "datasetSha256": "8c726998e7a39e59188173285a4d85c7bd94e7e35150a98f1ba5b5905412e74d",
+  "plannedWorkflows": 18,
+  "distinctCases": 4,
+  "arms": [
+    "astra",
+    "luna",
+    "adaptive"
+  ],
+  "largestSynthesisRequestBytes": 15161,
+  "maxRequests": 80,
+  "budgetUsd": 5,
+  "liveMeasured": true,
+  "startedAt": "2026-09-24T03:15:58.528Z",
+  "model": "openai/gpt-6-astra",
+  "reasoning": "low",
+  "cacheMode": "prefix",
+  "finalMaxOutputTokens": 4096,
+  "exactCacheTtlSeconds": 1800,
+  "runs": [
+    {
+      "index": 1,
+      "missionId": "m1",
+      "variant": "base",
+      "phase": "base",
+      "arm": "astra",
+      "fingerprint": "bed2c9576c046444eea308506fb5e83b10a34d3beecd3233447228138b64b283",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 505,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 605,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 551,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1",
+          "c2"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e5",
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 2800000,
+          "grantWon": 2700000,
+          "ownContributionWon": 100000,
+          "remainingBudgetWon": 100000
+        },
+        "deadlineAt": "2026-09-28T15:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3114,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 609,
+          "reasoningTokens": 44
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 4,
+      "requestIndices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0.0852975,
+        "accountedProviderUsd": 0.0852975
+      },
+      "latencyMs": 16642.8455
+    },
+    {
+      "index": 2,
+      "missionId": "m1",
+      "variant": "base",
+      "phase": "base",
+      "arm": "luna",
+      "fingerprint": "57784e1999e2bde6b6b63ed57f1e7721932e1ddcc565f5eb437cb3a1e13ffa2b",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 505,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 605,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 551,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1",
+          "c2"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e5",
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 2800000,
+          "grantWon": 2700000,
+          "ownContributionWon": 100000,
+          "remainingBudgetWon": 100000
+        },
+        "deadlineAt": "2026-09-28T15:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3114,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 592,
+          "reasoningTokens": 31
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 4,
+      "requestIndices": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0.0657761,
+        "accountedProviderUsd": 0.0657761
+      },
+      "latencyMs": 13632.9022
+    },
+    {
+      "index": 3,
+      "missionId": "m1",
+      "variant": "base",
+      "phase": "base",
+      "arm": "adaptive",
+      "fingerprint": "57151f7b79d7739dc76decbeab5e9b49331805765e3a9c629f4e046775fd1486",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 904,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 1047,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 966,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1",
+          "c2"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e5",
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 2800000,
+          "grantWon": 2700000,
+          "ownContributionWon": 100000,
+          "remainingBudgetWon": 100000
+        },
+        "deadlineAt": "2026-09-28T15:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3114,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 597,
+          "reasoningTokens": 36
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 4,
+      "requestIndices": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0.000122514,
+        "reportedProviderUsd": 0.0658375,
+        "accountedProviderUsd": 0.065960014
+      },
+      "latencyMs": 10853.2424
+    },
+    {
+      "index": 4,
+      "missionId": "m1",
+      "variant": "changed",
+      "phase": "changed",
+      "arm": "luna",
+      "fingerprint": "d208ed5ceef072496e5b747ed321fd27016a968e6bd2e42452f771b92dceec9b",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": []
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 608,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": []
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "excluded",
+            "reasonCodes": [
+              "NO_REMAINING_ELIGIBLE_COST"
+            ],
+            "evidenceIds": [
+              "e2",
+              "e4"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e5",
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 1600000,
+          "grantWon": 1500000,
+          "ownContributionWon": 100000,
+          "remainingBudgetWon": 1300000
+        },
+        "deadlineAt": "2026-09-28T15:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3139,
+          "cachedInputTokens": 1939,
+          "cacheWriteTokens": 0,
+          "outputTokens": 567,
+          "reasoningTokens": 32
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 2,
+      "requestIndices": [
+        13,
+        14
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0.0423573,
+        "accountedProviderUsd": 0.0423573
+      },
+      "latencyMs": 10135.8249
+    },
+    {
+      "index": 5,
+      "missionId": "m1",
+      "variant": "changed",
+      "phase": "changed",
+      "arm": "adaptive",
+      "fingerprint": "1533284b5f73380ee9632ddeca667016fdf10bd33b57b7097a51a8ffa1dca108",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": []
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 1049,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": []
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "excluded",
+            "reasonCodes": [
+              "NO_REMAINING_ELIGIBLE_COST"
+            ],
+            "evidenceIds": [
+              "e2",
+              "e4"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e5",
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 1600000,
+          "grantWon": 1500000,
+          "ownContributionWon": 100000,
+          "remainingBudgetWon": 1300000
+        },
+        "deadlineAt": "2026-09-28T15:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3139,
+          "cachedInputTokens": 1939,
+          "cacheWriteTokens": 0,
+          "outputTokens": 581,
+          "reasoningTokens": 46
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 2,
+      "requestIndices": [
+        15,
+        16
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0.000044058,
+        "reportedProviderUsd": 0.042989,
+        "accountedProviderUsd": 0.043033058
+      },
+      "latencyMs": 9693.798199999997
+    },
+    {
+      "index": 6,
+      "missionId": "m1",
+      "variant": "changed",
+      "phase": "changed",
+      "arm": "astra",
+      "fingerprint": "9c8169b60c79d2a89a090990d05f6a4eb6ffc7eaf0b9721300e44afbd3d42845",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": []
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 608,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": []
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "excluded",
+            "reasonCodes": [
+              "NO_REMAINING_ELIGIBLE_COST"
+            ],
+            "evidenceIds": [
+              "e2",
+              "e4"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e5",
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 1600000,
+          "grantWon": 1500000,
+          "ownContributionWon": 100000,
+          "remainingBudgetWon": 1300000
+        },
+        "deadlineAt": "2026-09-28T15:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3139,
+          "cachedInputTokens": 1939,
+          "cacheWriteTokens": 0,
+          "outputTokens": 570,
+          "reasoningTokens": 31
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 2,
+      "requestIndices": [
+        17,
+        18
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0.049269,
+        "accountedProviderUsd": 0.049269
+      },
+      "latencyMs": 10776.364799999996
+    },
+    {
+      "index": 7,
+      "missionId": "m1",
+      "variant": "base",
+      "phase": "exact_repeat",
+      "arm": "adaptive",
+      "fingerprint": "57151f7b79d7739dc76decbeab5e9b49331805765e3a9c629f4e046775fd1486",
+      "status": "produced",
+      "cacheHit": true,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 904,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 1047,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 966,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1",
+          "c2"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e5",
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 2800000,
+          "grantWon": 2700000,
+          "ownContributionWon": 100000,
+          "remainingBudgetWon": 100000
+        },
+        "deadlineAt": "2026-09-28T15:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3114,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 597,
+          "reasoningTokens": 36
+        },
+        "reason": null
+      },
+      "reusedRunIndex": 3,
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 0,
+      "requestIndices": [],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0,
+        "accountedProviderUsd": 0
+      },
+      "latencyMs": 0.6257999999943422
+    },
+    {
+      "index": 8,
+      "missionId": "m1",
+      "variant": "base",
+      "phase": "exact_repeat",
+      "arm": "astra",
+      "fingerprint": "bed2c9576c046444eea308506fb5e83b10a34d3beecd3233447228138b64b283",
+      "status": "produced",
+      "cacheHit": true,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 505,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 605,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 551,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1",
+          "c2"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e5",
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 2800000,
+          "grantWon": 2700000,
+          "ownContributionWon": 100000,
+          "remainingBudgetWon": 100000
+        },
+        "deadlineAt": "2026-09-28T15:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3114,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 609,
+          "reasoningTokens": 44
+        },
+        "reason": null
+      },
+      "reusedRunIndex": 1,
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 0,
+      "requestIndices": [],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0,
+        "accountedProviderUsd": 0
+      },
+      "latencyMs": 0.6352999999944586
+    },
+    {
+      "index": 9,
+      "missionId": "m1",
+      "variant": "base",
+      "phase": "exact_repeat",
+      "arm": "luna",
+      "fingerprint": "57784e1999e2bde6b6b63ed57f1e7721932e1ddcc565f5eb437cb3a1e13ffa2b",
+      "status": "produced",
+      "cacheHit": true,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 505,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 605,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 551,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1",
+          "c2"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e5",
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 2800000,
+          "grantWon": 2700000,
+          "ownContributionWon": 100000,
+          "remainingBudgetWon": 100000
+        },
+        "deadlineAt": "2026-09-28T15:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1",
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3114,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 592,
+          "reasoningTokens": 31
+        },
+        "reason": null
+      },
+      "reusedRunIndex": 2,
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 0,
+      "requestIndices": [],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0,
+        "accountedProviderUsd": 0
+      },
+      "latencyMs": 0.8078000000095926
+    },
+    {
+      "index": 10,
+      "missionId": "m2",
+      "variant": "base",
+      "phase": "base",
+      "arm": "astra",
+      "fingerprint": "7d1a495422c1296f9e922cb233d1934f33810ff705b79a871929c70941c17586",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 474,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 596,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 531,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "excluded",
+            "reasonCodes": [
+              "MUTUALLY_EXCLUSIVE_LOWER_PRIORITY"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 6000000,
+          "grantWon": 4800000,
+          "ownContributionWon": 1800000,
+          "remainingBudgetWon": 600000
+        },
+        "deadlineAt": "2026-09-26T18:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3206,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 542,
+          "reasoningTokens": 0
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 4,
+      "requestIndices": [
+        19,
+        20,
+        21,
+        22
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0.0822675,
+        "accountedProviderUsd": 0.0822675
+      },
+      "latencyMs": 13904.28959999999
+    },
+    {
+      "index": 11,
+      "missionId": "m2",
+      "variant": "base",
+      "phase": "base",
+      "arm": "luna",
+      "fingerprint": "15e2c6ca0f624ffb97922eafa39c7182251a7f69cf94b3963f996497c52aa2f1",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 474,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 596,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 531,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "excluded",
+            "reasonCodes": [
+              "MUTUALLY_EXCLUSIVE_LOWER_PRIORITY"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 6000000,
+          "grantWon": 4800000,
+          "ownContributionWon": 1800000,
+          "remainingBudgetWon": 600000
+        },
+        "deadlineAt": "2026-09-26T18:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3206,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 542,
+          "reasoningTokens": 0
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 4,
+      "requestIndices": [
+        23,
+        24,
+        25,
+        26
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0.0641901,
+        "accountedProviderUsd": 0.0641901
+      },
+      "latencyMs": 17513.204899999997
+    },
+    {
+      "index": 12,
+      "missionId": "m2",
+      "variant": "base",
+      "phase": "base",
+      "arm": "adaptive",
+      "fingerprint": "1f68625cf1befb1531155e5dd2134c7b4385bcc31fbf3bb1f61e657162335b00",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 870,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 1032,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 934,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "excluded",
+            "reasonCodes": [
+              "MUTUALLY_EXCLUSIVE_LOWER_PRIORITY"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 6000000,
+          "grantWon": 4800000,
+          "ownContributionWon": 1800000,
+          "remainingBudgetWon": 600000
+        },
+        "deadlineAt": "2026-09-26T18:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3206,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 542,
+          "reasoningTokens": 0
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 4,
+      "requestIndices": [
+        27,
+        28,
+        29,
+        30
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0.00011911200000000002,
+        "reportedProviderUsd": 0.0640075,
+        "accountedProviderUsd": 0.064126612
+      },
+      "latencyMs": 9577.751100000009
+    },
+    {
+      "index": 13,
+      "missionId": "m2",
+      "variant": "changed",
+      "phase": "changed",
+      "arm": "luna",
+      "fingerprint": "88a02dbb51e285c971358608ce47616b6343c4b21dd958fc819f2fa5b6abad46",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": []
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 604,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": []
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c2"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "excluded",
+            "reasonCodes": [
+              "EXCEEDS_OWN_FUNDS"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 4000000,
+          "grantWon": 2400000,
+          "ownContributionWon": 2000000,
+          "remainingBudgetWon": 400000
+        },
+        "deadlineAt": "2026-09-27T18:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c2"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3215,
+          "cachedInputTokens": 1939,
+          "cacheWriteTokens": 0,
+          "outputTokens": 536,
+          "reasoningTokens": 0
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 2,
+      "requestIndices": [
+        31,
+        32
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0.041566900000000004,
+        "accountedProviderUsd": 0.041566900000000004
+      },
+      "latencyMs": 9656.774300000005
+    },
+    {
+      "index": 14,
+      "missionId": "m2",
+      "variant": "changed",
+      "phase": "changed",
+      "arm": "adaptive",
+      "fingerprint": "827d823171c4ed7ac1891b3e417b450835628efb31ef2fb16b0084ea2385e683",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": []
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 1039,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": []
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c2"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "excluded",
+            "reasonCodes": [
+              "EXCEEDS_OWN_FUNDS"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 4000000,
+          "grantWon": 2400000,
+          "ownContributionWon": 2000000,
+          "remainingBudgetWon": 400000
+        },
+        "deadlineAt": "2026-09-27T18:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c2"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e1",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3215,
+          "cachedInputTokens": 1939,
+          "cacheWriteTokens": 0,
+          "outputTokens": 532,
+          "reasoningTokens": 0
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": false,
+        "corePassed": true,
+        "citationPassed": false,
+        "checksPassed": 36,
+        "checksTotal": 37,
+        "failures": [
+          "action.4.evidence"
+        ]
+      },
+      "requests": 2,
+      "requestIndices": [
+        33,
+        34
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0.000043638000000000005,
+        "reportedProviderUsd": 0.041299,
+        "accountedProviderUsd": 0.041342638
+      },
+      "latencyMs": 14658.279599999994
+    },
+    {
+      "index": 15,
+      "missionId": "m2",
+      "variant": "changed",
+      "phase": "changed",
+      "arm": "astra",
+      "fingerprint": "b1e3e728352b85d27feb2c0f8e911db5d091bb8e2247fbf8f58f5160ae776990",
+      "status": "produced",
+      "cacheHit": false,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": []
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 604,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": true,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": []
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c2"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "excluded",
+            "reasonCodes": [
+              "EXCEEDS_OWN_FUNDS"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 4000000,
+          "grantWon": 2400000,
+          "ownContributionWon": 2000000,
+          "remainingBudgetWon": 400000
+        },
+        "deadlineAt": "2026-09-27T18:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c2"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c2"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3215,
+          "cachedInputTokens": 1939,
+          "cacheWriteTokens": 0,
+          "outputTokens": 536,
+          "reasoningTokens": 0
+        },
+        "reason": null
+      },
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 2,
+      "requestIndices": [
+        35,
+        36
+      ],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0.048289,
+        "accountedProviderUsd": 0.048289
+      },
+      "latencyMs": 10661.713300000003
+    },
+    {
+      "index": 16,
+      "missionId": "m2",
+      "variant": "base",
+      "phase": "exact_repeat",
+      "arm": "adaptive",
+      "fingerprint": "1f68625cf1befb1531155e5dd2134c7b4385bcc31fbf3bb1f61e657162335b00",
+      "status": "produced",
+      "cacheHit": true,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 870,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 1032,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "jev",
+          "attempts": [
+            {
+              "requestedModel": "jev-1.13.0",
+              "observedModel": "jev-1.13.0",
+              "observedProvider": null,
+              "observedServiceTier": null,
+              "usage": {
+                "inputTokens": 934,
+                "cachedInputTokens": null,
+                "cacheWriteTokens": null,
+                "outputTokens": 42,
+                "reasoningTokens": null
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "excluded",
+            "reasonCodes": [
+              "MUTUALLY_EXCLUSIVE_LOWER_PRIORITY"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 6000000,
+          "grantWon": 4800000,
+          "ownContributionWon": 1800000,
+          "remainingBudgetWon": 600000
+        },
+        "deadlineAt": "2026-09-26T18:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3206,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 542,
+          "reasoningTokens": 0
+        },
+        "reason": null
+      },
+      "reusedRunIndex": 12,
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 0,
+      "requestIndices": [],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0,
+        "accountedProviderUsd": 0
+      },
+      "latencyMs": 0.7103999999817461
+    },
+    {
+      "index": 17,
+      "missionId": "m2",
+      "variant": "base",
+      "phase": "exact_repeat",
+      "arm": "astra",
+      "fingerprint": "7d1a495422c1296f9e922cb233d1934f33810ff705b79a871929c70941c17586",
+      "status": "produced",
+      "cacheHit": true,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 474,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 596,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "astra",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-astra",
+              "observedModel": "openai/gpt-6-astra",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 531,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "excluded",
+            "reasonCodes": [
+              "MUTUALLY_EXCLUSIVE_LOWER_PRIORITY"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 6000000,
+          "grantWon": 4800000,
+          "ownContributionWon": 1800000,
+          "remainingBudgetWon": 600000
+        },
+        "deadlineAt": "2026-09-26T18:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3206,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 542,
+          "reasoningTokens": 0
+        },
+        "reason": null
+      },
+      "reusedRunIndex": 10,
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 0,
+      "requestIndices": [],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0,
+        "accountedProviderUsd": 0
+      },
+      "latencyMs": 0.41250000000582077
+    },
+    {
+      "index": 18,
+      "missionId": "m2",
+      "variant": "base",
+      "phase": "exact_repeat",
+      "arm": "luna",
+      "fingerprint": "15e2c6ca0f624ffb97922eafa39c7182251a7f69cf94b3963f996497c52aa2f1",
+      "status": "produced",
+      "cacheHit": true,
+      "routing": [
+        {
+          "taskId": "t0",
+          "status": "selected",
+          "routeId": "r1",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 474,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t1",
+          "status": "selected",
+          "routeId": "r2",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 596,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        },
+        {
+          "taskId": "t2",
+          "status": "selected",
+          "routeId": "r3",
+          "requiresHostApproval": false,
+          "cacheHit": false,
+          "reason": null,
+          "selectedProvider": "luna",
+          "attempts": [
+            {
+              "requestedModel": "openai/gpt-6-luna",
+              "observedModel": "openai/gpt-6-luna",
+              "observedProvider": "OpenAI",
+              "observedServiceTier": "default",
+              "usage": {
+                "inputTokens": 531,
+                "cachedInputTokens": 0,
+                "cacheWriteTokens": 0,
+                "outputTokens": 15,
+                "reasoningTokens": 0
+              },
+              "reason": null
+            }
+          ]
+        }
+      ],
+      "artifact": {
+        "selectedCandidateIds": [
+          "c1"
+        ],
+        "candidateDecisions": [
+          {
+            "candidateId": "c1",
+            "decision": "selected",
+            "reasonCodes": [
+              "ELIGIBLE"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c2",
+            "decision": "excluded",
+            "reasonCodes": [
+              "MUTUALLY_EXCLUSIVE_LOWER_PRIORITY"
+            ],
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6"
+            ]
+          },
+          {
+            "candidateId": "c3",
+            "decision": "needs_info",
+            "reasonCodes": [
+              "MISSING_REQUIRED_DOCUMENT"
+            ],
+            "evidenceIds": [
+              "e6"
+            ]
+          }
+        ],
+        "budget": {
+          "eligibleCostWon": 6000000,
+          "grantWon": 4800000,
+          "ownContributionWon": 1800000,
+          "remainingBudgetWon": 600000
+        },
+        "deadlineAt": "2026-09-26T18:00:00+09:00",
+        "nextActions": [
+          {
+            "step": 1,
+            "actionCode": "VERIFY_DOCUMENTS",
+            "targetIds": [
+              "c3"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 2,
+            "actionCode": "PREPARE_DRAFT",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e1",
+              "e2",
+              "e3",
+              "e4",
+              "e5",
+              "e6",
+              "e7"
+            ]
+          },
+          {
+            "step": 3,
+            "actionCode": "REQUEST_APPROVAL",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              2
+            ],
+            "requiresApproval": false,
+            "evidenceIds": [
+              "e7"
+            ]
+          },
+          {
+            "step": 4,
+            "actionCode": "SUBMIT_APPLICATION",
+            "targetIds": [
+              "c1"
+            ],
+            "prerequisiteSteps": [
+              3
+            ],
+            "requiresApproval": true,
+            "evidenceIds": [
+              "e2",
+              "e7"
+            ]
+          }
+        ],
+        "requiresApproval": true
+      },
+      "synthesis": {
+        "requestedModel": "openai/gpt-6-astra",
+        "observedModel": "openai/gpt-6-astra",
+        "observedProvider": "OpenAI",
+        "observedServiceTier": "default",
+        "usage": {
+          "inputTokens": 3206,
+          "cachedInputTokens": 0,
+          "cacheWriteTokens": 1939,
+          "outputTokens": 542,
+          "reasoningTokens": 0
+        },
+        "reason": null
+      },
+      "reusedRunIndex": 11,
+      "routeQuality": {
+        "correct": 3,
+        "total": 3
+      },
+      "quality": {
+        "passed": true,
+        "corePassed": true,
+        "citationPassed": true,
+        "checksPassed": 37,
+        "checksTotal": 37,
+        "failures": []
+      },
+      "requests": 0,
+      "requestIndices": [],
+      "cost": {
+        "complete": true,
+        "estimatedProviderUsd": 0,
+        "reportedProviderUsd": 0,
+        "accountedProviderUsd": 0
+      },
+      "latencyMs": 0.6517999999923632
+    }
+  ],
+  "accounting": {
+    "requests": 36,
+    "maxRequests": 80,
+    "budgetUsd": 5,
+    "hardPrepaidCap": false,
+    "accountedProviderUsd": 0.6934757219999999,
+    "knownUsageUsd": 0.6934757219999999,
+    "estimatedProviderUsd": 0.00032932199999999995,
+    "reportedProviderUsd": 0.6931463999999998,
+    "complete": true,
+    "blockedReason": null,
+    "cashChargeUsd": null,
+    "pricingVerifiedOn": "2026-09-24",
+    "scope": "OpenRouter reported credit charge plus JEV input list-price estimate; excludes funding fees, tax and host inference"
+  },
+  "requests": [
+    {
+      "index": 1,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 2945,
+      "reservedUsd": 0.1904125,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0058,
+      "upstreamInferenceCostUsd": 0.0058,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 2343.5985,
+      "error": null
+    },
+    {
+      "index": 2,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 3224,
+      "reservedUsd": 0.1939,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0068,
+      "upstreamInferenceCostUsd": 0.0068,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 2990.6974,
+      "error": null
+    },
+    {
+      "index": 3,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 3059,
+      "reservedUsd": 0.1918375,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.00626,
+      "upstreamInferenceCostUsd": 0.00626,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 2218.0065000000004,
+      "error": null
+    },
+    {
+      "index": 4,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13630,
+      "reservedUsd": 0.477575,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0664375,
+      "upstreamInferenceCostUsd": 0.0664375,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 9015.723600000001,
+      "error": null
+    },
+    {
+      "index": 5,
+      "model": "openai/gpt-6-luna",
+      "requestBytes": 2945,
+      "reservedUsd": 0.001904125,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.000058,
+      "upstreamInferenceCostUsd": 0.000058,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 1136.4442999999992,
+      "error": null
+    },
+    {
+      "index": 6,
+      "model": "openai/gpt-6-luna",
+      "requestBytes": 3224,
+      "reservedUsd": 0.001939,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.000068,
+      "upstreamInferenceCostUsd": 0.000068,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 2094.346300000001,
+      "error": null
+    },
+    {
+      "index": 7,
+      "model": "openai/gpt-6-luna",
+      "requestBytes": 3059,
+      "reservedUsd": 0.001918375,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0000626,
+      "upstreamInferenceCostUsd": 0.0000626,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 1461.7806999999993,
+      "error": null
+    },
+    {
+      "index": 8,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13629,
+      "reservedUsd": 0.4775625,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0655875,
+      "upstreamInferenceCostUsd": 0.0655875,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 8895.3854,
+      "error": null
+    },
+    {
+      "index": 9,
+      "model": "jev-1.13.0",
+      "requestBytes": 2358,
+      "reservedUsd": 0.00044310000000000004,
+      "estimatedProviderUsd": 0.000037968000000000006,
+      "reportedProviderUsd": null,
+      "upstreamInferenceCostUsd": null,
+      "isByok": null,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 546.1722000000009,
+      "error": null
+    },
+    {
+      "index": 10,
+      "model": "jev-1.13.0",
+      "requestBytes": 2621,
+      "reservedUsd": 0.000454146,
+      "estimatedProviderUsd": 0.000043974,
+      "reportedProviderUsd": null,
+      "upstreamInferenceCostUsd": null,
+      "isByok": null,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 246.12910000000193,
+      "error": null
+    },
+    {
+      "index": 11,
+      "model": "jev-1.13.0",
+      "requestBytes": 2464,
+      "reservedUsd": 0.00044755200000000004,
+      "estimatedProviderUsd": 0.000040572000000000004,
+      "reportedProviderUsd": null,
+      "upstreamInferenceCostUsd": null,
+      "isByok": null,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 277.418700000002,
+      "error": null
+    },
+    {
+      "index": 12,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13633,
+      "reservedUsd": 0.4776125,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0658375,
+      "upstreamInferenceCostUsd": 0.0658375,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 9679.248699999996,
+      "error": null
+    },
+    {
+      "index": 13,
+      "model": "openai/gpt-6-luna",
+      "requestBytes": 3212,
+      "reservedUsd": 0.0019375,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0000683,
+      "upstreamInferenceCostUsd": 0.0000683,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 1440.058299999997,
+      "error": null
+    },
+    {
+      "index": 14,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13709,
+      "reservedUsd": 0.4785625,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.042289,
+      "upstreamInferenceCostUsd": 0.042289,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 8638.422299999998,
+      "error": null
+    },
+    {
+      "index": 15,
+      "model": "jev-1.13.0",
+      "requestBytes": 2609,
+      "reservedUsd": 0.00045364200000000003,
+      "estimatedProviderUsd": 0.000044058,
+      "reportedProviderUsd": null,
+      "upstreamInferenceCostUsd": null,
+      "isByok": null,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 510.03889999999956,
+      "error": null
+    },
+    {
+      "index": 16,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13713,
+      "reservedUsd": 0.4786125,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.042989,
+      "upstreamInferenceCostUsd": 0.042989,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 9152.181199999999,
+      "error": null
+    },
+    {
+      "index": 17,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 3212,
+      "reservedUsd": 0.19375,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.00683,
+      "upstreamInferenceCostUsd": 0.00683,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 1926.386099999996,
+      "error": null
+    },
+    {
+      "index": 18,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13710,
+      "reservedUsd": 0.478575,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.042439,
+      "upstreamInferenceCostUsd": 0.042439,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 8809.836900000002,
+      "error": null
+    },
+    {
+      "index": 19,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 2800,
+      "reservedUsd": 0.1886,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.00549,
+      "upstreamInferenceCostUsd": 0.00549,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 1763.1781000000046,
+      "error": null
+    },
+    {
+      "index": 20,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 3159,
+      "reservedUsd": 0.1930875,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.00671,
+      "upstreamInferenceCostUsd": 0.00671,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 1836.1696000000084,
+      "error": null
+    },
+    {
+      "index": 21,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 2985,
+      "reservedUsd": 0.1909125,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.00606,
+      "upstreamInferenceCostUsd": 0.00606,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 2222.348199999993,
+      "error": null
+    },
+    {
+      "index": 22,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13854,
+      "reservedUsd": 0.480375,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0640075,
+      "upstreamInferenceCostUsd": 0.0640075,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 8011.882400000002,
+      "error": null
+    },
+    {
+      "index": 23,
+      "model": "openai/gpt-6-luna",
+      "requestBytes": 2800,
+      "reservedUsd": 0.001886,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0000549,
+      "upstreamInferenceCostUsd": 0.0000549,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 922.1699999999983,
+      "error": null
+    },
+    {
+      "index": 24,
+      "model": "openai/gpt-6-luna",
+      "requestBytes": 3159,
+      "reservedUsd": 0.001930875,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0000671,
+      "upstreamInferenceCostUsd": 0.0000671,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 1696.795100000003,
+      "error": null
+    },
+    {
+      "index": 25,
+      "model": "openai/gpt-6-luna",
+      "requestBytes": 2985,
+      "reservedUsd": 0.001909125,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0000606,
+      "upstreamInferenceCostUsd": 0.0000606,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 1363.476800000004,
+      "error": null
+    },
+    {
+      "index": 26,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13853,
+      "reservedUsd": 0.4803625,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0640075,
+      "upstreamInferenceCostUsd": 0.0640075,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 13428.852599999998,
+      "error": null
+    },
+    {
+      "index": 27,
+      "model": "jev-1.13.0",
+      "requestBytes": 2213,
+      "reservedUsd": 0.00043701000000000005,
+      "estimatedProviderUsd": 0.00003654,
+      "reportedProviderUsd": null,
+      "upstreamInferenceCostUsd": null,
+      "isByok": null,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 529.4956999999995,
+      "error": null
+    },
+    {
+      "index": 28,
+      "model": "jev-1.13.0",
+      "requestBytes": 2556,
+      "reservedUsd": 0.00045141600000000006,
+      "estimatedProviderUsd": 0.000043344000000000004,
+      "reportedProviderUsd": null,
+      "upstreamInferenceCostUsd": null,
+      "isByok": null,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 218.425900000002,
+      "error": null
+    },
+    {
+      "index": 29,
+      "model": "jev-1.13.0",
+      "requestBytes": 2390,
+      "reservedUsd": 0.000444444,
+      "estimatedProviderUsd": 0.000039228000000000005,
+      "reportedProviderUsd": null,
+      "upstreamInferenceCostUsd": null,
+      "isByok": null,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 237.77419999999984,
+      "error": null
+    },
+    {
+      "index": 30,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13857,
+      "reservedUsd": 0.4804125,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0640075,
+      "upstreamInferenceCostUsd": 0.0640075,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 8514.858900000007,
+      "error": null
+    },
+    {
+      "index": 31,
+      "model": "openai/gpt-6-luna",
+      "requestBytes": 3166,
+      "reservedUsd": 0.00193175,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.0000679,
+      "upstreamInferenceCostUsd": 0.0000679,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 1671.3102000000072,
+      "error": null
+    },
+    {
+      "index": 32,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13886,
+      "reservedUsd": 0.480775,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.041499,
+      "upstreamInferenceCostUsd": 0.041499,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 7954.984899999996,
+      "error": null
+    },
+    {
+      "index": 33,
+      "model": "jev-1.13.0",
+      "requestBytes": 2563,
+      "reservedUsd": 0.00045171,
+      "estimatedProviderUsd": 0.000043638000000000005,
+      "reportedProviderUsd": null,
+      "upstreamInferenceCostUsd": null,
+      "isByok": null,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 571.0956000000006,
+      "error": null
+    },
+    {
+      "index": 34,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13890,
+      "reservedUsd": 0.480825,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.041299,
+      "upstreamInferenceCostUsd": 0.041299,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 14045.122599999988,
+      "error": null
+    },
+    {
+      "index": 35,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 3166,
+      "reservedUsd": 0.193175,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.00679,
+      "upstreamInferenceCostUsd": 0.00679,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 2306.9814999999944,
+      "error": null
+    },
+    {
+      "index": 36,
+      "model": "openai/gpt-6-astra",
+      "requestBytes": 13887,
+      "reservedUsd": 0.4807875,
+      "estimatedProviderUsd": null,
+      "reportedProviderUsd": 0.041499,
+      "upstreamInferenceCostUsd": 0.041499,
+      "isByok": false,
+      "costComplete": true,
+      "httpStatus": 200,
+      "latencyMs": 8322.399900000019,
+      "error": null
+    }
+  ],
+  "summaries": [
+    {
+      "arm": "astra",
+      "workflows": 6,
+      "correct": 6,
+      "freshWorkflows": 4,
+      "freshCorrect": 4,
+      "freshCoreCorrect": 4,
+      "freshCitationCorrect": 4,
+      "routeCorrect": 18,
+      "routeTotal": 18,
+      "inferenceRequests": 12,
+      "exactReplays": 2,
+      "totalLatencyMs": 51986.260999999984,
+      "accountedProviderUsd": 0.265123
+    },
+    {
+      "arm": "luna",
+      "workflows": 6,
+      "correct": 6,
+      "freshWorkflows": 4,
+      "freshCorrect": 4,
+      "freshCoreCorrect": 4,
+      "freshCitationCorrect": 4,
+      "routeCorrect": 18,
+      "routeTotal": 18,
+      "inferenceRequests": 12,
+      "exactReplays": 2,
+      "totalLatencyMs": 50940.16590000001,
+      "accountedProviderUsd": 0.21389040000000004
+    },
+    {
+      "arm": "adaptive",
+      "workflows": 6,
+      "correct": 5,
+      "freshWorkflows": 4,
+      "freshCorrect": 3,
+      "freshCoreCorrect": 4,
+      "freshCitationCorrect": 3,
+      "routeCorrect": 18,
+      "routeTotal": 18,
+      "inferenceRequests": 12,
+      "exactReplays": 2,
+      "totalLatencyMs": 44784.40749999997,
+      "accountedProviderUsd": 0.21446232199999998
+    }
+  ],
+  "limitations": [
+    "Synthetic expected answers; no human validation or production accuracy claim.",
+    "First observed calls are not guaranteed cold. Provider prompt caches are not cleared or isolated by arm.",
+    "Local evidence retrieval and structured artifacts; no browser or external action execution.",
+    "Astra/Luna use OpenRouter OpenAI default; JEV uses TypeSafe direct. No automatic transport retries.",
+    "All arms share exact-cache privileges; changed evidence invalidates workflow reuse.",
+    "Credit charges and JEV list-price estimates exclude taxes, funding fees and host inference."
+  ],
+  "finishedAt": "2026-09-24T03:18:26.446Z"
+}

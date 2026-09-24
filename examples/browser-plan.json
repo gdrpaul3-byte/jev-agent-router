@@ -1,0 +1,10 @@
+{
+  "url": "http://127.0.0.1:8776/",
+  "goal": "Open the local guide",
+  "maxSteps": 2,
+  "maxDurationMs": 30000,
+  "steps": [
+    { "instruction": "Open library", "action": "click", "expect": { "textIncludes": "Choose an article" } },
+    { "instruction": "Read guide", "action": "click", "expect": { "textIncludes": "Workflow verified" } }
+  ]
+}

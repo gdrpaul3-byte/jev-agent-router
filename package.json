@@ -1,0 +1,29 @@
+{
+  "name": "jev-agent-router",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "exports": "./src/index.mjs",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "doctor": "node src/cli.mjs doctor",
+    "demo": "node src/cli.mjs demo",
+    "route": "node -- src/router-cli.mjs route",
+    "route:adaptive": "node --use-system-ca -- src/adaptive-router-cli.mjs",
+    "benchmark:complex": "node --use-system-ca -- benchmarks/complex-mission-eval.mjs",
+    "test:all": "node --test test/*.test.mjs benchmarks/*.test.mjs",
+    "demo:live": "node --use-system-ca -- benchmarks/live-demo-server.mjs"
+  },
+  "optionalDependencies": {
+    "playwright-core": "1.63.0"
+  },
+  "description": "Bounded JEV, Luna and Astra routing with exact replay, cost evidence and host-owned permissions.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gdrpaul3-byte/jev-agent-router.git"
+  }
+}

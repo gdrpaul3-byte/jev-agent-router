@@ -1,0 +1,606 @@
+{
+  "createdAt": "2026-09-24T05:32:11.828Z",
+  "scope": "Reviewed allowlisted package; local secret values and personal paths checked; keys and state excluded.",
+  "files": [
+    {
+      "path": ".env.example",
+      "bytes": 290,
+      "sha256": "d3004c02064b0215d19a92f35b7fba6fdb6fba140be18dfb18cb53bb472756fe"
+    },
+    {
+      "path": ".gitattributes",
+      "bytes": 8,
+      "sha256": "705fd4d6451a31d36b3df7de96f83f30ac976c9b4a6d1e51671d8e2f33e2d0da"
+    },
+    {
+      "path": ".github/workflows/test.yml",
+      "bytes": 551,
+      "sha256": "61b87ecce86f7072b93b84fdb948a292eed080ec6e537d445e24b2a3c0564336"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 112,
+      "sha256": "9a4a7d7c7efa5dfd01627476ed3453c8d408e27998f4ff58842614487456a197"
+    },
+    {
+      "path": "benchmarks/complex-mission-cases.mjs",
+      "bytes": 12496,
+      "sha256": "699ac2a95e6cacc09cf50d20aec59f152668128d5123d60c2d7b2abd0237d5e3"
+    },
+    {
+      "path": "benchmarks/complex-mission-eval.mjs",
+      "bytes": 17650,
+      "sha256": "c12e28e7f24d1001eec79bab404ed282a9db086694cf5b85260e7d706112b682"
+    },
+    {
+      "path": "benchmarks/complex-missions.json",
+      "bytes": 39668,
+      "sha256": "2d4f86a7d75d9ef560fe7e2417f85062aef0418071c42a818d239fdd0fd506be"
+    },
+    {
+      "path": "benchmarks/cua-recorder.mjs",
+      "bytes": 4143,
+      "sha256": "4e491511fe15b77f41780d748a76b721ddc6373ef82f8624a5026b468f01910d"
+    },
+    {
+      "path": "benchmarks/goal-fixture.mjs",
+      "bytes": 8813,
+      "sha256": "0c34f84e3f63a1c468e7b40f7691ca53d07ef9b07edf9defe24612efec88900c"
+    },
+    {
+      "path": "benchmarks/goal-fixture.test.mjs",
+      "bytes": 7368,
+      "sha256": "d17f20cf1583926faaa80d7bb470ae59cb76c1f817eb5c596ff27a76218d0cfe"
+    },
+    {
+      "path": "benchmarks/goal-plan.mjs",
+      "bytes": 5447,
+      "sha256": "5acf6538f38df92a87d586d34e678bae2b90dc0e2dffe3571e360b9891cb920d"
+    },
+    {
+      "path": "benchmarks/hsmu-run.mjs",
+      "bytes": 4278,
+      "sha256": "7950ed6009cb4e810ea0038845d4688cfdf754456c9d8509989dcb849a4d8855"
+    },
+    {
+      "path": "benchmarks/live-demo-server.mjs",
+      "bytes": 10957,
+      "sha256": "8f1faf69cd94089a56e9ea7180250ecd85477ab5be5f10091bf8be6971e6fce7"
+    },
+    {
+      "path": "benchmarks/live-demo.html",
+      "bytes": 11994,
+      "sha256": "2821740fb02ceaaf9d8d10a864a87bcbe9078f40f6dfab6f022bc72c9ba9820f"
+    },
+    {
+      "path": "benchmarks/llm-control-cases.mjs",
+      "bytes": 6885,
+      "sha256": "9936c8f657810c2a4ba91439aa94792dc6be16d75fd2fe09f9bcdd6c226c1cdf"
+    },
+    {
+      "path": "benchmarks/llm-control-eval.mjs",
+      "bytes": 26582,
+      "sha256": "55661c8993ce355bea433686f42d2cb82b5d5935759fa4fed0c6ab01c8b59f9e"
+    },
+    {
+      "path": "benchmarks/llm-control-openai.mjs",
+      "bytes": 17585,
+      "sha256": "e007fded8c511108c671a9e62de904696c63ff60104ad628d33337d7863d9fde"
+    },
+    {
+      "path": "benchmarks/llm-control-openrouter.mjs",
+      "bytes": 9412,
+      "sha256": "61d84a972e7cc0f67e14f84a0731774e9f4d58bbcad3f53ccdd905264beceba8"
+    },
+    {
+      "path": "benchmarks/long-tour-session.mjs",
+      "bytes": 14169,
+      "sha256": "ba65a1f32c1836f6c63e531464168dd7e66eddadfa0a3a61b6c17be1f731e77c"
+    },
+    {
+      "path": "benchmarks/metered-fetch.mjs",
+      "bytes": 127,
+      "sha256": "ee3e3e49ff2e8468a9caac8889bca6cf12f2582b632fc7055173c8a6bfef6df8"
+    },
+    {
+      "path": "benchmarks/metered-fetch.test.mjs",
+      "bytes": 7336,
+      "sha256": "0e17059faa0dd7942a727d4c9d3b0783348319f92f7864bf985d9fe5a1f1493a"
+    },
+    {
+      "path": "benchmarks/news-triage-cases.json",
+      "bytes": 46672,
+      "sha256": "14aae1ea810c8a3647cbd92ae5fea3d49623b00b2fe175c5833e5b8535d5220c"
+    },
+    {
+      "path": "benchmarks/news-triage-eval.mjs",
+      "bytes": 20365,
+      "sha256": "9f3d6dff931e2e865e523603303f06a259d3b1458511abdbefbbcf6854348406"
+    },
+    {
+      "path": "benchmarks/record-checkpoints.mjs",
+      "bytes": 2276,
+      "sha256": "737926be5a253b55bdc19b8ce5828651e8714c17dc928ce53fb97edc2ee34d3a"
+    },
+    {
+      "path": "benchmarks/record-window.mjs",
+      "bytes": 6366,
+      "sha256": "18b9bb5ad317c445da7f0c4c35266147edbd1444f173511684232d4e86fec555"
+    },
+    {
+      "path": "benchmarks/render-complex-results.mjs",
+      "bytes": 8803,
+      "sha256": "18b8e02f559177775357dc3582d3d8714b558c8c0b66f410d60e86ac5e638621"
+    },
+    {
+      "path": "benchmarks/render-goal-video.mjs",
+      "bytes": 13467,
+      "sha256": "294475f25ec77e9c287aa063213fcf42a746ee711a915dc1843c8defb4782ec6"
+    },
+    {
+      "path": "benchmarks/render-long-tour.mjs",
+      "bytes": 11079,
+      "sha256": "259c82c01d5b78da7cbb4e66cf2ad927a2c2554ae537cd61fda755e464c7035d"
+    },
+    {
+      "path": "benchmarks/render-screenshot-video.mjs",
+      "bytes": 8500,
+      "sha256": "25f5d6a8cc79273270759926a06179167d009381e2a5b1ea1002af5b8b83bfa6"
+    },
+    {
+      "path": "benchmarks/results/complex-missions-v1/INTERPRETATION.md",
+      "bytes": 3308,
+      "sha256": "51479bc361a4d30324c74bee041c64efa8c481ff902e4da0bf5418771ff10e73"
+    },
+    {
+      "path": "benchmarks/results/complex-missions-v1/report.json",
+      "bytes": 124341,
+      "sha256": "35346d74b79016dc2a31c2d2898a8b672ce8bf62e8a79c46200ece7c0fa6ee5a"
+    },
+    {
+      "path": "benchmarks/results/complex-missions-v1/report.json.manifest.json",
+      "bytes": 529,
+      "sha256": "2eae737e3c3f044b71b93192aecbed53148a6b1d81b701fcc9f79298ecde158c"
+    },
+    {
+      "path": "benchmarks/results/complex-missions-v1/RESULTS.md",
+      "bytes": 7049,
+      "sha256": "6fe336d635b068013efafb0f7f4799c7789b1b55bb6bf349e46096bd4ab41298"
+    },
+    {
+      "path": "benchmarks/results/complex-missions-v1/verification.json",
+      "bytes": 1024,
+      "sha256": "3cd10b0f1649f9dd1614e6d47b92b1719da34e1754940725ab9921f6f4476f40"
+    },
+    {
+      "path": "benchmarks/task-router-cases.json",
+      "bytes": 17633,
+      "sha256": "75e1a439563f95c195ceb31ee031008dceab24a2406cc73362161e49b37e100b"
+    },
+    {
+      "path": "benchmarks/task-router-eval.mjs",
+      "bytes": 16506,
+      "sha256": "bcfaedfc7456be413c83ef36a2d3508e13876a9cd634aeac74849e9ccf31459a"
+    },
+    {
+      "path": "docs/adaptive-routing-design.md",
+      "bytes": 6207,
+      "sha256": "5b7b5c0ef31b4b41d21ba9d4b15851ba1ec50da695b6b615bf01afd1776fa6d7"
+    },
+    {
+      "path": "docs/adaptive-routing.md",
+      "bytes": 7261,
+      "sha256": "dccb318644b25b45b60f5c5bb949b17dbeb421d88e60d9879969a2ab76aba144"
+    },
+    {
+      "path": "docs/batch-routing.md",
+      "bytes": 6171,
+      "sha256": "8a96fe82960d1d2777f5f11b9e6ca8d40bb1a61845f4c71aa71c2a7600cf30c9"
+    },
+    {
+      "path": "docs/claude-chrome.md",
+      "bytes": 10398,
+      "sha256": "412bb2fae528c864207b7f32eedc5c89c7fa2ba21903f6164c7ba0e896fd462e"
+    },
+    {
+      "path": "docs/DEMO.en.md",
+      "bytes": 4461,
+      "sha256": "83fdae2f1c81a10a640eea84890a1e51bb32927274ddffc109ca5fdd284371fb"
+    },
+    {
+      "path": "docs/DEMO.ko.md",
+      "bytes": 5124,
+      "sha256": "094fe1a7c6777707ad18316be62d1daa425392fa9dfc3208936586d4bc7296da"
+    },
+    {
+      "path": "docs/INSTALL.en.md",
+      "bytes": 13494,
+      "sha256": "f757b8f7fab19a6f8a9807093c67d0e1b5ebd706be6a86c9c07ea14371518d71"
+    },
+    {
+      "path": "docs/INSTALL.ko.md",
+      "bytes": 15014,
+      "sha256": "debee05e2929fe9b620c98b5dcf4c8796ccee628f3521501457965d822a2230b"
+    },
+    {
+      "path": "docs/task-router.md",
+      "bytes": 13914,
+      "sha256": "f08006468fc3b9c027a07541e757e73dbc9374dcb406e1fc1d909deb436e9f7b"
+    },
+    {
+      "path": "examples/adaptive-router-config.json",
+      "bytes": 252,
+      "sha256": "447e302cff5854781248116b2d6018d6f577229ee3b5bf9e0f87badbacf928ff"
+    },
+    {
+      "path": "examples/adaptive-router-task.json",
+      "bytes": 965,
+      "sha256": "14dede2f9be9a36dc945468aacf0d740dda5d1393bffb8cda4099dd1753eb924"
+    },
+    {
+      "path": "examples/browser-plan.json",
+      "bytes": 349,
+      "sha256": "64c2dedc2d8c6c5336c1f53bd6a7741f8c7af7c5ce929afe52cf6a3302cc2a2c"
+    },
+    {
+      "path": "examples/demo-server.mjs",
+      "bytes": 596,
+      "sha256": "2f083e11ce27183b4488fb34c14c90fe9db2e946a021021beb6d7cd8c63ae880"
+    },
+    {
+      "path": "examples/demo.html",
+      "bytes": 1302,
+      "sha256": "25185ba093a7f7307843804c29b7bd408d258c41053d201adc8f398cc6f1b6d4"
+    },
+    {
+      "path": "examples/live-smoke-plan.json",
+      "bytes": 295,
+      "sha256": "f6589182be4638ac4c54bc6f7a1fde18b6793a664a9f218a3370d1a08af6199c"
+    },
+    {
+      "path": "examples/offline.mjs",
+      "bytes": 2061,
+      "sha256": "3b2286ff0cd298de277293340e09c4b522c84040cd36119ae35824fcf5ce50c0"
+    },
+    {
+      "path": "examples/router-config.json",
+      "bytes": 177,
+      "sha256": "9a3419a80870644ea2835cc866d06345a0332b1d5b2d40d1949536ee9eeaf4c9"
+    },
+    {
+      "path": "examples/router-task.json",
+      "bytes": 1740,
+      "sha256": "d72af7339398ff9cebfa173266bfd16c023bd0ee182204129f6435f6559e7136"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1086,
+      "sha256": "136a991f223045bbca49f668eaa4b6c7b9147a57ea056f646c7fcfe5b5d00e68"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 795,
+      "sha256": "ee07afceccc8e5a4c9fbedda4a768d92ddb81c3ed7aeda46718ff37e73646c97"
+    },
+    {
+      "path": "package.json",
+      "bytes": 975,
+      "sha256": "11ccde62fbd2c97af194923ff5a815d6883a4477d85ab2a7bc255d2141fdc144"
+    },
+    {
+      "path": "README.md",
+      "bytes": 9741,
+      "sha256": "1d0c95fb71dd12bfd81d73f53f374e40f8ab23cabb2bb834343cd8a9babbd6c6"
+    },
+    {
+      "path": "scripts/install-skill.mjs",
+      "bytes": 8508,
+      "sha256": "c268bdcf9fa1d2e354b34f0195b280f2bcc039818788d12c8d825b1cff74b765"
+    },
+    {
+      "path": "skills/jev-adaptive-router/SKILL.md",
+      "bytes": 11316,
+      "sha256": "69ce0fc18d665b3524caeb7128f38935bb26c913bee3246f207a0a26ce764533"
+    },
+    {
+      "path": "skills/jev-computer-use/SKILL.md",
+      "bytes": 12937,
+      "sha256": "e107271d389bd7b07437839565bc8bad2b5c9aff3c9225dfda7051bb38d7e9e2"
+    },
+    {
+      "path": "skills/jev-task-router/SKILL.md",
+      "bytes": 6493,
+      "sha256": "7b571155517bf805ea4c3d5c421b425b677b3c838702e62428e947eb667d2cdd"
+    },
+    {
+      "path": "src/adaptive-router-cli.mjs",
+      "bytes": 5003,
+      "sha256": "c8e5298eb534b7d9352f2f91f8b177e09d646350600ed6d0e0d70a765ebdef0d"
+    },
+    {
+      "path": "src/adaptive-router.mjs",
+      "bytes": 30711,
+      "sha256": "70af2baeaeb6d069ed21ee90588006e1de7c3463481b311d0017293365a4b615"
+    },
+    {
+      "path": "src/browser-goal.mjs",
+      "bytes": 5159,
+      "sha256": "32d80bc3706ec744d016f2c735960b9cea399bc03dc0d0dbb69c31e3f10e1878"
+    },
+    {
+      "path": "src/browser-run.mjs",
+      "bytes": 2568,
+      "sha256": "64d54b37c817cf2adb3ba853a34e534368b42ebc8b6c345e481f289a6e119746"
+    },
+    {
+      "path": "src/claude-chrome-cli.mjs",
+      "bytes": 4700,
+      "sha256": "0fe34a81fbb05fbe655b3939ae794e4a14cb455f6a3379dfdce8a0a4b0190603"
+    },
+    {
+      "path": "src/claude-chrome.mjs",
+      "bytes": 10962,
+      "sha256": "1016d4478cdfdd2d025496679ef32bfa0d5875d28e55a1d085dcc6a4eece67a2"
+    },
+    {
+      "path": "src/cli.mjs",
+      "bytes": 4933,
+      "sha256": "e868d2d4ef64f6595f005ad8ad1afabc02f7a9791c011e0a711c8988c1a77194"
+    },
+    {
+      "path": "src/codex-target.mjs",
+      "bytes": 14981,
+      "sha256": "d7b2405ef1eda13856fc48b990edf308eb735add55b4e68fbf8f2fba29e606cf"
+    },
+    {
+      "path": "src/config.mjs",
+      "bytes": 948,
+      "sha256": "d13cba7c6ad518014933fb9c0f2b3089f226128f6e971d348884dc8794682dbc"
+    },
+    {
+      "path": "src/cua.mjs",
+      "bytes": 20276,
+      "sha256": "3150ed8cf7ec0476d44ff7602a0eb91e41790a498e733d43bd0da45ce4c4fb46"
+    },
+    {
+      "path": "src/decider.mjs",
+      "bytes": 17559,
+      "sha256": "ea6a729a1315109b8750f53cfd0d7ba152040d2f674110ea20ee15d189671d6b"
+    },
+    {
+      "path": "src/goal.mjs",
+      "bytes": 14108,
+      "sha256": "10406c5182a8f5253ad7e26ca60597f1f2fd8efbd1f794b1a15a0df3bd0addf7"
+    },
+    {
+      "path": "src/index.mjs",
+      "bytes": 3807,
+      "sha256": "0623dcb22df1f007985ea360c4afbe901302822b8e8d0747bda080da9c5db0fd"
+    },
+    {
+      "path": "src/inference-budget.mjs",
+      "bytes": 5914,
+      "sha256": "b9ec71c09fdd6fc6a4fc985f3049c14b31427856b9954e283a1c2cdebe420d7d"
+    },
+    {
+      "path": "src/meter.mjs",
+      "bytes": 7740,
+      "sha256": "5853e97da6ddb297c49e5fa7a51211a0b7c83bc69a55ea3ff314efa782817f6f"
+    },
+    {
+      "path": "src/observation.mjs",
+      "bytes": 3313,
+      "sha256": "ece78d470a4ccc2a700bff0b49476ef3e230e466c0b40494c6885c2bb7beee25"
+    },
+    {
+      "path": "src/playwright.mjs",
+      "bytes": 14241,
+      "sha256": "0c4b1b6236995ffe9f1fcfa69231210cd0d335693bcc78e4a1cac5e3f9621e9a"
+    },
+    {
+      "path": "src/router-batch.mjs",
+      "bytes": 8784,
+      "sha256": "476ad4d611d7b8f0bb2f398cd226159570bebcc9be04437fdcf66d2495603b54"
+    },
+    {
+      "path": "src/router-cli.mjs",
+      "bytes": 6775,
+      "sha256": "ec186c51567c3d874b6544a4db9b404d7055d1bf8f8fdc335dd56f4d6fb6e769"
+    },
+    {
+      "path": "src/router-task.mjs",
+      "bytes": 20287,
+      "sha256": "3144747d69aac8dfacbfc9c28b1e3f2dbb51107fceadeb9f2dcfa7a6dbbaea9c"
+    },
+    {
+      "path": "src/router.mjs",
+      "bytes": 12454,
+      "sha256": "2a7082dda36189c631c6bb8eb09ea6c2234f00bd9e4072c8c4044d0b9bcb7f45"
+    },
+    {
+      "path": "src/selector.mjs",
+      "bytes": 8664,
+      "sha256": "33a5ee032d73b70fc74bbf469196fc725db1585cfa1bfdd466d1f5f2293918b1"
+    },
+    {
+      "path": "src/structured-llm.mjs",
+      "bytes": 17500,
+      "sha256": "abe1c6aa6bfcdac6dfc2bd5c48de3efa54a9731ae5456e650fe22aa54505bbc1"
+    },
+    {
+      "path": "test/adaptive-router-cli.test.mjs",
+      "bytes": 4235,
+      "sha256": "50fa0660de921ad14a96bc726f63d8461e2c85fbf4cbebf1808e544d639a759f"
+    },
+    {
+      "path": "test/adaptive-router.test.mjs",
+      "bytes": 24615,
+      "sha256": "9bc9aafdb3ea552026d95f56514ea723eccd4b6997404714c6245b30c4268dea"
+    },
+    {
+      "path": "test/browser-run.test.mjs",
+      "bytes": 3707,
+      "sha256": "5d93e37a4182d803f9c1e97dfe82fb0076f15cf2c82b81fa738369decd49ce37"
+    },
+    {
+      "path": "test/claude-chrome-cli.test.mjs",
+      "bytes": 3228,
+      "sha256": "c9da57c87f700fff8af6f202bc9d56cb23b828f90bdbefe2ff9ce771debf888a"
+    },
+    {
+      "path": "test/claude-chrome.test.mjs",
+      "bytes": 13085,
+      "sha256": "71dd1eb8ea9d484db545390fa2436c1d09b203b7c86ab8fd12fe9955c3c5b09b"
+    },
+    {
+      "path": "test/cli.test.mjs",
+      "bytes": 1897,
+      "sha256": "39e3bcceb8141efeef771068682b96e52647dbf3c666df4d8a7496e875477c58"
+    },
+    {
+      "path": "test/codex-target.test.mjs",
+      "bytes": 18829,
+      "sha256": "bd0e6432e1b5abd57509b3b7e450dd030b286e19060d7926ea4806a8e14db196"
+    },
+    {
+      "path": "test/complex-mission-cases.test.mjs",
+      "bytes": 9988,
+      "sha256": "b2ffa616e0dd590865a7088401f2229085a102f25c749cbcd07ef5cd55d4cd62"
+    },
+    {
+      "path": "test/complex-mission-eval.test.mjs",
+      "bytes": 6941,
+      "sha256": "92b10e4bbd3f0b2dbd419d75fb28dcdb61910e8eb1f63154e82355b4441cbf98"
+    },
+    {
+      "path": "test/complex-mission-integration.test.mjs",
+      "bytes": 11084,
+      "sha256": "01a54fb9a81ea74c5f1a3897374761af1a22a3a4d6029194ba33f3779659e51c"
+    },
+    {
+      "path": "test/config.test.mjs",
+      "bytes": 1339,
+      "sha256": "325c90e92230bee0f7aa4b2fa5a314ee2241e6a859563dd47d571eddcd82fd8d"
+    },
+    {
+      "path": "test/cua.test.mjs",
+      "bytes": 28982,
+      "sha256": "68e2f801af346e1aeddf3bab6b0e5311d82916f1082610763b9ef7d74e0b556d"
+    },
+    {
+      "path": "test/decider.test.mjs",
+      "bytes": 24811,
+      "sha256": "1f8b125f6f0b746198238cf529006accfdd5e88411561bffe447c68b58468a6b"
+    },
+    {
+      "path": "test/goal-integration.test.mjs",
+      "bytes": 12455,
+      "sha256": "7ff45c1aca9bd49f4b5c170265d95bbe9217459eb69e94120e0a329949885381"
+    },
+    {
+      "path": "test/goal.test.mjs",
+      "bytes": 15879,
+      "sha256": "d0fcbdbc6a7c0685de84fa87ccc0767dfa8633cb2591a4b2ff2997245915b0dd"
+    },
+    {
+      "path": "test/inference-budget.test.mjs",
+      "bytes": 6070,
+      "sha256": "72be2cb48c91fd11fe75ee1230736490d7b77350cd21886bd85e7f7882747301"
+    },
+    {
+      "path": "test/installer-adaptive.test.mjs",
+      "bytes": 6720,
+      "sha256": "c2642d4b107dc30d2963234a830d73420278b3bcaa6253f64dfbc1d8d9be961d"
+    },
+    {
+      "path": "test/installer.test.mjs",
+      "bytes": 5973,
+      "sha256": "a4583fe337729784528a8f02f1d951c9aa52a6a1be3cfb213ab9eeee04f2303a"
+    },
+    {
+      "path": "test/live-demo-server.test.mjs",
+      "bytes": 6439,
+      "sha256": "e15f571bd5d6efad443d280731804d5d2e6f3e634830c3a185b6f867cc551d4f"
+    },
+    {
+      "path": "test/llm-control-cases.test.mjs",
+      "bytes": 7656,
+      "sha256": "12856123d9b6ca8dca719fba57f83d583138ce2996fc8b33a5498898e73b8a33"
+    },
+    {
+      "path": "test/llm-control-eval.test.mjs",
+      "bytes": 37081,
+      "sha256": "f96d0f3195957ed84feb89ca290014dd10e459f3c67c67dd841cee4b3b2a0525"
+    },
+    {
+      "path": "test/llm-control-openai.test.mjs",
+      "bytes": 17802,
+      "sha256": "2a60a2216f116d50b07b9ed39adce8e9c38077bf13c8e4f6e740b03c18d1094b"
+    },
+    {
+      "path": "test/llm-control-openrouter.test.mjs",
+      "bytes": 12463,
+      "sha256": "ced27bceb021eea1f7aff11d0ab0a042e158eeac2c8767bdd65ec6603e398ccd"
+    },
+    {
+      "path": "test/news-triage-eval.test.mjs",
+      "bytes": 18576,
+      "sha256": "42751b32a2ae39fee153d2c442e0578f02ea0a41d37765ce8eaafc7633d673aa"
+    },
+    {
+      "path": "test/observation.test.mjs",
+      "bytes": 3636,
+      "sha256": "4768e6efd7363ba63fece1f334fabd252a17aa8cf74f2f93779c9669470adf8f"
+    },
+    {
+      "path": "test/playwright.test.mjs",
+      "bytes": 21175,
+      "sha256": "40da3195af0c2c8aa0f6964a06d59d5688768f4491f78d3d5f4ce72b9f527296"
+    },
+    {
+      "path": "test/router-batch.test.mjs",
+      "bytes": 11149,
+      "sha256": "3edcc07689538d07f5a15a802be11b018642275f39b65b421b6f47f51493884e"
+    },
+    {
+      "path": "test/router-cli.test.mjs",
+      "bytes": 17806,
+      "sha256": "e7a2209f525aeac04b0fe2e82849182e96464dc064d89d22b3c8bec5443024a2"
+    },
+    {
+      "path": "test/router-eval.test.mjs",
+      "bytes": 12041,
+      "sha256": "3e17098cd65cd3f844baada89b66ea648511c7c28e4893a4907a293479edcb0d"
+    },
+    {
+      "path": "test/router-handoff.test.mjs",
+      "bytes": 7602,
+      "sha256": "bacfc7e1d72a882c9264ab191d0b0a42d7e902a604335af5041477e96ee05c1c"
+    },
+    {
+      "path": "test/router-task.test.mjs",
+      "bytes": 11489,
+      "sha256": "4c2d6ce82a4f211365b1529e21c4b682504c4be611a4ba3146130db417f49b49"
+    },
+    {
+      "path": "test/router.test.mjs",
+      "bytes": 15744,
+      "sha256": "9d07b0024a876fae06d95f2eff080f51bb322e7f4d153e1a8bcf9d1bd5a953de"
+    },
+    {
+      "path": "test/selector.test.mjs",
+      "bytes": 18187,
+      "sha256": "e09dc04d9abb7957218e157afce38840f5a8eb86201c29af358ca463144a5283"
+    },
+    {
+      "path": "test/session-billing.test.mjs",
+      "bytes": 2917,
+      "sha256": "5e6219a22988739e2adcc6d08077eb8cbba5c217069278f84e6a104737f09a07"
+    },
+    {
+      "path": "test/structured-llm.test.mjs",
+      "bytes": 15646,
+      "sha256": "77a32cb8f98b08fe7e5c8037e29b7157855a0f9cd1de7a6f297a9ba944df7ebf"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JEV continuous workflow demo</title>
+<style>
+body{margin:0;background:#f5f4ef;color:#233c38;font-family:system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}
+main{max-width:650px;padding:48px}small{letter-spacing:.12em;text-transform:uppercase}h1{font-size:44px;line-height:1.1}p{line-height:1.7;color:#50625e}button{background:#235d4b;color:white;border:0;border-radius:8px;padding:16px 24px;font:inherit;cursor:pointer}#status{font-weight:600}
+</style>
+<main><small>JEV · Local verification</small><h1>One call, two steps.</h1>
+<p>This fixture tests real browser actions. The selector may use mock responses or the live TypeSafe API; the runner reports which mode was used. This fixture alone does not measure JEV speed improvements.</p>
+<p id="status">Ready to open the guide</p><button id="next">Open library</button></main>
+<script>
+let stage=0;const button=document.getElementById('next');const status=document.getElementById('status');
+button.addEventListener('click',()=>{stage++;if(stage===1){status.textContent='Choose an article';button.textContent='Read guide'}else{status.textContent='Workflow verified';button.remove()}});
+</script></html>

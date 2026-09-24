@@ -1,0 +1,35 @@
+{
+  "verifiedAt": "2026-09-24T03:21:34.464Z",
+  "tests": {
+    "passed": 718,
+    "failed": 0,
+    "command": "npm --prefix computer-use run test:all"
+  },
+  "checks": {
+    "fixtureUnchanged": true,
+    "datasetUnchanged": true,
+    "publicArtifactsSecretFree": true,
+    "liveComplete": true,
+    "requests": 36,
+    "exactReplaysZeroCost": true,
+    "changedEvidenceMisses": true,
+    "recordedCost": 0.6934757219999999
+  },
+  "postLiveVerification": {
+    "verifiedAt": "2026-09-24T03:35:34.622Z",
+    "tests": {
+      "passed": 722,
+      "failed": 0,
+      "command": "npm --prefix computer-use run test:all"
+    },
+    "existingLiveStateReplayedWithoutCredentialsOrNetwork": [
+      "astra",
+      "luna",
+      "adaptive"
+    ],
+    "newJevAndLunaCostComparison": "mocked HTTP regression checks; no additional live API calls",
+    "eligibleLunaWithLocalObservations": "offline unresolved plan; live resolves state without probing",
+    "publicArtifactsSecretFree": true,
+    "fixtureAndDatasetUnchanged": true
+  }
+}

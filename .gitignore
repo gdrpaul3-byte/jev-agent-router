@@ -1,0 +1,11 @@
+node_modules/
+.npm-cache/
+.env
+.env.*
+!.env.example
+.jev-router/
+.jev-router-*/
+*.log
+*.tmp
+.DS_Store
+Thumbs.db

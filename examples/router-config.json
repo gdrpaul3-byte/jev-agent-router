@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "mode": "shadow",
+  "model": "jev-1.13.0",
+  "timeoutMs": 5000,
+  "maxCalls": 20,
+  "maxInputBytes": 24000,
+  "minConfidence": 0.75,
+  "minMargin": 0.1
+}
