@@ -10,7 +10,7 @@ const skillDefinitions = {
   'task-router': { name: 'jev-task-router', backupName: 'SKILL.md.before-task-router-v1' },
   adaptive: { name: 'jev-adaptive-router', backupName: 'SKILL.md.before-adaptive-v1' },
   // Claude in Chrome tools exist only in Claude Code; Codex uses the CUA path in jev-computer-use.
-  'claude-chrome': { name: 'jev-claude-chrome', backupName: 'SKILL.md.before-claude-chrome-v1', agents: ['claude'] },
+  'claude-chrome': { name: 'jev-claude-chrome', backupName: 'SKILL.md.before-playwright-ab-v1', agents: ['claude'] },
 };
 const escapedRuntime = runtimeUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const runtimeImport = new RegExp(`\\bimport\\s*\\(\\s*(["'])${escapedRuntime}\\1\\s*\\)`);

@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-09-24T19:56:33.815Z",
+  "createdAt": "2026-09-25T01:53:04.209Z",
   "scope": "Reviewed allowlisted package; local secret values and personal paths checked; keys and state excluded.",
   "files": [
     {
@@ -26,6 +26,16 @@
       "path": "benchmarks/browser-llm-decider.mjs",
       "bytes": 14858,
       "sha256": "362155eb8952f229c2ea1318a3ac8733f540513cd55fa4973b21877cf0ee4fc0"
+    },
+    {
+      "path": "benchmarks/claude-playwright-goal.mjs",
+      "bytes": 13238,
+      "sha256": "bb11b78f372bb7bd3a69e40476a5ff7ec68f04927a8af4a015e3e17008250bde"
+    },
+    {
+      "path": "benchmarks/claude-playwright-goal.test.mjs",
+      "bytes": 15545,
+      "sha256": "b09852a101a599d44ac6fe673790613690eb953fdf69e8a1d6e6920df5b198c9"
     },
     {
       "path": "benchmarks/complex-mission-cases.mjs",
@@ -523,19 +533,29 @@
       "sha256": "2ef6504c7dab048bb3f492adf4f03445ef0b6db910e58a9311f3fb98e672d608"
     },
     {
+      "path": "benchmarks/results/claude-ab-20260925/protocol-playwright.json",
+      "bytes": 8965,
+      "sha256": "a510337260ed39de96beeafe261bc4e796b034952fa0bf7d5aee5c2c368e8f6e"
+    },
+    {
       "path": "benchmarks/results/claude-ab-20260925/protocol.json",
       "bytes": 5304,
       "sha256": "c3564afd6c32a41c2e1c62b324a14f17189b3d0e2c6862ece0b7a8c0ded07ed0"
     },
     {
+      "path": "benchmarks/results/claude-ab-20260925/report-playwright.json",
+      "bytes": 60215,
+      "sha256": "b16576ad41078147c7620eb8039eb53639a96b169a0fa4a3aeece7b015086211"
+    },
+    {
       "path": "benchmarks/results/claude-ab-20260925/report.json",
-      "bytes": 27613,
-      "sha256": "0802764b9af4739d3d8324cfa65b3c2d462aaed016ec456f724b09a17ff3e32f"
+      "bytes": 27747,
+      "sha256": "a3c00551428ed020642db444a99f160416c2e02cc48c7a3f23c8f2b49b1015eb"
     },
     {
       "path": "benchmarks/results/claude-ab-20260925/RESULTS.md",
-      "bytes": 8785,
-      "sha256": "23771aef49371e6c912ec73de05b3f9538e4e603b1ecd123e2d32713727baaa4"
+      "bytes": 17496,
+      "sha256": "9852db04c0d0b3cfa23030656d717e980eb58bbbfb835e39a4c5c93e6d726715"
     },
     {
       "path": "benchmarks/results/claude-chrome-live-20260924/report.json",
@@ -619,8 +639,8 @@
     },
     {
       "path": "docs/claude-chrome.md",
-      "bytes": 25673,
-      "sha256": "73c1f853016d048942dbc144f1dda1f1c0ffdd8760984403dd79bed169e15064"
+      "bytes": 26207,
+      "sha256": "c49b5eb8e4fa4aa056a344f843ef808d26a228fd5de0d2b6010c5086868a6210"
     },
     {
       "path": "docs/COMPARISON.md",
@@ -714,13 +734,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 21575,
-      "sha256": "8ecbd9a3a72b38a90553bf30bf49fd4f447e0d11144655da5b6690efd03dd4de"
+      "bytes": 23648,
+      "sha256": "902d3ae43ffd9e0a85fc562ce33037578a27b1cd0cd7ae0cef16bd166af141d0"
     },
     {
       "path": "scripts/install-skill.mjs",
       "bytes": 8936,
-      "sha256": "67be92b65dd70943935401486fd3d22fe639e6f5f3bfc13372a9f75053152ea5"
+      "sha256": "c403c72bd11fd062c19f0521c2ecfb59c2edb47a3236a818218e42f7736b6bc0"
     },
     {
       "path": "skills/jev-adaptive-router/SKILL.md",
@@ -729,8 +749,8 @@
     },
     {
       "path": "skills/jev-claude-chrome/SKILL.md",
-      "bytes": 15113,
-      "sha256": "8534ea486f185ea8053b6fb43c835f880ee8a07c20cf0a443ae897cec0466e3b"
+      "bytes": 15641,
+      "sha256": "a753e5968236673fbd1fb2d86e4ce1e17b1f0ac746d1f1ff38e84ea070e5992c"
     },
     {
       "path": "skills/jev-computer-use/SKILL.md",
@@ -985,7 +1005,7 @@
     {
       "path": "test/installer-adaptive.test.mjs",
       "bytes": 8089,
-      "sha256": "6ed5bef5529a4dce9bb20aa96954394011a19ad00c2477cb522e848a45fd34dd"
+      "sha256": "d42e4eeb02cafe8471632de0d51504f317de442353d3d306cc7fd5ec7c7f3855"
     },
     {
       "path": "test/installer.test.mjs",

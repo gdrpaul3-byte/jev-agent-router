@@ -375,9 +375,9 @@
       "extra": true,
       "void": null,
       "passed": false,
-      "stop": "authorize screenshot timeout; viewport shrank; writing the 24 KB observation took ~67 s (> 60 s authorize window)",
+      "stop": "authorize screenshot timeout; viewport shrank; each ~21 k-character (~24 KB) observation took 73-76 s from browser read to the last written file (> 60 s authorize window)",
       "claimedStatus": "stopped",
-      "claimedStopReason": "authorize screenshot timeout; viewport shrank; writing the 24 KB observation took ~67 s (> 60 s authorize window)",
+      "claimedStopReason": "authorize screenshot timeout; viewport shrank; each ~21 k-character (~24 KB) observation took 73-76 s from browser read to the last written file (> 60 s authorize window)",
       "factChecks": {
         "requests": false,
         "cost": false
@@ -917,7 +917,7 @@
   "decisions": [
     {
       "decision": "A6x not run",
-      "why": "A5x showed the authorize observation of the GitHub page (15.8 KB page text + 8 KB read_page) takes 64-67 s to transcribe with Write in A2 and A5x, longer than the 60 s authorize window, independent of screenshot timeouts"
+      "why": "A5x showed an observation of the GitHub page (~21 k characters, ~24 KB) took 72-76 s from browser read to the last written file in A2 and A5x (64-67 s of it writing), longer than the 60 s authorize window, independent of screenshot timeouts"
     }
   ],
   "totals": {

@@ -73,7 +73,7 @@ test('Claude Chrome skill installs only for Claude with an executable helper pat
     const { stdout } = await exec(process.execPath, ['--', paths.cli, 'help']);
     assert.ok(JSON.parse(stdout).commands.some(command => command.startsWith('start --session')));
     const updated = await installSkills({ homeDirectory, skill: 'claude-chrome', agent: 'claude', update: true });
-    assert.deepEqual(updated.backups, [join(result.installed[0], 'SKILL.md.before-claude-chrome-v1')]);
+    assert.deepEqual(updated.backups, [join(result.installed[0], 'SKILL.md.before-playwright-ab-v1')]);
   });
 });
 

@@ -1,0 +1,111 @@
+{
+  "name": "Opus 5.5 + JEV through an isolated Playwright loop, compared with the same day's Opus-only and Opus + JEV (Claude in Chrome) arms",
+  "registeredAt": "2026-09-25 10:20 KST, after zero-cost validation and an adversarial review, before any paid attempt of this arm",
+  "arm": {
+    "id": "opus+jev-playwright",
+    "host": "A fresh Opus 5.5 subagent (claude-opus-5-5, general-purpose type, session effort) runs ONE harness command with Bash, then reads final-text.txt and extracts the facts. It never uses browser tools, never edits plans or code, never reruns the command and never completes a stopped task manually.",
+    "loop": "benchmarks/claude-playwright-goal.mjs: Node launches an isolated headless Chrome (fresh context, no profile, cookies or storage), and the repository's goal loop (src/goal.mjs via createCuaSession) asks JEV (TypeSafe direct API) for each next host-approved click. The host model is not in the per-step loop."
+  },
+  "settings": {
+    "browser": {
+      "channel": "chrome",
+      "headless": true,
+      "viewport": "Playwright default (not set)",
+      "gotoTimeoutMs": 20000,
+      "settleAfterGotoMs": 2000,
+      "actionTimeoutMs": 30000,
+      "note": "Playwright's click also waits, within actionTimeoutMs, for a navigation it triggers to commit; 30 s as in the repository's earlier HSMU Playwright run."
+    },
+    "afterEachClick": "Never replaying the click: page.waitForLoadState('domcontentloaded', 30 s) (only waits when the click created a new document, as on HSMU; returns at once for GitHub's same-document navigation), then 1000 ms (the Claude in Chrome bridge's post-click wait), then read-only polling every 250 ms until two consecutive captures have the same URL, title and elements, capped at 10 s. A DOMContentLoaded timeout ends the run as ACTION_FAILED/ACTION_TIMEOUT.",
+    "jev": {
+      "timeoutMs": 5000,
+      "maxInputBytes": 100000,
+      "minConfidence": 0.75,
+      "minMargin": 0.1,
+      "maxCalls": "min(50, maxSteps + 3)",
+      "model": "Both JEV arms request jev-latest through src/decider.mjs; the morning arm was served jev-1.13.0. Any other served model in result.json jev.perRequest[].model is reported as a confound.",
+      "note": "Same request limits as the Claude in Chrome bridge command (src/claude-chrome-command.mjs)."
+    },
+    "goalLoop": {
+      "verificationTimeoutMs": 30000,
+      "maxStaleReplans": 2,
+      "note": "As in the repository's earlier HSMU Playwright plan; the plan's maxSteps, maxDurationMs, goal, actions and completion are unchanged."
+    }
+  },
+  "preparation": "Same intent as the Chrome arms (start page ready, HSMU pop-ups closed with the repository's prepareHsmuHome routine, no model request), but it runs inside the host's single command, so it is inside the agent duration and reported separately as timing.setupMs and timing.prepareMs.",
+  "tasks": "Identical to protocol.json: github-results, hsmu-scholarship, hsmu-directions, with the same start URLs, plans (plans/*.json, unchanged), truth and fact names. GitHub main was e9a7eb6 at registration (git ls-remote, 10:18 KST), as in the morning.",
+  "order": [
+    [
+      "P1",
+      "github-results"
+    ],
+    [
+      "P2",
+      "hsmu-scholarship"
+    ],
+    [
+      "P3",
+      "hsmu-directions"
+    ],
+    [
+      "P4",
+      "github-results"
+    ],
+    [
+      "P5",
+      "hsmu-scholarship"
+    ],
+    [
+      "P6",
+      "hsmu-directions"
+    ]
+  ],
+  "comparisonArms": "Not re-run: opus (6/6) and opus+jev in Claude in Chrome (0/7) from protocol.json, recorded 03:49-04:50 KST the same day, more than five hours before this arm. This arm uses an isolated headless Chrome (GitHub signed out) instead of the user's Chrome.",
+  "disclosures": {
+    "scriptedPath": "Both JEV arms get the task card plus a plan the experimenter wrote. Every action has an exact-name target and the dry run found exactly one matching element per step, so JEV's target question is that element versus NONE and its action choice follows the click order written in the goal. For hsmu-directions the goal also names the H menu link and the 총장 인사말 submenu button, which the Opus-only card did not. Plan writing is counted in neither JEV arm's time or cost. Read the comparison as 'Opus alone' versus 'Opus + JEV following a plan the host wrote', not as navigation ability.",
+    "adapterDifferences": [
+      "Playwright lists every rendered interactive element including off-screen ones and scrolls on click; the Chrome bridge's read_page interactive filter lists only the viewport, so reaching 오시는 길 does not test the bridge's missing scroll.",
+      "Page text is document.body.innerText, not get_page_text, so the PAGE_TEXT_UNAVAILABLE risk on 총장 인사말 cannot occur.",
+      "The host does not transcribe observations, so the decide-to-click gap is only JEV latency and the hover-menu expiry of C2/C3 is not exercised.",
+      "JEV input differs in size: the GitHub home request is 36.6 KB here (129 elements) against about 11 k tokens (88 refs) in the Chrome arm."
+    ],
+    "latentIssue": "src/playwright.mjs clicks page.locator(INTERACTIVE).nth(ref), which pierces open shadow DOM while the captured ref index does not; the dry and smoke runs show no index shift on these paths. Not fixed for this experiment.",
+    "scriptedDeciderTimes": "The zero-cost smoke runs with a scripted decider are a harness lower bound without JEV latency, not a comparable non-JEV arm."
+  },
+  "success": "Every fact equals the truth (same normalizer as protocol.json), the harness finalUrl is the target page, for hsmu-directions the harness-recorded visits show 총장 인사말 then 총장 프로필 then 오시는 길, the harness status is completed, and the host ran exactly one node command of the harness, no browser, computer-use or file-editing tool.",
+  "metrics": {
+    "primaryTime": "Comparable to the other arms' agent durations (whose preparation was done untimed by the parent): agent duration_ms minus timing.setupMs minus timing.prepareMs.",
+    "secondaryTime": "Raw agent duration_ms, the harness command's own duration, loopMs, JEV per-request latency. timing.totalMs is frozen before the bounded billing flush.",
+    "opus": "Tokens and API list-price equivalent from the subagent transcript, same method and prices as protocol.json.",
+    "jev": "Harness meter: requests, known input tokens and known-usage list-price estimate (as the Chrome arm), completeness, per-request latency and served model.",
+    "labels": "TIMEOUT with loop duration below maxDurationMs is labelled JEV_REQUEST_TIMEOUT. The per-observation URL/element counts are reported so a stop on a half-rendered page can be recognised; it still counts as a failure."
+  },
+  "validationBeforeRegistration": [
+    "Dry run (no API): all three paths observable in an isolated headless Chrome with exactly one matching target per step; the GitHub home page's JEV request would be 36.6 KB, so the Chrome bridge's 100 KB limit is used instead of the goal CLI default of 24 KB.",
+    "Harness smoke run 1 (scripted decider, no API, no post-click wait): stopped with OBSERVATION_FAILED on HSMU navigations and with a decision on a half-rendered GitHub page.",
+    "Smoke run 2 (domcontentloaded + 1 s): all three completed (loop 4.9, 5.8, 9.7 s).",
+    "Adversarial review (22 agents): 20 findings, 13 confirmed by a refuting verifier; fixes applied: 30 s click/commit timeout, read-only stability poll, final-read race, teardown reason, known JEV usage, request-timeout label, grader host rules and cost, and these disclosures.",
+    "Smoke run 3 (final harness, scripted decider): all three completed (loop 6.7, 7.3, 12.8 s); every post-click stability poll settled in two reads (about 0.3 s)."
+  ],
+  "noSelection": "Every attempt is reported. A failure is not replaced by a rerun; any extra attempt is labelled extra.",
+  "extraRound": {
+    "registeredAt": "2026-09-25 10:31 KST",
+    "reason": "An exit-delay bug in the harness: the final-read guard added after the review used a 30 s timer that was never cleared, so each P1-P6 Node process stayed alive about 30 s after writing result.json (P1: harness command 53.9 s vs timing.totalMs 21.3 s). Loop outcomes, facts, visited pages and costs are unaffected; only the host-visible wall clock is inflated.",
+    "fix": "Timer cleared after the race; offline test that no timer stays pending; zero-cost smoke run after the fix: process wall 48.95 s vs summed harness totalMs 48.43 s.",
+    "attempts": [
+      [
+        "X1",
+        "github-results"
+      ],
+      [
+        "X2",
+        "hsmu-scholarship"
+      ],
+      [
+        "X3",
+        "hsmu-directions"
+      ]
+    ],
+    "reporting": "Extra attempts, labelled extra, with the same prompts, plans, settings and grader. P1-P6 remain the registered result; their wall clock is also reported with the measured idle tail (harness command duration minus timing.totalMs) shown separately."
+  }
+}
