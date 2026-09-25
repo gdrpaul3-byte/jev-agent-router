@@ -120,7 +120,7 @@ node -- scripts/install-skill.mjs --agent both --skill adaptive
 
 하나만 사용할 때는 `--agent codex` 또는 `--agent claude`를 씁니다. 각 사용자 폴더의 `~/.codex/skills`, `~/.claude/skills`에 설치되며 적응형 스킬 이름은 `jev-adaptive-router`입니다. 설치기는 현재 저장소의 실행 엔진·문서·`.env` 절대 경로가 들어간 `SKILL.md`를 복사합니다. 키 내용이나 별도의 실행 엔진은 복사하지 않습니다. 설치 후 해당 저장소 경로를 유지하세요.
 
-`--skill task-router`, `--skill browser`, `--skill all`도 사용할 수 있습니다. `--skill`을 생략하면 기존 브라우저 스킬만 설치합니다. 기존 스킬을 조용히 덮어쓰지 않으며, 같은 저장소에서 설치한 호환 스킬은 다음처럼 갱신합니다.
+`--skill task-router`, `--skill browser`, `--skill claude-chrome`, `--skill all`도 사용할 수 있습니다. `claude-chrome`(`jev-claude-chrome`)은 Claude in Chrome 확장 도구를 쓰므로 Claude에만 설치됩니다. 따라서 `--skill all --agent both`는 Codex에 3개, Claude에 4개를 설치합니다. `--skill`을 생략하면 기존 브라우저 스킬만 설치합니다. 기존 스킬을 조용히 덮어쓰지 않으며, 같은 저장소에서 설치한 호환 스킬은 다음처럼 갱신합니다.
 
 ```sh
 node -- scripts/install-skill.mjs --agent both --skill adaptive --update
@@ -132,7 +132,19 @@ node -- scripts/install-skill.mjs --agent both --skill adaptive --update
 
 > jev-adaptive-router를 사용해서 이 업무의 다음 단계를 research 또는 draft 중에서 골라 줘. 먼저 오프라인 사전 검사를 하고 최신 근거를 사용해. 반환된 비용과 승인 조건을 확인한 뒤 내가 요청한 범위에서 기존 도구를 사용해.
 
-호스트는 로컬 Node 명령을 실행하고 입력·설정 파일을 읽을 수 있어야 합니다. 스킬이 원격 봇 연결을 만들어 주지는 않습니다. Claude 로그인은 라우터 API 키와 별개입니다. Claude in Chrome 연결 코드와 모의 검사는 있지만 실제 Claude 브라우저 실행 검증은 아직 보류 상태입니다.
+호스트는 로컬 Node 명령을 실행하고 입력·설정 파일을 읽을 수 있어야 합니다. 스킬이 원격 봇 연결을 만들어 주지는 않습니다. Claude 로그인은 라우터 API 키와 별개입니다.
+
+### Claude in Chrome
+
+```sh
+node -- scripts/install-skill.mjs --agent claude --skill claude-chrome
+```
+
+Claude Code를 `claude --chrome`으로 시작하고 `/chrome`으로 연결을 확인한 뒤 다음처럼 요청합니다.
+
+> jev-claude-chrome으로 http://127.0.0.1:8776/ 데모 탭에서 Open library를 누르고 Read guide를 눌러 Workflow verified가 보이게 해 줘. 모든 시도와 JEV 비용을 보고해.
+
+스킬은 비공개 세션 원장을 만들고, 공식 확장 도구로 탭을 관측하고, JEV에게 호스트가 허용한 동작 하나를 받아 한 번 실행한 뒤 새 관측으로 검증합니다. 2026-09-24에 로컬 예제 두 개로 실제 검증했습니다. [실측 결과](../benchmarks/results/claude-chrome-live-20260924/RESULTS.md)와 [브리지 계약](claude-chrome.md)을 참고하세요. 이 경로에는 `TYPESAFE_API_KEY`만 필요합니다. 동작 하나에 Claude 도구 호출이 여러 번 필요해 약 30–60초가 걸리며, 속도 이점은 주장하지 않습니다.
 
 ## 6. 선택 사항: 영속 인계
 

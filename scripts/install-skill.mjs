@@ -6,9 +6,11 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const packageDirectory = fileURLToPath(new URL('../', import.meta.url));
 const runtimeUrl = pathToFileURL(join(packageDirectory, 'src', 'index.mjs')).href;
 const skillDefinitions = {
-  browser: { name: 'jev-computer-use', backupName: 'SKILL.md.before-browser-v2' },
+  browser: { name: 'jev-computer-use', backupName: 'SKILL.md.before-claude-chrome-v1' },
   'task-router': { name: 'jev-task-router', backupName: 'SKILL.md.before-task-router-v1' },
   adaptive: { name: 'jev-adaptive-router', backupName: 'SKILL.md.before-adaptive-v1' },
+  // Claude in Chrome tools exist only in Claude Code; Codex uses the CUA path in jev-computer-use.
+  'claude-chrome': { name: 'jev-claude-chrome', backupName: 'SKILL.md.before-playwright-ab-v1', agents: ['claude'] },
 };
 const escapedRuntime = runtimeUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const runtimeImport = new RegExp(`\\bimport\\s*\\(\\s*(["'])${escapedRuntime}\\1\\s*\\)`);
@@ -57,8 +59,9 @@ export async function installSkills({ agent = 'both', skill = 'browser', homeDir
   // configuration, private state, credentials, or arbitrary files are included.
   for (const definition of selected) {
     const content = renderSkill(await readFile(new URL(`../skills/${definition.name}/SKILL.md`, import.meta.url), 'utf8'));
-    for (const name of agents) entries.push({ ...definition, content, destination: join(home, `.${name}`, 'skills', definition.name) });
+    for (const name of agents) if (!definition.agents || definition.agents.includes(name)) entries.push({ ...definition, content, destination: join(home, `.${name}`, 'skills', definition.name) });
   }
+  if (!entries.length) throw new Error('SKILL_NOT_FOR_AGENT');
   const destinations = entries.map(entry => entry.destination);
   const originals = [];
   // Check every selected destination before creating backups or modifying either host.
@@ -123,13 +126,13 @@ export function parseInstallArguments(args) {
 }
 
 if (process.argv[1] && pathToFileURL(resolve(process.argv[1])).href === import.meta.url) {
-  const usage = 'Usage: node -- scripts/install-skill.mjs --agent codex|claude|both [--skill browser|task-router|adaptive|all] [--update]\nDefault skill: browser. Installs only SKILL.md; keeps the runtime and .env in this checkout. Existing destinations require --update from the same runtime and an unused release backup name.';
+  const usage = 'Usage: node -- scripts/install-skill.mjs --agent codex|claude|both [--skill browser|task-router|adaptive|claude-chrome|all] [--update]\nDefault skill: browser. claude-chrome is installed for Claude only. Installs only SKILL.md; keeps the runtime and .env in this checkout. Existing destinations require --update from the same runtime and an unused release backup name.';
   try {
     const options = parseInstallArguments(process.argv.slice(2));
     if (options.help) console.log(usage);
     else console.log(JSON.stringify(await installSkills(options)));
   } catch (error) {
-      const allowed = ['INVALID_ARGUMENTS', 'INVALID_AGENT', 'INVALID_SKILL', 'INVALID_HOME', 'INVALID_UPDATE', 'SKILL_ALREADY_EXISTS', 'UNRESOLVED_SKILL_TEMPLATE', 'SKILL_NOT_FOUND', 'SKILL_UNSAFE_PATH', 'SKILL_RUNTIME_MISMATCH', 'SKILL_BACKUP_ALREADY_EXISTS', 'SKILL_CHANGED_DURING_UPDATE'];
+      const allowed = ['INVALID_ARGUMENTS', 'INVALID_AGENT', 'INVALID_SKILL', 'SKILL_NOT_FOR_AGENT', 'INVALID_HOME', 'INVALID_UPDATE', 'SKILL_ALREADY_EXISTS', 'UNRESOLVED_SKILL_TEMPLATE', 'SKILL_NOT_FOUND', 'SKILL_UNSAFE_PATH', 'SKILL_RUNTIME_MISMATCH', 'SKILL_BACKUP_ALREADY_EXISTS', 'SKILL_CHANGED_DURING_UPDATE'];
       console.error(allowed.includes(error.message) ? error.message : 'SKILL_INSTALL_FAILED');
       if (error.message === 'INVALID_ARGUMENTS') console.error(usage);
       process.exitCode = 1;

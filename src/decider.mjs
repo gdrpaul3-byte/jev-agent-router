@@ -115,10 +115,12 @@ function prepareRequest(input) {
     if (!isRecord(element) || !isCount(element.ref) || refs.has(element.ref)
         || !isText(element.role) || typeof element.name !== 'string'
         || ['description', 'value'].some(key => element[key] !== undefined && typeof element[key] !== 'string')
-        || ['disabled', 'editable', 'protected'].some(key => element[key] !== undefined && typeof element[key] !== 'boolean')) return { reason: 'INVALID_INPUT' };
+        || ['disabled', 'editable', 'protected'].some(key => element[key] !== undefined && typeof element[key] !== 'boolean')
+        || (element.valueSource !== undefined && (element.valueSource !== 'tool_report' || typeof element.value !== 'string'))) return { reason: 'INVALID_INPUT' };
     refs.add(element.ref);
     const copied = { ref: element.ref, role: element.role, name: element.name };
-    for (const key of ['description', 'value', 'disabled', 'editable', 'protected']) {
+    // valueSource "tool_report": the host's input tool reported setting this value; the page does not show it.
+    for (const key of ['description', 'value', 'valueSource', 'disabled', 'editable', 'protected']) {
       if (element[key] !== undefined) copied[key] = element[key];
     }
     elements.push(copied);

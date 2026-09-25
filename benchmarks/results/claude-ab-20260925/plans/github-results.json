@@ -1,0 +1,15 @@
+{
+  "plan": {
+    "goal": "In the GitHub repository file list, click the \"benchmarks, (Directory)\" link, then \"results, (Directory)\", then \"complex-missions-v1, (Directory)\", then the \"RESULTS.md, (File)\" link, until the rendered document titled \"캐시·JEV·Luna·Astra — 복잡한 전체 업무 비교\" is shown. Do not open any other folder, file, commit, branch or settings link.",
+    "allowedOrigins": ["https://github.com"],
+    "maxSteps": 6,
+    "maxDurationMs": 900000,
+    "actions": [
+      { "id": "openBenchmarks", "action": "click", "description": "On the repository home page, open the benchmarks folder from the file list.", "target": { "roles": ["link"], "nameEquals": "benchmarks, (Directory)" } },
+      { "id": "openResults", "action": "click", "description": "Inside the benchmarks folder, open the results folder.", "target": { "roles": ["link"], "nameEquals": "results, (Directory)" } },
+      { "id": "openMissions", "action": "click", "description": "Inside the results folder, open the complex-missions-v1 folder.", "target": { "roles": ["link"], "nameEquals": "complex-missions-v1, (Directory)" } },
+      { "id": "openResultsFile", "action": "click", "description": "Inside the complex-missions-v1 folder, open the RESULTS.md file.", "target": { "roles": ["link"], "nameEquals": "RESULTS.md, (File)" } }
+    ],
+    "completion": { "textIncludes": "캐시·JEV·Luna·Astra — 복잡한 전체 업무 비교", "urlIncludes": "/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md" }
+  }
+}

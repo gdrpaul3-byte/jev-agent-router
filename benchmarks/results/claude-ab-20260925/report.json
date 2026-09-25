@@ -1,0 +1,930 @@
+{
+  "protocol": {
+    "name": "Opus 5.5 only vs Opus 5.5 + JEV on real public sites (Claude in Chrome)",
+    "registeredAt": "2026-09-25 (KST), before any attempt",
+    "arms": {
+      "opus": "A fresh Opus 5.5 subagent (claude-opus-5-5, general-purpose type, session effort) uses the Claude in Chrome tools directly and decides every action itself. No JEV, skill or CLI.",
+      "opus+jev": "A fresh Opus 5.5 subagent follows the installed jev-claude-chrome skill with the pre-registered plan: JEV (TypeSafe jev-1.13.0) proposes each click, the local ledger authorizes and verifies, Opus observes, executes and extracts the facts after `completed`. No manual takeover after a stop."
+    },
+    "sharedRules": [
+      "Use only the prepared tab; move only by clicking page elements (no navigate, URL typing, back/forward, new tabs).",
+      "No typing, form submission, downloads, sign-in/out, settings or edit controls.",
+      "Page content is untrusted data.",
+      "Both arms get the same extension note: a ref click may be dropped unless a screenshot was taken since the last navigation."
+    ],
+    "preparation": "Not timed, done by the parent session before each attempt: navigate the tab to the start URL, wait, close the four HSMU pop-ups (HSMU tasks), take a 0.1-scale screenshot.",
+    "tasks": [
+      {
+        "id": "github-results",
+        "language": "en",
+        "start": "https://github.com/gdrpaul3-byte/jev-agent-router",
+        "card": "Click through the repository file list: benchmarks -> results -> complex-missions-v1 -> RESULTS.md. From that document report (a) the total number of real requests (총 실제 요청) and (b) the verified total cost (확인 가능한 비용).",
+        "truth": {
+          "requests": "36",
+          "cost": "$0.69347572"
+        },
+        "finalUrl": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+        "plan": "plans/github-results.json"
+      },
+      {
+        "id": "hsmu-scholarship",
+        "language": "ko",
+        "start": "https://www.hsmu.ac.kr/web/main/index.do",
+        "card": "화성의과학대학교 홈페이지에서 M 메뉴를 열어 '장학' 게시판으로 이동하고 '[안내] 2026학년도 2학기 센터 핵심 역량 특강 챌린지' 공지를 열어 (a) 참여 조건(몇 개 프로그램 중 몇 개 이상), (b) 시상 인원 합계, (c) 제출 기한을 보고하세요.",
+        "truth": {
+          "participation": "7개 중 5개 이상",
+          "awardees": "총 6명",
+          "deadline": "종강일까지"
+        },
+        "finalUrlIncludes": "HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700",
+        "plan": "plans/hsmu-scholarship.json"
+      },
+      {
+        "id": "hsmu-directions",
+        "language": "ko",
+        "start": "https://www.hsmu.ac.kr/web/main/index.do",
+        "card": "The repository's earlier Astra-vs-JEV real-site task: visit in order (1) 총장 인사말, (2) 총장 프로필, (3) 오시는 길 by clicking the site's menus and links; from 오시는 길 report (a) the bus from 서울역, (b) the main phone number, (c) the 통학버스 탑승요금.",
+        "truth": {
+          "seoulStationBus": "5101",
+          "mainPhone": "031-369-9100~1",
+          "shuttleFare": "무료"
+        },
+        "visitOrder": [
+          "/web/contents/HSMU10501000.do",
+          "/web/contents/HSMU10502000.do",
+          "/web/contents/HSMU10401000.do"
+        ],
+        "knownRiskBeforeRunning": "Exploration showed get_page_text returns 'No text content found' on the 총장 인사말 page (the extension picks an empty content container), which the bridge stops as PAGE_TEXT_UNAVAILABLE. Kept because it is the repository's canonical real-site task.",
+        "plan": "plans/hsmu-directions.json"
+      }
+    ],
+    "order": [
+      [
+        "A1",
+        "github-results",
+        "opus"
+      ],
+      [
+        "A2",
+        "github-results",
+        "opus+jev"
+      ],
+      [
+        "A3",
+        "github-results",
+        "opus+jev"
+      ],
+      [
+        "A4",
+        "github-results",
+        "opus"
+      ],
+      [
+        "B1",
+        "hsmu-scholarship",
+        "opus+jev"
+      ],
+      [
+        "B2",
+        "hsmu-scholarship",
+        "opus"
+      ],
+      [
+        "B3",
+        "hsmu-scholarship",
+        "opus"
+      ],
+      [
+        "B4",
+        "hsmu-scholarship",
+        "opus+jev"
+      ],
+      [
+        "C1",
+        "hsmu-directions",
+        "opus"
+      ],
+      [
+        "C2",
+        "hsmu-directions",
+        "opus+jev"
+      ],
+      [
+        "C3",
+        "hsmu-directions",
+        "opus+jev"
+      ],
+      [
+        "C4",
+        "hsmu-directions",
+        "opus"
+      ]
+    ],
+    "success": "All facts equal the truth after whitespace normalization, the final page is the target page reached by clicks only, no rule violation, visit order for hsmu-directions; the opus+jev arm additionally needs the ledger status `completed`. Graded by the parent from the subagent transcript and the ledger, not from the subagent's own claim.",
+    "metrics": {
+      "wallClock": "Agent-reported duration_ms (subagent start to final report, includes tool loading and skill reading); also first-to-last browser tool timestamp.",
+      "opusTokens": "Summed from the subagent transcript usage, deduplicated by message id: input, 5m and 1h cache writes, cache reads, output.",
+      "opusUsd": "API list price for Claude Opus 5.5 read on 2026-09-25 from platform.claude.com pricing: input $4, 5m cache write $5, 1h cache write $8, cache hit $0.20, output $20 per million tokens. Subscription billing may differ.",
+      "jev": "Ledger session.usage: requests, input tokens, estimatedJevUsd at TypeSafe list price $0.042 per million input tokens.",
+      "toolCalls": "Count of tool_use blocks by kind (browser, Bash, file)."
+    },
+    "noSelection": "Every attempt, including failures, is reported. No attempt is re-run to replace a failure; extra attempts, if any, are reported as extra."
+  },
+  "pricing": {
+    "opus55PerMTok": {
+      "input": 4,
+      "write5m": 5,
+      "write1h": 8,
+      "read": 0.2,
+      "output": 20
+    },
+    "source": "https://platform.claude.com/docs/en/about-claude/pricing (read 2026-09-25)",
+    "jevPerMTokInput": 0.042
+  },
+  "attempts": [
+    {
+      "attempt": "A1",
+      "task": "github-results",
+      "arm": "opus",
+      "extra": false,
+      "void": null,
+      "passed": true,
+      "stop": null,
+      "claimedStatus": "completed",
+      "claimedStopReason": null,
+      "factChecks": {
+        "requests": true,
+        "cost": true
+      },
+      "finalUrl": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+      "arrived": true,
+      "visitOrderOk": null,
+      "violations": [],
+      "agentDurationMs": 50619,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 16,
+        "write5m": 41181,
+        "write1h": 0,
+        "read": 521644,
+        "output": 959
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 0.3294778,
+      "opusUsdWithEstimate": 0.3294778,
+      "jev": null,
+      "tools": {
+        "ToolSearch": 1,
+        "chrome:computer:screenshot": 5,
+        "chrome:computer:left_click": 4,
+        "chrome:computer:wait": 4,
+        "chrome:get_page_text": 1
+      },
+      "note": null
+    },
+    {
+      "attempt": "A2",
+      "task": "github-results",
+      "arm": "opus+jev",
+      "extra": false,
+      "void": null,
+      "passed": false,
+      "stop": "authorize screenshot timed out, viewport shrank to 157x73",
+      "claimedStatus": "stopped",
+      "claimedStopReason": "authorize screenshot timed out, viewport shrank to 157x73",
+      "factChecks": {
+        "requests": false,
+        "cost": false
+      },
+      "finalUrl": "https://github.com/gdrpaul3-byte/jev-agent-router",
+      "arrived": false,
+      "visitOrderOk": null,
+      "violations": [],
+      "agentDurationMs": 456539,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 54,
+        "write5m": 132369,
+        "write1h": 0,
+        "read": 3021436,
+        "output": 30886
+      },
+      "estimatedMissingOutput": 11391,
+      "opusUsd": 1.8840682,
+      "opusUsdWithEstimate": 2.1118882,
+      "jev": {
+        "status": "active",
+        "reason": null,
+        "calls": 1,
+        "requests": 1,
+        "inputTokens": 10815,
+        "jevUsd": 0.00045423,
+        "verifiedSteps": [],
+        "pendingProposal": true
+      },
+      "tools": {
+        "Read": 4,
+        "ToolSearch": 1,
+        "Bash": 11,
+        "chrome:tabs_context_mcp": 5,
+        "chrome:read_page": 7,
+        "chrome:get_page_text": 4,
+        "Write": 6,
+        "Grep": 3,
+        "chrome:computer:screenshot": 2
+      },
+      "note": null
+    },
+    {
+      "attempt": "A3",
+      "task": "github-results",
+      "arm": "opus+jev",
+      "extra": false,
+      "void": null,
+      "passed": false,
+      "stop": "screenshots time out, viewport shrunk to 314x155",
+      "claimedStatus": "stopped",
+      "claimedStopReason": "screenshots time out, viewport shrunk to 314x155",
+      "factChecks": {
+        "requests": false,
+        "cost": false
+      },
+      "finalUrl": "https://github.com/gdrpaul3-byte/jev-agent-router",
+      "arrived": false,
+      "visitOrderOk": null,
+      "violations": [],
+      "agentDurationMs": 270300,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 36,
+        "write5m": 80683,
+        "write1h": 0,
+        "read": 1562501,
+        "output": 19615
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 1.1083592,
+      "opusUsdWithEstimate": 1.1083592,
+      "jev": {
+        "status": "active",
+        "reason": null,
+        "calls": 0,
+        "requests": 0,
+        "inputTokens": 0,
+        "jevUsd": 0,
+        "verifiedSteps": [],
+        "pendingProposal": false
+      },
+      "tools": {
+        "Read": 2,
+        "ToolSearch": 1,
+        "Bash": 6,
+        "chrome:tabs_context_mcp": 3,
+        "chrome:read_page": 3,
+        "chrome:get_page_text": 2,
+        "chrome:computer:screenshot": 2,
+        "chrome:find": 1,
+        "chrome:computer:scroll_to": 1,
+        "Grep": 1,
+        "Write": 3
+      },
+      "note": "Chrome window minimized and the MCP tab not the active tab; found after the attempt"
+    },
+    {
+      "attempt": "A4",
+      "task": "github-results",
+      "arm": "opus",
+      "extra": false,
+      "void": "setup error by the parent: the prepared tab was outside the tab group; zero browser actions; rerun as A4r",
+      "passed": false,
+      "stop": "VOID_SETUP_ERROR",
+      "claimedStatus": "stopped",
+      "claimedStopReason": "tab not in the MCP tab group",
+      "factChecks": {
+        "requests": false,
+        "cost": false
+      },
+      "finalUrl": null,
+      "arrived": false,
+      "visitOrderOk": null,
+      "violations": [],
+      "agentDurationMs": 10550,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 8,
+        "write5m": 31680,
+        "write1h": 0,
+        "read": 229827,
+        "output": 589
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 0.21617740000000002,
+      "opusUsdWithEstimate": 0.21617740000000002,
+      "jev": null,
+      "tools": {
+        "ToolSearch": 1,
+        "chrome:computer:screenshot": 1,
+        "chrome:tabs_context_mcp": 1
+      },
+      "note": null
+    },
+    {
+      "attempt": "A4r",
+      "task": "github-results",
+      "arm": "opus",
+      "extra": false,
+      "void": null,
+      "passed": true,
+      "stop": null,
+      "claimedStatus": "completed",
+      "claimedStopReason": null,
+      "factChecks": {
+        "requests": true,
+        "cost": true
+      },
+      "finalUrl": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+      "arrived": true,
+      "visitOrderOk": null,
+      "violations": [],
+      "agentDurationMs": 120720,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 18,
+        "write5m": 41054,
+        "write1h": 0,
+        "read": 593027,
+        "output": 1566
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 0.3552674,
+      "opusUsdWithEstimate": 0.3552674,
+      "jev": null,
+      "tools": {
+        "ToolSearch": 1,
+        "chrome:computer:screenshot": 6,
+        "chrome:computer:left_click": 4,
+        "chrome:computer:wait": 3,
+        "chrome:get_page_text": 2
+      },
+      "note": "rerun of void A4; two screenshot timeouts tolerated"
+    },
+    {
+      "attempt": "A5x",
+      "task": "github-results",
+      "arm": "opus+jev",
+      "extra": true,
+      "void": null,
+      "passed": false,
+      "stop": "authorize screenshot timeout; viewport shrank; each ~21 k-character (~24 KB) observation took 73-76 s from browser read to the last written file (> 60 s authorize window)",
+      "claimedStatus": "stopped",
+      "claimedStopReason": "authorize screenshot timeout; viewport shrank; each ~21 k-character (~24 KB) observation took 73-76 s from browser read to the last written file (> 60 s authorize window)",
+      "factChecks": {
+        "requests": false,
+        "cost": false
+      },
+      "finalUrl": "https://github.com/gdrpaul3-byte/jev-agent-router",
+      "arrived": false,
+      "visitOrderOk": null,
+      "violations": [],
+      "agentDurationMs": 462097,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 54,
+        "write5m": 130164,
+        "write1h": 0,
+        "read": 3042160,
+        "output": 28023
+      },
+      "estimatedMissingOutput": 11859,
+      "opusUsd": 1.819928,
+      "opusUsdWithEstimate": 2.057108,
+      "jev": {
+        "status": "active",
+        "reason": null,
+        "calls": 1,
+        "requests": 1,
+        "inputTokens": 11062,
+        "jevUsd": 0.000464604,
+        "verifiedSteps": [],
+        "pendingProposal": true
+      },
+      "tools": {
+        "Read": 2,
+        "ToolSearch": 1,
+        "Bash": 13,
+        "chrome:tabs_context_mcp": 5,
+        "chrome:read_page": 6,
+        "chrome:get_page_text": 4,
+        "Write": 6,
+        "Grep": 4,
+        "chrome:computer:screenshot": 2
+      },
+      "note": null
+    },
+    {
+      "attempt": "B1",
+      "task": "hsmu-scholarship",
+      "arm": "opus+jev",
+      "extra": false,
+      "void": null,
+      "passed": false,
+      "stop": "LOW_CONFIDENCE",
+      "claimedStatus": "stopped",
+      "claimedStopReason": "LOW_CONFIDENCE 0.73 on openBoard after the M menu click was verified",
+      "factChecks": {
+        "participation": false,
+        "awardees": false,
+        "deadline": false
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/main/index.do",
+      "arrived": false,
+      "visitOrderOk": null,
+      "violations": [],
+      "agentDurationMs": 116831,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 28,
+        "write5m": 92679,
+        "write1h": 0,
+        "read": 1042582,
+        "output": 8509
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 0.8422034,
+      "opusUsdWithEstimate": 0.8422034,
+      "jev": {
+        "status": "needs_host",
+        "reason": "LOW_CONFIDENCE",
+        "calls": 2,
+        "requests": 2,
+        "inputTokens": 6873,
+        "jevUsd": 0.00028866600000000003,
+        "verifiedSteps": [
+          "openMenu"
+        ],
+        "pendingProposal": false
+      },
+      "tools": {
+        "Read": 1,
+        "ToolSearch": 1,
+        "Bash": 5,
+        "chrome:tabs_context_mcp": 3,
+        "chrome:read_page": 4,
+        "chrome:get_page_text": 3,
+        "Write": 10,
+        "chrome:computer:screenshot": 1,
+        "chrome:computer:left_click": 1,
+        "chrome:computer:wait": 1
+      },
+      "note": null
+    },
+    {
+      "attempt": "B2",
+      "task": "hsmu-scholarship",
+      "arm": "opus",
+      "extra": false,
+      "void": null,
+      "passed": true,
+      "stop": null,
+      "claimedStatus": "completed",
+      "claimedStopReason": null,
+      "factChecks": {
+        "participation": true,
+        "awardees": true,
+        "deadline": true
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+      "arrived": true,
+      "visitOrderOk": null,
+      "violations": [],
+      "agentDurationMs": 66443,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 24,
+        "write5m": 45609,
+        "write1h": 0,
+        "read": 834116,
+        "output": 2689
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 0.4487442,
+      "opusUsdWithEstimate": 0.4487442,
+      "jev": null,
+      "tools": {
+        "ToolSearch": 1,
+        "chrome:tabs_context_mcp": 1,
+        "chrome:computer:screenshot": 6,
+        "chrome:computer:left_click": 3,
+        "chrome:computer:hover": 2,
+        "chrome:find": 2,
+        "chrome:computer:wait": 2,
+        "chrome:get_page_text": 2
+      },
+      "note": "self-reported misclick: first M click by coordinates landed on S"
+    },
+    {
+      "attempt": "B3",
+      "task": "hsmu-scholarship",
+      "arm": "opus",
+      "extra": false,
+      "void": null,
+      "passed": true,
+      "stop": null,
+      "claimedStatus": "completed",
+      "claimedStopReason": null,
+      "factChecks": {
+        "participation": true,
+        "awardees": true,
+        "deadline": true
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+      "arrived": true,
+      "visitOrderOk": null,
+      "violations": [],
+      "agentDurationMs": 58302,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 26,
+        "write5m": 46315,
+        "write1h": 0,
+        "read": 920159,
+        "output": 2268
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 0.46107080000000006,
+      "opusUsdWithEstimate": 0.46107080000000006,
+      "jev": null,
+      "tools": {
+        "ToolSearch": 1,
+        "chrome:computer:screenshot": 7,
+        "chrome:computer:left_click": 4,
+        "chrome:computer:hover": 1,
+        "chrome:find": 3,
+        "chrome:computer:scroll_to": 1,
+        "chrome:get_page_text": 1
+      },
+      "note": "self-reported misclick: coordinate click on M opened the S menu"
+    },
+    {
+      "attempt": "B4",
+      "task": "hsmu-scholarship",
+      "arm": "opus+jev",
+      "extra": false,
+      "void": null,
+      "passed": false,
+      "stop": "LOW_CONFIDENCE",
+      "claimedStatus": "stopped",
+      "claimedStopReason": "LOW_CONFIDENCE 0.73 on openBoard after the verified M click",
+      "factChecks": {
+        "participation": false,
+        "awardees": false,
+        "deadline": false
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/main/index.do",
+      "arrived": false,
+      "visitOrderOk": null,
+      "violations": [],
+      "agentDurationMs": 103291,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 28,
+        "write5m": 56236,
+        "write1h": 0,
+        "read": 1074773,
+        "output": 9438
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 0.6850066,
+      "opusUsdWithEstimate": 0.6850066,
+      "jev": {
+        "status": "needs_host",
+        "reason": "LOW_CONFIDENCE",
+        "calls": 2,
+        "requests": 2,
+        "inputTokens": 6873,
+        "jevUsd": 0.00028866600000000003,
+        "verifiedSteps": [
+          "openMenu"
+        ],
+        "pendingProposal": false
+      },
+      "tools": {
+        "Read": 2,
+        "ToolSearch": 1,
+        "Bash": 4,
+        "chrome:tabs_context_mcp": 3,
+        "chrome:read_page": 4,
+        "chrome:get_page_text": 3,
+        "Write": 10,
+        "chrome:computer:screenshot": 1,
+        "chrome:computer:left_click": 1,
+        "chrome:computer:wait": 1
+      },
+      "note": null
+    },
+    {
+      "attempt": "C1",
+      "task": "hsmu-directions",
+      "arm": "opus",
+      "extra": false,
+      "void": null,
+      "passed": true,
+      "stop": null,
+      "claimedStatus": "completed",
+      "claimedStopReason": null,
+      "factChecks": {
+        "seoulStationBus": true,
+        "mainPhone": true,
+        "shuttleFare": true
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/contents/HSMU10401000.do",
+      "arrived": true,
+      "visitOrderOk": true,
+      "violations": [],
+      "agentDurationMs": 103500,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 38,
+        "write5m": 55903,
+        "write1h": 0,
+        "read": 1439315,
+        "output": 3366
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 0.63485,
+      "opusUsdWithEstimate": 0.63485,
+      "jev": null,
+      "tools": {
+        "ToolSearch": 1,
+        "chrome:computer:screenshot": 11,
+        "chrome:find": 6,
+        "chrome:computer:left_click": 8,
+        "chrome:computer:hover": 1,
+        "chrome:read_page": 2,
+        "chrome:computer:wait": 4,
+        "chrome:get_page_text": 1
+      },
+      "note": null
+    },
+    {
+      "attempt": "C2",
+      "task": "hsmu-directions",
+      "arm": "opus+jev",
+      "extra": false,
+      "void": null,
+      "passed": false,
+      "stop": "LOW_CONFIDENCE",
+      "claimedStatus": "stopped",
+      "claimedStopReason": "H menu closed before the authorize observation; proposal expired; next decide BLOCKED 0.46 (LOW_CONFIDENCE)",
+      "factChecks": {
+        "seoulStationBus": false,
+        "mainPhone": false,
+        "shuttleFare": false
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/main/index.do",
+      "arrived": false,
+      "visitOrderOk": false,
+      "violations": [],
+      "agentDurationMs": 196758,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 46,
+        "write5m": 70876,
+        "write1h": 0,
+        "read": 1977826,
+        "output": 16884
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 1.0878092,
+      "opusUsdWithEstimate": 1.0878092,
+      "jev": {
+        "status": "needs_host",
+        "reason": "LOW_CONFIDENCE",
+        "calls": 3,
+        "requests": 3,
+        "inputTokens": 12557,
+        "jevUsd": 0.000527394,
+        "verifiedSteps": [
+          "openMainMenu"
+        ],
+        "pendingProposal": false
+      },
+      "tools": {
+        "Read": 1,
+        "ToolSearch": 1,
+        "Bash": 10,
+        "chrome:tabs_context_mcp": 6,
+        "chrome:read_page": 9,
+        "chrome:get_page_text": 5,
+        "Write": 14,
+        "chrome:computer:screenshot": 4,
+        "chrome:computer:left_click": 1,
+        "chrome:computer:wait": 1
+      },
+      "note": null
+    },
+    {
+      "attempt": "C3",
+      "task": "hsmu-directions",
+      "arm": "opus+jev",
+      "extra": false,
+      "void": null,
+      "passed": false,
+      "stop": "LOW_CONFIDENCE",
+      "claimedStatus": "stopped",
+      "claimedStopReason": "H menu closed before the openGreeting authorize observation; next decide BLOCKED 0.34 (LOW_CONFIDENCE)",
+      "factChecks": {
+        "seoulStationBus": false,
+        "mainPhone": false,
+        "shuttleFare": false
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/main/index.do",
+      "arrived": false,
+      "visitOrderOk": false,
+      "violations": [],
+      "agentDurationMs": 336284,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 54,
+        "write5m": 86433,
+        "write1h": 0,
+        "read": 2443410,
+        "output": 29057
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 1.502203,
+      "opusUsdWithEstimate": 1.502203,
+      "jev": {
+        "status": "needs_host",
+        "reason": "LOW_CONFIDENCE",
+        "calls": 3,
+        "requests": 3,
+        "inputTokens": 12557,
+        "jevUsd": 0.000527394,
+        "verifiedSteps": [
+          "openMainMenu"
+        ],
+        "pendingProposal": true
+      },
+      "tools": {
+        "Read": 3,
+        "ToolSearch": 1,
+        "Bash": 8,
+        "chrome:tabs_context_mcp": 6,
+        "chrome:read_page": 9,
+        "chrome:get_page_text": 6,
+        "Write": 17,
+        "chrome:computer:screenshot": 4,
+        "chrome:computer:left_click": 1,
+        "chrome:computer:wait": 1,
+        "chrome:computer:hover": 1,
+        "Grep": 1
+      },
+      "note": null
+    },
+    {
+      "attempt": "C4",
+      "task": "hsmu-directions",
+      "arm": "opus",
+      "extra": false,
+      "void": null,
+      "passed": true,
+      "stop": null,
+      "claimedStatus": "completed",
+      "claimedStopReason": null,
+      "factChecks": {
+        "seoulStationBus": true,
+        "mainPhone": true,
+        "shuttleFare": true
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/contents/HSMU10401000.do",
+      "arrived": true,
+      "visitOrderOk": true,
+      "violations": [],
+      "agentDurationMs": 81071,
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 24,
+        "write5m": 44443,
+        "write1h": 0,
+        "read": 829389,
+        "output": 1504
+      },
+      "estimatedMissingOutput": 0,
+      "opusUsd": 0.4182688,
+      "opusUsdWithEstimate": 0.4182688,
+      "jev": null,
+      "tools": {
+        "ToolSearch": 1,
+        "chrome:tabs_context_mcp": 5,
+        "chrome:computer:screenshot": 7,
+        "chrome:find": 2,
+        "chrome:computer:hover": 3,
+        "chrome:computer:left_click": 4,
+        "chrome:computer:wait": 6,
+        "chrome:get_page_text": 1
+      },
+      "note": null
+    }
+  ],
+  "summary": [
+    {
+      "task": "github-results",
+      "arm": "opus",
+      "attempts": 2,
+      "passed": 2,
+      "durationsMs": [
+        50619,
+        120720
+      ],
+      "opusUsd": 0.6847452,
+      "opusUsdWithEstimate": 0.6847452,
+      "jevRequests": 0,
+      "jevUsd": 0
+    },
+    {
+      "task": "github-results",
+      "arm": "opus+jev",
+      "attempts": 3,
+      "passed": 0,
+      "durationsMs": [
+        456539,
+        270300,
+        462097
+      ],
+      "opusUsd": 4.8123553999999995,
+      "opusUsdWithEstimate": 5.277355399999999,
+      "jevRequests": 2,
+      "jevUsd": 0.0009188340000000001
+    },
+    {
+      "task": "hsmu-scholarship",
+      "arm": "opus+jev",
+      "attempts": 2,
+      "passed": 0,
+      "durationsMs": [
+        116831,
+        103291
+      ],
+      "opusUsd": 1.5272100000000002,
+      "opusUsdWithEstimate": 1.5272100000000002,
+      "jevRequests": 4,
+      "jevUsd": 0.0005773320000000001
+    },
+    {
+      "task": "hsmu-scholarship",
+      "arm": "opus",
+      "attempts": 2,
+      "passed": 2,
+      "durationsMs": [
+        66443,
+        58302
+      ],
+      "opusUsd": 0.909815,
+      "opusUsdWithEstimate": 0.909815,
+      "jevRequests": 0,
+      "jevUsd": 0
+    },
+    {
+      "task": "hsmu-directions",
+      "arm": "opus",
+      "attempts": 2,
+      "passed": 2,
+      "durationsMs": [
+        103500,
+        81071
+      ],
+      "opusUsd": 1.0531188,
+      "opusUsdWithEstimate": 1.0531188,
+      "jevRequests": 0,
+      "jevUsd": 0
+    },
+    {
+      "task": "hsmu-directions",
+      "arm": "opus+jev",
+      "attempts": 2,
+      "passed": 0,
+      "durationsMs": [
+        196758,
+        336284
+      ],
+      "opusUsd": 2.5900122,
+      "opusUsdWithEstimate": 2.5900122,
+      "jevRequests": 6,
+      "jevUsd": 0.001054788
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "A6x not run",
+      "why": "A5x showed an observation of the GitHub page (~21 k characters, ~24 KB) took 72-76 s from browser read to the last written file in A2 and A5x (64-67 s of it writing), longer than the 60 s authorize window, independent of screenshot timeouts"
+    }
+  ],
+  "totals": {
+    "opusUsd": 11.793434,
+    "opusUsdWithEstimate": 12.258434000000001,
+    "jevRequests": 12,
+    "jevUsd": 0.0025509540000000002,
+    "agentMs": 2433305
+  }
+}

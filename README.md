@@ -19,9 +19,9 @@
 | **Validate before handing off / 오래된 인계와 중복 유료 호출 방지** | The separate durable task API checks the current input, committed ledger and handoff, rejects older known task revisions, and preserves interrupted calls for review. / 별도 업무 인계 API는 현재 입력·원장·인계 파일의 일치 여부와 최신 revision을 확인합니다. 결과 미상인 유료 호출을 자동 반복하지 않습니다. [Handoffs / 인계](docs/task-router.md) |
 | **Inspect the whole workflow / 완료·실패·전체 비용을 함께 비교** | No-JEV LLM controls, the same cache opportunities, completion checks, failed attempts and costs are published. Browser videos share the actual task-start zero and include decisions, waits and final extraction. / JEV 미사용 대조군과 같은 캐시 기회로 비교하며, 완료 검증·실패·비용을 공개합니다. 영상은 실제 업무 시작점을 맞추고 판단·대기·최종 추출을 포함합니다. [Video and all attempts / 영상과 모든 시도](benchmarks/results/browser-task-aligned-20260924/RESULTS.md) |
 
-**Use it when** your agent repeatedly chooses among known workers or tools and you want to compare decision cost, reuse and outcomes before expanding automation. The adaptive live experiment used JEV for every fresh routing call; warm-Luna selection and Astra escalation are implemented and mock-tested. Claude browser integration and Grok integration remain unverified. The durable handoff API and adaptive cache have distinct contracts; a recommendation does not execute a worker or grant permission.
+**Use it when** your agent repeatedly chooses among known workers or tools and you want to compare decision cost, reuse and outcomes before expanding automation. The adaptive live experiment used JEV for every fresh routing call; warm-Luna selection and Astra escalation are implemented and mock-tested. The Claude in Chrome path was live-tested on two local fixtures ([results](benchmarks/results/claude-chrome-live-20260924/RESULTS.md)); on three real public-site tasks it completed 0 of 7 attempts while Opus 5.5 alone completed 6 of 6; a later third arm, in which Opus 5.5 launched an isolated, signed-out Playwright JEV loop following an experimenter-written plan, completed 5 of 6 registered attempts with less mean time and Opus cost in this pilot ([A/B](benchmarks/results/claude-ab-20260925/RESULTS.md)). Grok integration remains unverified. The durable handoff API and adaptive cache have distinct contracts; a recommendation does not execute a worker or grant permission.
 
-**이런 경우에 적합합니다:** 정해진 담당·도구 중 하나를 반복해서 고르는 업무에서, 자동화 범위를 늘리기 전에 판단 비용·재사용·실제 결과를 확인하고 싶을 때입니다. 적응형 실측에서는 새 판단에 모두 JEV가 선택됐으며, Luna 캐시 선택·Astra 위임은 모의 테스트로 검증했습니다. Claude 브라우저·Grok 실기 검증은 남아 있습니다. 적응형 캐시와 업무 인계 API의 계약은 별개이고, 추천만으로 작업이 실행되거나 권한이 생기지는 않습니다.
+**이런 경우에 적합합니다:** 정해진 담당·도구 중 하나를 반복해서 고르는 업무에서, 자동화 범위를 늘리기 전에 판단 비용·재사용·실제 결과를 확인하고 싶을 때입니다. 적응형 실측에서는 새 판단에 모두 JEV가 선택됐으며, Luna 캐시 선택·Astra 위임은 모의 테스트로 검증했습니다. Claude in Chrome 경로는 로컬 예제 두 개로 실제 검증했지만([결과](benchmarks/results/claude-chrome-live-20260924/RESULTS.md)), 실사이트 과제 3종에서는 Opus 5.5 단독 6/6, Chrome 브리지 0/7이었고, 나중에 추가한 세 번째 조건(실험자가 쓴 계획을 따르는 격리·비로그인 Playwright JEV 루프)은 등록 시도 6회 중 5회를 완료했습니다([비교](benchmarks/results/claude-ab-20260925/RESULTS.md)). Grok 실기 검증은 남아 있습니다. 적응형 캐시와 업무 인계 API의 계약은 별개이고, 추천만으로 작업이 실행되거나 권한이 생기지는 않습니다.
 
 [Compared with TypeSafe Mario, Jev Codex Router, Typesafe MCP, Newsjack and Canny / 관련 저장소와의 용도 비교](docs/COMPARISON.md). The comparison explains scope and shared ideas; it makes no claim that these features are exclusive or that this project outperforms those repositories.
 
@@ -31,7 +31,7 @@ A host such as Codex or Claude supplies a task, current evidence, and a finite l
 
 - **Adaptive routing:** reuse a valid exact result; otherwise select JEV, Luna, or Astra using host-supplied difficulty and scoped cost/cache observations. A semantic abstention can escalate once to Astra within the configured limits.
 - **Durable task routing:** shadow comparison, active local handoff files, and an offline handoff reader that checks the committed ledger against the current input.
-- **Bounded browser helpers:** adapters for a host's existing Codex browser session and a Claude in Chrome decision/authorization/verification bridge. The actual Claude browser integration has **not been live-validated**.
+- **Bounded browser helpers:** adapters for a host's existing Codex browser session and a Claude in Chrome decision/authorization/verification bridge with a session ledger. The Claude path was **live-tested** with Claude Code and the Claude in Chrome extension on two local fixtures, but **did not complete real public-site tasks** in a pre-registered A/B. A third arm registered afterwards, an isolated Playwright JEV loop launched by Claude and following an experimenter-written plan, completed 5 of 6 registered attempts (2 of 3 extra attempts after a harness fix); see [Claude in Chrome](#claude-code--claude-in-chrome).
 - **Accounting:** record calls, observed token usage, provider cost estimates or reported credit charges, cache reuse, and uncertain outcomes. Unknown costs remain `null`.
 
 This is a local Node.js runtime with optional host skills, not a replacement for Codex, Claude, or their browser tools. A skill tells the host how to use the runtime; installing it does not install API credits or establish a browser connection.
@@ -57,6 +57,34 @@ This is a local Node.js runtime with optional host skills, not a replacement for
 
 [Earlier pilot and replay-only comparison / 이전 파일럿·재생 시작 정렬 영상](benchmarks/results/browser-playwright-20260924/RESULTS.md) remain available unchanged.
 
+## Claude Code + Claude in Chrome
+
+**Claude can now be the host.** Install the Claude-only skill with `node -- scripts/install-skill.mjs --agent claude --skill claude-chrome`, start `claude --chrome`, and ask Claude to use `jev-claude-chrome`. Claude reads the tab with the official extension tools, JEV proposes one host-approved action, a local session ledger authorizes it, Claude executes it once, and the ledger verifies it from a fresh read.
+
+**Claude도 호스트로 사용할 수 있습니다.** `--agent claude --skill claude-chrome`으로 Claude 전용 스킬을 설치하고 `claude --chrome`에서 `jev-claude-chrome` 사용을 요청하면 됩니다.
+
+| Release run (2026-09-24 UTC) | Result | Steps | JEV requests | JEV cost | Wall clock |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Two-click demo | completed, first attempt | 2 | 3 | $0.000185 | 163 s |
+| Korean notice search: type → search → filter → open the 2026 notice | completed, first attempt | 4 | 5 | $0.000576 | 249 s |
+
+The wall clock is mostly Claude's own tool round trips (about 30–60 s per action); no speed advantage is claimed. Development attempts before a four-round review stopped at the confidence gate or a timing window and are listed with their reasons in [the live results](benchmarks/results/claude-chrome-live-20260924/RESULTS.md). The review checked the bridge against the installed extension's source; see [the contract and known limitations](docs/claude-chrome.md).
+
+**Real-site A/B (2026-09-25).** Three tasks on public sites (a GitHub repository in English, a scholarship notice and the earlier ordered-visit task on a Korean university site), graded from transcripts, ledgers and harness records. The two Chrome arms ran 03:49–04:50 KST; the Playwright arm was registered and run afterwards (10:20–10:34 KST) and compared with them without re-running them:
+
+| Arm (Claude Opus 5.5 host) | Completed | Mean agent time | Comparable time¹ | Mean Opus cost (API list price) | JEV cost |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Opus only, Claude in Chrome tools | 6/6 | 80 s | 80 s | $0.44 | — |
+| Opus + JEV, Claude in Chrome bridge (incl. one extra attempt) | 0/7 | 277 s | 277 s | $1.28 logged (≈$1.34²) | $0.0026 for 12 requests |
+| Opus + JEV, isolated Playwright loop (registered) | 5/6 | 65 s, ≈30 s of it an exit-delay bug | 54 s | $0.23 | $0.0067 for 28 requests |
+| same loop after the fix (extra) | 2/3 | 29 s | 21 s | $0.20 | $0.0031 for 13 requests |
+
+¹ Agent time minus browser launch and pop-up preparation, which the parent session did untimed for the Chrome arms; this is the Playwright protocol's registered primary time. ² Including output tokens estimated where the final usage was not logged.
+
+With Claude in Chrome the host has to read every page and re-type it for the ledger, so the bridge was slower and costlier than Opus alone and stopped on text-heavy pages, closing menus, the 0.75 confidence gate and a minimized Chrome window. In the Playwright arm Opus ran one command ([`benchmarks/claude-playwright-goal.mjs`](benchmarks/claude-playwright-goal.mjs)); Node drove an isolated headless Chrome and JEV chose every click in 0.2–1.1 s, so the whole browsing loop took 7–17 s and Opus spent 9–13 s. Its two failures were JEV confidence 0.73 and 0.69 on the same step. The JEV arms follow a plan the experimenter wrote (not counted in time or cost), and the Playwright browser is isolated and signed out. In this small pilot Opus alone was the only arm without failures, and the Playwright loop used less mean time and Opus cost; neither is a general claim. [Results, all attempts, protocols and disclosures](benchmarks/results/claude-ab-20260925/RESULTS.md)
+
+**실사이트 비교(2026-09-25).** Opus 5.5 단독 6/6(평균 80초, $0.44), Chrome 브리지 0/7(277초, $1.28), 나중에 추가한 격리 Playwright JEV 루프는 등록 시도 5/6(평균 65초, 이 중 약 30초는 실행기 종료 지연 버그)과 수정 후 추가 시도 2/3(29초, $0.20)입니다. Chrome 브리지는 Claude가 모든 페이지를 읽고 옮겨 써야 해서 느렸습니다. Playwright 루프는 Opus가 명령 한 번만 실행하고 Node와 JEV가 클릭을 처리해 7~17초에 탐색을 끝냈습니다. 실패 2회는 같은 단계의 확신도 기준 미달이었습니다. JEV 조건은 실험자가 쓴 계획을 따르고, Playwright 브라우저는 로그인되지 않은 격리 환경입니다. 소규모 실험이므로 일반적인 우위로 해석하지 않습니다. [결과·모든 시도·프로토콜](benchmarks/results/claude-ab-20260925/RESULTS.md)
+
 ## Measured synthetic workflow comparison
 
 On 2026-09-24, two Korean **synthetic** missions covered scholarship allocation and public-grant selection. Each had a base case and changed evidence. Every arm selected local evidence and used **Astra for final structured synthesis**. All arms received the same exact-cache and prompt-cache opportunities.
@@ -75,7 +103,7 @@ There were **12 fresh workflows, 6 exact replays, and 36 actual POST requests**.
 
 The one strict failure was a final-step citation-set mismatch. An independent agent review found that the supplied citations supported that step, but the **frozen score remains 11/12 strict, 12/12 core**. The fixtures are agent-authored development cases, not a human-validated benchmark. See the [full conditions](benchmarks/results/complex-missions-v1/RESULTS.md), [interpretation](benchmarks/results/complex-missions-v1/INTERPRETATION.md), [frozen manifest](benchmarks/results/complex-missions-v1/report.json.manifest.json), and [verification record](benchmarks/results/complex-missions-v1/verification.json).
 
-Current release verification: **794 automated tests passed, zero failures**. The original synthetic run records 718 tests before inference and 722 after the first router refinements. Run `npm run test:all` to verify your installed revision.
+Current release verification: **976 automated tests passed, zero failures** (794 before the Claude in Chrome work, 961 before the Playwright A/B harness; in one earlier full run on Windows, a pre-existing router-task test failed once intermittently, then passed alone and in every later full run). The original synthetic run records 718 tests before inference and 722 after the first router refinements. Run `npm run test:all` to verify your installed revision.
 
 A read-only live progress dashboard and bilingual recording instructions are included. The synthetic results above come from their preserved API report; the real Chrome recordings are a separate experiment linked earlier in this README.
 
@@ -116,7 +144,7 @@ See [adaptive routing](docs/adaptive-routing.md), [task routing and handoffs](do
 
 호스트가 업무·현재 근거·실제로 사용할 수 있는 도구 목록을 전달하면, 라우터가 다음 경로를 권고합니다. 동일 입력 결과를 재사용하고, 새 판단은 업무 난도와 최근 비용·캐시 관측에 따라 JEV/Luna/Astra 중에서 선택합니다. 모델은 임의의 도구나 실행 권한을 만들 수 없습니다.
 
-**스킬과 실행 엔진은 별개입니다.** 스킬은 Codex·Claude에게 이 저장소의 명령을 사용하는 절차를 알려 줍니다. Node 실행 엔진과 API 키는 로컬에 따로 준비해야 하며, 스킬 설치만으로 브라우저·봇이 연결되거나 선택된 업무가 자동 실행되지는 않습니다. Claude in Chrome 연결 코드는 있으나 실제 Claude 브라우저 검증은 아직 완료하지 않았습니다.
+**스킬과 실행 엔진은 별개입니다.** 스킬은 Codex·Claude에게 이 저장소의 명령을 사용하는 절차를 알려 줍니다. Node 실행 엔진과 API 키는 로컬에 따로 준비해야 하며, 스킬 설치만으로 브라우저·봇이 연결되거나 선택된 업무가 자동 실행되지는 않습니다. Claude in Chrome 경로는 Claude Code가 호스트가 되어 로컬 예제 두 개를 실제로 완료했지만 실사이트에서는 완료하지 못했고, 나중에 추가한 조건에서 Claude가 실행한 격리 Playwright JEV 루프는 실험자가 쓴 계획으로 등록 시도 6회 중 5회를 완료했습니다([비교](benchmarks/results/claude-ab-20260925/RESULTS.md)). Claude 전용 스킬은 `--agent claude --skill claude-chrome`으로 설치합니다.
 
 위 실험에서는 새 업무 12건의 핵심 판단·계산·마감·승인 조건이 모두 맞았고, 인용까지 포함한 엄격 검사는 11/12였습니다. 정확 재생 6건의 추가 호출·비용은 0이었습니다. 적응형이 이번 평균 시간은 가장 짧았지만 비용은 Luna+Astra가 조금 더 낮았습니다. 이 작은 합성 평가를 모든 실제 업무의 정확도·속도·비용 우월성으로 일반화하지 않습니다.
 

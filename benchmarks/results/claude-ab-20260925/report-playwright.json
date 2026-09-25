@@ -1,0 +1,1912 @@
+{
+  "protocol": {
+    "name": "Opus 5.5 + JEV through an isolated Playwright loop, compared with the same day's Opus-only and Opus + JEV (Claude in Chrome) arms",
+    "registeredAt": "2026-09-25 10:20 KST, after zero-cost validation and an adversarial review, before any paid attempt of this arm",
+    "arm": {
+      "id": "opus+jev-playwright",
+      "host": "A fresh Opus 5.5 subagent (claude-opus-5-5, general-purpose type, session effort) runs ONE harness command with Bash, then reads final-text.txt and extracts the facts. It never uses browser tools, never edits plans or code, never reruns the command and never completes a stopped task manually.",
+      "loop": "benchmarks/claude-playwright-goal.mjs: Node launches an isolated headless Chrome (fresh context, no profile, cookies or storage), and the repository's goal loop (src/goal.mjs via createCuaSession) asks JEV (TypeSafe direct API) for each next host-approved click. The host model is not in the per-step loop."
+    },
+    "settings": {
+      "browser": {
+        "channel": "chrome",
+        "headless": true,
+        "viewport": "Playwright default (not set)",
+        "gotoTimeoutMs": 20000,
+        "settleAfterGotoMs": 2000,
+        "actionTimeoutMs": 30000,
+        "note": "Playwright's click also waits, within actionTimeoutMs, for a navigation it triggers to commit; 30 s as in the repository's earlier HSMU Playwright run."
+      },
+      "afterEachClick": "Never replaying the click: page.waitForLoadState('domcontentloaded', 30 s) (only waits when the click created a new document, as on HSMU; returns at once for GitHub's same-document navigation), then 1000 ms (the Claude in Chrome bridge's post-click wait), then read-only polling every 250 ms until two consecutive captures have the same URL, title and elements, capped at 10 s. A DOMContentLoaded timeout ends the run as ACTION_FAILED/ACTION_TIMEOUT.",
+      "jev": {
+        "timeoutMs": 5000,
+        "maxInputBytes": 100000,
+        "minConfidence": 0.75,
+        "minMargin": 0.1,
+        "maxCalls": "min(50, maxSteps + 3)",
+        "model": "Both JEV arms request jev-latest through src/decider.mjs; the morning arm was served jev-1.13.0. Any other served model in result.json jev.perRequest[].model is reported as a confound.",
+        "note": "Same request limits as the Claude in Chrome bridge command (src/claude-chrome-command.mjs)."
+      },
+      "goalLoop": {
+        "verificationTimeoutMs": 30000,
+        "maxStaleReplans": 2,
+        "note": "As in the repository's earlier HSMU Playwright plan; the plan's maxSteps, maxDurationMs, goal, actions and completion are unchanged."
+      }
+    },
+    "preparation": "Same intent as the Chrome arms (start page ready, HSMU pop-ups closed with the repository's prepareHsmuHome routine, no model request), but it runs inside the host's single command, so it is inside the agent duration and reported separately as timing.setupMs and timing.prepareMs.",
+    "tasks": "Identical to protocol.json: github-results, hsmu-scholarship, hsmu-directions, with the same start URLs, plans (plans/*.json, unchanged), truth and fact names. GitHub main was e9a7eb6 at registration (git ls-remote, 10:18 KST), as in the morning.",
+    "order": [
+      [
+        "P1",
+        "github-results"
+      ],
+      [
+        "P2",
+        "hsmu-scholarship"
+      ],
+      [
+        "P3",
+        "hsmu-directions"
+      ],
+      [
+        "P4",
+        "github-results"
+      ],
+      [
+        "P5",
+        "hsmu-scholarship"
+      ],
+      [
+        "P6",
+        "hsmu-directions"
+      ]
+    ],
+    "comparisonArms": "Not re-run: opus (6/6) and opus+jev in Claude in Chrome (0/7) from protocol.json, recorded 03:49-04:50 KST the same day, more than five hours before this arm. This arm uses an isolated headless Chrome (GitHub signed out) instead of the user's Chrome.",
+    "disclosures": {
+      "scriptedPath": "Both JEV arms get the task card plus a plan the experimenter wrote. Every action has an exact-name target and the dry run found exactly one matching element per step, so JEV's target question is that element versus NONE and its action choice follows the click order written in the goal. For hsmu-directions the goal also names the H menu link and the 총장 인사말 submenu button, which the Opus-only card did not. Plan writing is counted in neither JEV arm's time or cost. Read the comparison as 'Opus alone' versus 'Opus + JEV following a plan the host wrote', not as navigation ability.",
+      "adapterDifferences": [
+        "Playwright lists every rendered interactive element including off-screen ones and scrolls on click; the Chrome bridge's read_page interactive filter lists only the viewport, so reaching 오시는 길 does not test the bridge's missing scroll.",
+        "Page text is document.body.innerText, not get_page_text, so the PAGE_TEXT_UNAVAILABLE risk on 총장 인사말 cannot occur.",
+        "The host does not transcribe observations, so the decide-to-click gap is only JEV latency and the hover-menu expiry of C2/C3 is not exercised.",
+        "JEV input differs in size: the GitHub home request is 36.6 KB here (129 elements) against about 11 k tokens (88 refs) in the Chrome arm."
+      ],
+      "latentIssue": "src/playwright.mjs clicks page.locator(INTERACTIVE).nth(ref), which pierces open shadow DOM while the captured ref index does not; the dry and smoke runs show no index shift on these paths. Not fixed for this experiment.",
+      "scriptedDeciderTimes": "The zero-cost smoke runs with a scripted decider are a harness lower bound without JEV latency, not a comparable non-JEV arm."
+    },
+    "success": "Every fact equals the truth (same normalizer as protocol.json), the harness finalUrl is the target page, for hsmu-directions the harness-recorded visits show 총장 인사말 then 총장 프로필 then 오시는 길, the harness status is completed, and the host ran exactly one node command of the harness, no browser, computer-use or file-editing tool.",
+    "metrics": {
+      "primaryTime": "Comparable to the other arms' agent durations (whose preparation was done untimed by the parent): agent duration_ms minus timing.setupMs minus timing.prepareMs.",
+      "secondaryTime": "Raw agent duration_ms, the harness command's own duration, loopMs, JEV per-request latency. timing.totalMs is frozen before the bounded billing flush.",
+      "opus": "Tokens and API list-price equivalent from the subagent transcript, same method and prices as protocol.json.",
+      "jev": "Harness meter: requests, known input tokens and known-usage list-price estimate (as the Chrome arm), completeness, per-request latency and served model.",
+      "labels": "TIMEOUT with loop duration below maxDurationMs is labelled JEV_REQUEST_TIMEOUT. The per-observation URL/element counts are reported so a stop on a half-rendered page can be recognised; it still counts as a failure."
+    },
+    "validationBeforeRegistration": [
+      "Dry run (no API): all three paths observable in an isolated headless Chrome with exactly one matching target per step; the GitHub home page's JEV request would be 36.6 KB, so the Chrome bridge's 100 KB limit is used instead of the goal CLI default of 24 KB.",
+      "Harness smoke run 1 (scripted decider, no API, no post-click wait): stopped with OBSERVATION_FAILED on HSMU navigations and with a decision on a half-rendered GitHub page.",
+      "Smoke run 2 (domcontentloaded + 1 s): all three completed (loop 4.9, 5.8, 9.7 s).",
+      "Adversarial review (22 agents): 20 findings, 13 confirmed by a refuting verifier; fixes applied: 30 s click/commit timeout, read-only stability poll, final-read race, teardown reason, known JEV usage, request-timeout label, grader host rules and cost, and these disclosures.",
+      "Smoke run 3 (final harness, scripted decider): all three completed (loop 6.7, 7.3, 12.8 s); every post-click stability poll settled in two reads (about 0.3 s)."
+    ],
+    "noSelection": "Every attempt is reported. A failure is not replaced by a rerun; any extra attempt is labelled extra.",
+    "extraRound": {
+      "registeredAt": "2026-09-25 10:31 KST",
+      "reason": "An exit-delay bug in the harness: the final-read guard added after the review used a 30 s timer that was never cleared, so each P1-P6 Node process stayed alive about 30 s after writing result.json (P1: harness command 53.9 s vs timing.totalMs 21.3 s). Loop outcomes, facts, visited pages and costs are unaffected; only the host-visible wall clock is inflated.",
+      "fix": "Timer cleared after the race; offline test that no timer stays pending; zero-cost smoke run after the fix: process wall 48.95 s vs summed harness totalMs 48.43 s.",
+      "attempts": [
+        [
+          "X1",
+          "github-results"
+        ],
+        [
+          "X2",
+          "hsmu-scholarship"
+        ],
+        [
+          "X3",
+          "hsmu-directions"
+        ]
+      ],
+      "reporting": "Extra attempts, labelled extra, with the same prompts, plans, settings and grader. P1-P6 remain the registered result; their wall clock is also reported with the measured idle tail (harness command duration minus timing.totalMs) shown separately."
+    }
+  },
+  "pricing": {
+    "opus55PerMTok": {
+      "input": 4,
+      "write5m": 5,
+      "write1h": 8,
+      "read": 0.2,
+      "output": 20
+    },
+    "jevPerMTokInput": 0.042
+  },
+  "attempts": [
+    {
+      "attempt": "P1",
+      "task": "github-results",
+      "arm": "opus+jev-playwright",
+      "extra": false,
+      "passed": true,
+      "stop": null,
+      "comparableMs": 55907,
+      "jevKnownUsd": 0.001619226,
+      "jevComplete": true,
+      "settles": [
+        {
+          "stable": true,
+          "ms": 454,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 373,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 358,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 374,
+          "reads": 2,
+          "failures": 0
+        }
+      ],
+      "observations": [
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router",
+          "title": "GitHub - gdrpaul3-byte/jev-agent-router: JEV + LLM + exact replay for existing agents: verified handoffs, measured costs",
+          "elements": 129,
+          "textChars": 15037
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router",
+          "title": "GitHub - gdrpaul3-byte/jev-agent-router: JEV + LLM + exact replay for existing agents: verified handoffs, measured costs",
+          "elements": 129,
+          "textChars": 15037
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks",
+          "title": "jev-agent-router/benchmarks at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 129,
+          "textChars": 5036
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks",
+          "title": "jev-agent-router/benchmarks at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 129,
+          "textChars": 5036
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results",
+          "title": "jev-agent-router/benchmarks/results at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 62,
+          "textChars": 1777
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results",
+          "title": "jev-agent-router/benchmarks/results at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 62,
+          "textChars": 1777
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results/complex-missions-v1",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1 at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 67,
+          "textChars": 1991
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results/complex-missions-v1",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1 at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 67,
+          "textChars": 1991
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1/RESULTS.md at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 78,
+          "textChars": 5677
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1/RESULTS.md at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 78,
+          "textChars": 5677
+        }
+      ],
+      "harnessStatus": "completed",
+      "completedSteps": 4,
+      "factChecks": {
+        "requests": true,
+        "cost": true
+      },
+      "finalUrl": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+      "arrived": true,
+      "visitOrderOk": null,
+      "hostRuleOk": true,
+      "agentDurationMs": 66491,
+      "harnessCommandMs": 53867,
+      "harnessTiming": {
+        "setupMs": 10584,
+        "prepareMs": 0,
+        "loopMs": 9648,
+        "finalReadMs": 56,
+        "teardownMs": 970,
+        "totalMs": 21259
+      },
+      "loopMetrics": {
+        "observations": 10,
+        "observationMs": 670.4172000000035,
+        "decisions": 5,
+        "decisionMs": 2091.3133999999973,
+        "actions": 4,
+        "actionMs": 6860.247400000002,
+        "staleReplans": 0
+      },
+      "replans": 0,
+      "diagnostics": null,
+      "jev": {
+        "requests": 5,
+        "inputTokens": 38553,
+        "estimatedJevUsd": 0.001619226,
+        "knownInputTokens": 38553,
+        "knownUsageUsd": 0.001619226,
+        "errors": 0,
+        "pendingRequests": 0,
+        "complete": true,
+        "perRequest": [
+          {
+            "index": 1,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 1074,
+            "inputTokens": 11479,
+            "error": null
+          },
+          {
+            "index": 2,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 255,
+            "inputTokens": 8586,
+            "error": null
+          },
+          {
+            "index": 3,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 234,
+            "inputTokens": 4993,
+            "error": null
+          },
+          {
+            "index": 4,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 238,
+            "inputTokens": 5259,
+            "error": null
+          },
+          {
+            "index": 5,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 251,
+            "inputTokens": 8236,
+            "error": null
+          }
+        ]
+      },
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 6,
+        "write5m": 70475,
+        "write1h": 0,
+        "read": 123239,
+        "output": 881
+      },
+      "opusUsd": 0.39466680000000004,
+      "tools": {
+        "Bash": 1,
+        "Read": 1
+      },
+      "claimedStatus": "completed"
+    },
+    {
+      "attempt": "P2",
+      "task": "hsmu-scholarship",
+      "arm": "opus+jev-playwright",
+      "extra": false,
+      "passed": true,
+      "stop": null,
+      "comparableMs": 57277,
+      "jevKnownUsd": 0.0007399560000000001,
+      "jevComplete": true,
+      "settles": [
+        {
+          "stable": true,
+          "ms": 276,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 294,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 272,
+          "reads": 2,
+          "failures": 0
+        }
+      ],
+      "observations": [
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 416
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 512
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 42,
+          "textChars": 616
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 42,
+          "textChars": 616
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 61,
+          "textChars": 1750
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 61,
+          "textChars": 1750
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 32,
+          "textChars": 1137
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 32,
+          "textChars": 1137
+        }
+      ],
+      "harnessStatus": "completed",
+      "completedSteps": 3,
+      "factChecks": {
+        "participation": true,
+        "awardees": true,
+        "deadline": true
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+      "arrived": true,
+      "visitOrderOk": null,
+      "hostRuleOk": true,
+      "agentDurationMs": 69096,
+      "harnessCommandMs": 56213,
+      "harnessTiming": {
+        "setupMs": 11388,
+        "prepareMs": 431,
+        "loopMs": 10500,
+        "finalReadMs": 12,
+        "teardownMs": 916,
+        "totalMs": 23248
+      },
+      "loopMetrics": {
+        "observations": 8,
+        "observationMs": 115.63789999999972,
+        "decisions": 4,
+        "decisionMs": 1663.9186000000009,
+        "actions": 3,
+        "actionMs": 8702.814699999999,
+        "staleReplans": 0
+      },
+      "replans": 0,
+      "diagnostics": null,
+      "jev": {
+        "requests": 4,
+        "inputTokens": 17618,
+        "estimatedJevUsd": 0.0007399560000000001,
+        "knownInputTokens": 17618,
+        "knownUsageUsd": 0.0007399560000000001,
+        "errors": 0,
+        "pendingRequests": 0,
+        "complete": true,
+        "perRequest": [
+          {
+            "index": 1,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 650,
+            "inputTokens": 3329,
+            "error": null
+          },
+          {
+            "index": 2,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 234,
+            "inputTokens": 4067,
+            "error": null
+          },
+          {
+            "index": 3,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 539,
+            "inputTokens": 6179,
+            "error": null
+          },
+          {
+            "index": 4,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 214,
+            "inputTokens": 4043,
+            "error": null
+          }
+        ]
+      },
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 6,
+        "write5m": 29995,
+        "write1h": 0,
+        "read": 159422,
+        "output": 862
+      },
+      "opusUsd": 0.1991234,
+      "tools": {
+        "Bash": 1,
+        "Read": 1
+      },
+      "claimedStatus": "completed"
+    },
+    {
+      "attempt": "P3",
+      "task": "hsmu-directions",
+      "arm": "opus+jev-playwright",
+      "extra": false,
+      "passed": true,
+      "stop": null,
+      "comparableMs": 60852,
+      "jevKnownUsd": 0.001202838,
+      "jevComplete": true,
+      "settles": [
+        {
+          "stable": true,
+          "ms": 293,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 271,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 302,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 286,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 277,
+          "reads": 2,
+          "failures": 0
+        }
+      ],
+      "observations": [
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 512
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 512
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 45,
+          "textChars": 727
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 45,
+          "textChars": 727
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 인사말",
+          "elements": 31,
+          "textChars": 387
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 인사말",
+          "elements": 31,
+          "textChars": 387
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 인사말",
+          "elements": 37,
+          "textChars": 435
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 인사말",
+          "elements": 37,
+          "textChars": 435
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10502000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 프로필",
+          "elements": 31,
+          "textChars": 384
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10502000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 프로필",
+          "elements": 31,
+          "textChars": 384
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10401000.do",
+          "title": "대표홈페이지>U>캠퍼스안내>오시는길",
+          "elements": 40,
+          "textChars": 1855
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10401000.do",
+          "title": "대표홈페이지>U>캠퍼스안내>오시는길",
+          "elements": 40,
+          "textChars": 1855
+        }
+      ],
+      "harnessStatus": "completed",
+      "completedSteps": 5,
+      "factChecks": {
+        "seoulStationBus": true,
+        "mainPhone": true,
+        "shuttleFare": true
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/contents/HSMU10401000.do",
+      "arrived": true,
+      "visitOrderOk": true,
+      "hostRuleOk": true,
+      "agentDurationMs": 77148,
+      "harnessCommandMs": 66282,
+      "harnessTiming": {
+        "setupMs": 14452,
+        "prepareMs": 1844,
+        "loopMs": 16470,
+        "finalReadMs": 10,
+        "teardownMs": 606,
+        "totalMs": 33385
+      },
+      "loopMetrics": {
+        "observations": 12,
+        "observationMs": 162.1303999999909,
+        "decisions": 6,
+        "decisionMs": 2492.3917000000038,
+        "actions": 5,
+        "actionMs": 13798.776699999999,
+        "staleReplans": 0
+      },
+      "replans": 0,
+      "diagnostics": null,
+      "jev": {
+        "requests": 6,
+        "inputTokens": 28639,
+        "estimatedJevUsd": 0.001202838,
+        "knownInputTokens": 28639,
+        "knownUsageUsd": 0.001202838,
+        "errors": 0,
+        "pendingRequests": 0,
+        "complete": true,
+        "perRequest": [
+          {
+            "index": 1,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 744,
+            "inputTokens": 4292,
+            "error": null
+          },
+          {
+            "index": 2,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 232,
+            "inputTokens": 5053,
+            "error": null
+          },
+          {
+            "index": 3,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 222,
+            "inputTokens": 4337,
+            "error": null
+          },
+          {
+            "index": 4,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 239,
+            "inputTokens": 4660,
+            "error": null
+          },
+          {
+            "index": 5,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 753,
+            "inputTokens": 4346,
+            "error": null
+          },
+          {
+            "index": 6,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 276,
+            "inputTokens": 5951,
+            "error": null
+          }
+        ]
+      },
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 6,
+        "write5m": 31263,
+        "write1h": 0,
+        "read": 160123,
+        "output": 896
+      },
+      "opusUsd": 0.2062836,
+      "tools": {
+        "Bash": 1,
+        "Read": 1
+      },
+      "claimedStatus": "completed"
+    },
+    {
+      "attempt": "P4",
+      "task": "github-results",
+      "arm": "opus+jev-playwright",
+      "extra": false,
+      "passed": true,
+      "stop": null,
+      "comparableMs": 51067,
+      "jevKnownUsd": 0.0016188480000000002,
+      "jevComplete": true,
+      "settles": [
+        {
+          "stable": true,
+          "ms": 397,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 298,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 304,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 308,
+          "reads": 2,
+          "failures": 0
+        }
+      ],
+      "observations": [
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router",
+          "title": "GitHub - gdrpaul3-byte/jev-agent-router: JEV + LLM + exact replay for existing agents: verified handoffs, measured costs",
+          "elements": 129,
+          "textChars": 15037
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router",
+          "title": "GitHub - gdrpaul3-byte/jev-agent-router: JEV + LLM + exact replay for existing agents: verified handoffs, measured costs",
+          "elements": 129,
+          "textChars": 15037
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks",
+          "title": "jev-agent-router/benchmarks at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 129,
+          "textChars": 5036
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks",
+          "title": "jev-agent-router/benchmarks at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 129,
+          "textChars": 5036
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results",
+          "title": "jev-agent-router/benchmarks/results at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 62,
+          "textChars": 1777
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results",
+          "title": "jev-agent-router/benchmarks/results at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 62,
+          "textChars": 1777
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results/complex-missions-v1",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1 at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 67,
+          "textChars": 1954
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results/complex-missions-v1",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1 at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 67,
+          "textChars": 1954
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1/RESULTS.md at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 78,
+          "textChars": 5680
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1/RESULTS.md at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 78,
+          "textChars": 5680
+        }
+      ],
+      "harnessStatus": "completed",
+      "completedSteps": 4,
+      "factChecks": {
+        "requests": true,
+        "cost": true
+      },
+      "finalUrl": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+      "arrived": true,
+      "visitOrderOk": null,
+      "hostRuleOk": true,
+      "agentDurationMs": 57303,
+      "harnessCommandMs": 46517,
+      "harnessTiming": {
+        "setupMs": 6236,
+        "prepareMs": 0,
+        "loopMs": 8031,
+        "finalReadMs": 26,
+        "teardownMs": 516,
+        "totalMs": 14809
+      },
+      "loopMetrics": {
+        "observations": 10,
+        "observationMs": 268.1698000000006,
+        "decisions": 5,
+        "decisionMs": 1789.7101999999986,
+        "actions": 4,
+        "actionMs": 5953.2822,
+        "staleReplans": 0
+      },
+      "replans": 0,
+      "diagnostics": null,
+      "jev": {
+        "requests": 5,
+        "inputTokens": 38544,
+        "estimatedJevUsd": 0.0016188480000000002,
+        "knownInputTokens": 38544,
+        "knownUsageUsd": 0.0016188480000000002,
+        "errors": 0,
+        "pendingRequests": 0,
+        "complete": true,
+        "perRequest": [
+          {
+            "index": 1,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 770,
+            "inputTokens": 11479,
+            "error": null
+          },
+          {
+            "index": 2,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 265,
+            "inputTokens": 8586,
+            "error": null
+          },
+          {
+            "index": 3,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 250,
+            "inputTokens": 4993,
+            "error": null
+          },
+          {
+            "index": 4,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 231,
+            "inputTokens": 5248,
+            "error": null
+          },
+          {
+            "index": 5,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 251,
+            "inputTokens": 8238,
+            "error": null
+          }
+        ]
+      },
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 6,
+        "write5m": 33743,
+        "write1h": 0,
+        "read": 159984,
+        "output": 883
+      },
+      "opusUsd": 0.21839580000000003,
+      "tools": {
+        "Bash": 1,
+        "Read": 1
+      },
+      "claimedStatus": "completed"
+    },
+    {
+      "attempt": "P5",
+      "task": "hsmu-scholarship",
+      "arm": "opus+jev-playwright",
+      "extra": false,
+      "passed": true,
+      "stop": null,
+      "comparableMs": 53295,
+      "jevKnownUsd": 0.0007399560000000001,
+      "jevComplete": true,
+      "settles": [
+        {
+          "stable": true,
+          "ms": 275,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 308,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 276,
+          "reads": 2,
+          "failures": 0
+        }
+      ],
+      "observations": [
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 416
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 512
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 42,
+          "textChars": 616
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 42,
+          "textChars": 616
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 61,
+          "textChars": 1750
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 61,
+          "textChars": 1750
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 32,
+          "textChars": 1137
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 32,
+          "textChars": 1137
+        }
+      ],
+      "harnessStatus": "completed",
+      "completedSteps": 3,
+      "factChecks": {
+        "participation": true,
+        "awardees": true,
+        "deadline": true
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+      "arrived": true,
+      "visitOrderOk": null,
+      "hostRuleOk": true,
+      "agentDurationMs": 64446,
+      "harnessCommandMs": 53050,
+      "harnessTiming": {
+        "setupMs": 10746,
+        "prepareMs": 405,
+        "loopMs": 9287,
+        "finalReadMs": 10,
+        "teardownMs": 729,
+        "totalMs": 21177
+      },
+      "loopMetrics": {
+        "observations": 8,
+        "observationMs": 107.44109999999455,
+        "decisions": 4,
+        "decisionMs": 1439.9880000000012,
+        "actions": 3,
+        "actionMs": 7731.026599999997,
+        "staleReplans": 0
+      },
+      "replans": 0,
+      "diagnostics": null,
+      "jev": {
+        "requests": 4,
+        "inputTokens": 17618,
+        "estimatedJevUsd": 0.0007399560000000001,
+        "knownInputTokens": 17618,
+        "knownUsageUsd": 0.0007399560000000001,
+        "errors": 0,
+        "pendingRequests": 0,
+        "complete": true,
+        "perRequest": [
+          {
+            "index": 1,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 725,
+            "inputTokens": 3329,
+            "error": null
+          },
+          {
+            "index": 2,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 229,
+            "inputTokens": 4067,
+            "error": null
+          },
+          {
+            "index": 3,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 238,
+            "inputTokens": 6179,
+            "error": null
+          },
+          {
+            "index": 4,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 230,
+            "inputTokens": 4043,
+            "error": null
+          }
+        ]
+      },
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 6,
+        "write5m": 30001,
+        "write1h": 0,
+        "read": 159428,
+        "output": 998
+      },
+      "opusUsd": 0.2018746,
+      "tools": {
+        "Bash": 1,
+        "Read": 1
+      },
+      "claimedStatus": "completed"
+    },
+    {
+      "attempt": "P6",
+      "task": "hsmu-directions",
+      "arm": "opus+jev-playwright",
+      "extra": false,
+      "passed": false,
+      "stop": "LOW_CONFIDENCE",
+      "comparableMs": 47817,
+      "jevKnownUsd": 0.000766374,
+      "jevComplete": true,
+      "settles": [
+        {
+          "stable": true,
+          "ms": 278,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 264,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 278,
+          "reads": 2,
+          "failures": 0
+        }
+      ],
+      "observations": [
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 416
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 512
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 45,
+          "textChars": 727
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 45,
+          "textChars": 727
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 인사말",
+          "elements": 31,
+          "textChars": 387
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 인사말",
+          "elements": 31,
+          "textChars": 387
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 인사말",
+          "elements": 37,
+          "textChars": 435
+        }
+      ],
+      "harnessStatus": "needs_host",
+      "completedSteps": 3,
+      "factChecks": {
+        "seoulStationBus": false,
+        "mainPhone": false,
+        "shuttleFare": false
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+      "arrived": false,
+      "visitOrderOk": false,
+      "hostRuleOk": true,
+      "agentDurationMs": 55934,
+      "harnessCommandMs": 47141,
+      "harnessTiming": {
+        "setupMs": 7844,
+        "prepareMs": 273,
+        "loopMs": 6917,
+        "finalReadMs": 6,
+        "teardownMs": 671,
+        "totalMs": 15711
+      },
+      "loopMetrics": {
+        "observations": 7,
+        "observationMs": 56.32799999999952,
+        "decisions": 4,
+        "decisionMs": 1270.0773000000008,
+        "actions": 3,
+        "actionMs": 5585.3035,
+        "staleReplans": 0
+      },
+      "replans": 0,
+      "diagnostics": {
+        "head": "OPERATION",
+        "choice": "openProfile",
+        "confidence": 0.73,
+        "margin": 0.67
+      },
+      "jev": {
+        "requests": 4,
+        "inputTokens": 18247,
+        "estimatedJevUsd": 0.000766374,
+        "knownInputTokens": 18247,
+        "knownUsageUsd": 0.000766374,
+        "errors": 0,
+        "pendingRequests": 0,
+        "complete": true,
+        "perRequest": [
+          {
+            "index": 1,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 563,
+            "inputTokens": 4197,
+            "error": null
+          },
+          {
+            "index": 2,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 259,
+            "inputTokens": 5053,
+            "error": null
+          },
+          {
+            "index": 3,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 218,
+            "inputTokens": 4337,
+            "error": null
+          },
+          {
+            "index": 4,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 212,
+            "inputTokens": 4660,
+            "error": null
+          }
+        ]
+      },
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 4,
+        "write5m": 28195,
+        "write1h": 0,
+        "read": 94264,
+        "output": 813
+      },
+      "opusUsd": 0.17610379999999998,
+      "tools": {
+        "Bash": 1
+      },
+      "claimedStatus": "stopped"
+    },
+    {
+      "attempt": "X1",
+      "task": "github-results",
+      "arm": "opus+jev-playwright",
+      "extra": true,
+      "passed": true,
+      "stop": null,
+      "comparableMs": 22126,
+      "jevKnownUsd": 0.0016188480000000002,
+      "jevComplete": true,
+      "settles": [
+        {
+          "stable": true,
+          "ms": 366,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 299,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 310,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 309,
+          "reads": 2,
+          "failures": 0
+        }
+      ],
+      "observations": [
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router",
+          "title": "GitHub - gdrpaul3-byte/jev-agent-router: JEV + LLM + exact replay for existing agents: verified handoffs, measured costs",
+          "elements": 129,
+          "textChars": 15037
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router",
+          "title": "GitHub - gdrpaul3-byte/jev-agent-router: JEV + LLM + exact replay for existing agents: verified handoffs, measured costs",
+          "elements": 129,
+          "textChars": 15037
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks",
+          "title": "jev-agent-router/benchmarks at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 129,
+          "textChars": 5036
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks",
+          "title": "jev-agent-router/benchmarks at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 129,
+          "textChars": 5036
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results",
+          "title": "jev-agent-router/benchmarks/results at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 62,
+          "textChars": 1777
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results",
+          "title": "jev-agent-router/benchmarks/results at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 62,
+          "textChars": 1777
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results/complex-missions-v1",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1 at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 67,
+          "textChars": 1954
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/tree/main/benchmarks/results/complex-missions-v1",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1 at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 67,
+          "textChars": 1954
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1/RESULTS.md at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 78,
+          "textChars": 5680
+        },
+        {
+          "url": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+          "title": "jev-agent-router/benchmarks/results/complex-missions-v1/RESULTS.md at main · gdrpaul3-byte/jev-agent-router · GitHub",
+          "elements": 78,
+          "textChars": 5680
+        }
+      ],
+      "harnessStatus": "completed",
+      "completedSteps": 4,
+      "factChecks": {
+        "requests": true,
+        "cost": true
+      },
+      "finalUrl": "https://github.com/gdrpaul3-byte/jev-agent-router/blob/main/benchmarks/results/complex-missions-v1/RESULTS.md",
+      "arrived": true,
+      "visitOrderOk": null,
+      "hostRuleOk": true,
+      "agentDurationMs": 28636,
+      "harnessCommandMs": 17185,
+      "harnessTiming": {
+        "setupMs": 6510,
+        "prepareMs": 0,
+        "loopMs": 7873,
+        "finalReadMs": 32,
+        "teardownMs": 573,
+        "totalMs": 14988
+      },
+      "loopMetrics": {
+        "observations": 10,
+        "observationMs": 313.64110000000164,
+        "decisions": 5,
+        "decisionMs": 1634.3873000000012,
+        "actions": 4,
+        "actionMs": 5911.2345,
+        "staleReplans": 0
+      },
+      "replans": 0,
+      "diagnostics": null,
+      "jev": {
+        "requests": 5,
+        "inputTokens": 38544,
+        "estimatedJevUsd": 0.0016188480000000002,
+        "knownInputTokens": 38544,
+        "knownUsageUsd": 0.0016188480000000002,
+        "errors": 0,
+        "pendingRequests": 0,
+        "complete": true,
+        "perRequest": [
+          {
+            "index": 1,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 734,
+            "inputTokens": 11479,
+            "error": null
+          },
+          {
+            "index": 2,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 233,
+            "inputTokens": 8586,
+            "error": null
+          },
+          {
+            "index": 3,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 210,
+            "inputTokens": 4993,
+            "error": null
+          },
+          {
+            "index": 4,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 205,
+            "inputTokens": 5248,
+            "error": null
+          },
+          {
+            "index": 5,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 225,
+            "inputTokens": 8238,
+            "error": null
+          }
+        ]
+      },
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 6,
+        "write5m": 33748,
+        "write1h": 0,
+        "read": 159993,
+        "output": 898
+      },
+      "opusUsd": 0.21872260000000002,
+      "tools": {
+        "Bash": 1,
+        "Read": 1
+      },
+      "claimedStatus": "completed"
+    },
+    {
+      "attempt": "X2",
+      "task": "hsmu-scholarship",
+      "arm": "opus+jev-playwright",
+      "extra": true,
+      "passed": true,
+      "stop": null,
+      "comparableMs": 22394,
+      "jevKnownUsd": 0.0007399560000000001,
+      "jevComplete": true,
+      "settles": [
+        {
+          "stable": true,
+          "ms": 277,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 276,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 284,
+          "reads": 2,
+          "failures": 0
+        }
+      ],
+      "observations": [
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 416
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 512
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 42,
+          "textChars": 616
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 42,
+          "textChars": 616
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 61,
+          "textChars": 1750
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 61,
+          "textChars": 1750
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 32,
+          "textChars": 1137
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+          "title": "대표홈페이지>M>공지사항>장학",
+          "elements": 32,
+          "textChars": 1137
+        }
+      ],
+      "harnessStatus": "completed",
+      "completedSteps": 3,
+      "factChecks": {
+        "participation": true,
+        "awardees": true,
+        "deadline": true
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/contents/HSMU40102000.do?schM=view&page=1&viewCount=10&id=3700&schBdcode=&schGroupCode=&notice=centerNoticeBoard",
+      "arrived": true,
+      "visitOrderOk": null,
+      "hostRuleOk": true,
+      "agentDurationMs": 31816,
+      "harnessCommandMs": 20369,
+      "harnessTiming": {
+        "setupMs": 9066,
+        "prepareMs": 356,
+        "loopMs": 8318,
+        "finalReadMs": 4,
+        "teardownMs": 490,
+        "totalMs": 18233
+      },
+      "loopMetrics": {
+        "observations": 8,
+        "observationMs": 80.73669999999947,
+        "decisions": 4,
+        "decisionMs": 1210.4092000000019,
+        "actions": 3,
+        "actionMs": 7015.5401,
+        "staleReplans": 0
+      },
+      "replans": 0,
+      "diagnostics": null,
+      "jev": {
+        "requests": 4,
+        "inputTokens": 17618,
+        "estimatedJevUsd": 0.0007399560000000001,
+        "knownInputTokens": 17618,
+        "knownUsageUsd": 0.0007399560000000001,
+        "errors": 0,
+        "pendingRequests": 0,
+        "complete": true,
+        "perRequest": [
+          {
+            "index": 1,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 538,
+            "inputTokens": 3329,
+            "error": null
+          },
+          {
+            "index": 2,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 206,
+            "inputTokens": 4067,
+            "error": null
+          },
+          {
+            "index": 3,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 225,
+            "inputTokens": 6179,
+            "error": null
+          },
+          {
+            "index": 4,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 225,
+            "inputTokens": 4043,
+            "error": null
+          }
+        ]
+      },
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 6,
+        "write5m": 29999,
+        "write1h": 0,
+        "read": 159430,
+        "output": 1011
+      },
+      "opusUsd": 0.20212499999999997,
+      "tools": {
+        "Bash": 1,
+        "Read": 1
+      },
+      "claimedStatus": "completed"
+    },
+    {
+      "attempt": "X3",
+      "task": "hsmu-directions",
+      "arm": "opus+jev-playwright",
+      "extra": true,
+      "passed": false,
+      "stop": "LOW_CONFIDENCE",
+      "comparableMs": 18318,
+      "jevKnownUsd": 0.000766374,
+      "jevComplete": true,
+      "settles": [
+        {
+          "stable": true,
+          "ms": 268,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 273,
+          "reads": 2,
+          "failures": 0
+        },
+        {
+          "stable": true,
+          "ms": 273,
+          "reads": 2,
+          "failures": 0
+        }
+      ],
+      "observations": [
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 416
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 27,
+          "textChars": 512
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 45,
+          "textChars": 727
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/main/index.do",
+          "title": "화성의과학대학교",
+          "elements": 45,
+          "textChars": 727
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 인사말",
+          "elements": 31,
+          "textChars": 387
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 인사말",
+          "elements": 31,
+          "textChars": 387
+        },
+        {
+          "url": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+          "title": "대표홈페이지>H>About HSMU>총장 인사말",
+          "elements": 37,
+          "textChars": 435
+        }
+      ],
+      "harnessStatus": "needs_host",
+      "completedSteps": 3,
+      "factChecks": {
+        "seoulStationBus": false,
+        "mainPhone": false,
+        "shuttleFare": false
+      },
+      "finalUrl": "https://www.hsmu.ac.kr/web/contents/HSMU10501000.do",
+      "arrived": false,
+      "visitOrderOk": false,
+      "hostRuleOk": true,
+      "agentDurationMs": 27611,
+      "harnessCommandMs": 18547,
+      "harnessTiming": {
+        "setupMs": 8948,
+        "prepareMs": 345,
+        "loopMs": 6603,
+        "finalReadMs": 5,
+        "teardownMs": 463,
+        "totalMs": 16364
+      },
+      "loopMetrics": {
+        "observations": 7,
+        "observationMs": 38.10519999999997,
+        "decisions": 4,
+        "decisionMs": 1373.6167999999998,
+        "actions": 3,
+        "actionMs": 5186.4679000000015,
+        "staleReplans": 0
+      },
+      "replans": 0,
+      "diagnostics": {
+        "head": "OPERATION",
+        "choice": "openProfile",
+        "confidence": 0.69,
+        "margin": 0.62
+      },
+      "jev": {
+        "requests": 4,
+        "inputTokens": 18247,
+        "estimatedJevUsd": 0.000766374,
+        "knownInputTokens": 18247,
+        "knownUsageUsd": 0.000766374,
+        "errors": 0,
+        "pendingRequests": 0,
+        "complete": true,
+        "perRequest": [
+          {
+            "index": 1,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 633,
+            "inputTokens": 4197,
+            "error": null
+          },
+          {
+            "index": 2,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 254,
+            "inputTokens": 5053,
+            "error": null
+          },
+          {
+            "index": 3,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 245,
+            "inputTokens": 4337,
+            "error": null
+          },
+          {
+            "index": 4,
+            "model": "jev-1.13.0",
+            "httpStatus": 200,
+            "latencyMs": 227,
+            "inputTokens": 4660,
+            "error": null
+          }
+        ]
+      },
+      "model": "claude-opus-5-5",
+      "tokens": {
+        "input": 4,
+        "write5m": 28202,
+        "write1h": 0,
+        "read": 94268,
+        "output": 816
+      },
+      "opusUsd": 0.17619959999999998,
+      "tools": {
+        "Bash": 1
+      },
+      "claimedStatus": "stopped"
+    }
+  ],
+  "summary": [
+    {
+      "task": "github-results",
+      "extra": false,
+      "attempts": 2,
+      "passed": 2,
+      "agentS": [
+        66.5,
+        57.3
+      ],
+      "comparableS": [
+        55.9,
+        51.1
+      ],
+      "loopS": [
+        9.6,
+        8
+      ],
+      "opusUsd": 0.6130626000000001,
+      "jevRequests": 10,
+      "jevUsd": 0.0032380740000000005,
+      "jevCostComplete": true
+    },
+    {
+      "task": "hsmu-scholarship",
+      "extra": false,
+      "attempts": 2,
+      "passed": 2,
+      "agentS": [
+        69.1,
+        64.4
+      ],
+      "comparableS": [
+        57.3,
+        53.3
+      ],
+      "loopS": [
+        10.5,
+        9.3
+      ],
+      "opusUsd": 0.40099799999999997,
+      "jevRequests": 8,
+      "jevUsd": 0.0014799120000000001,
+      "jevCostComplete": true
+    },
+    {
+      "task": "hsmu-directions",
+      "extra": false,
+      "attempts": 2,
+      "passed": 1,
+      "agentS": [
+        77.1,
+        55.9
+      ],
+      "comparableS": [
+        60.9,
+        47.8
+      ],
+      "loopS": [
+        16.5,
+        6.9
+      ],
+      "opusUsd": 0.3823874,
+      "jevRequests": 10,
+      "jevUsd": 0.0019692119999999997,
+      "jevCostComplete": true
+    },
+    {
+      "task": "github-results",
+      "extra": true,
+      "attempts": 1,
+      "passed": 1,
+      "agentS": [
+        28.6
+      ],
+      "comparableS": [
+        22.1
+      ],
+      "loopS": [
+        7.9
+      ],
+      "opusUsd": 0.21872260000000002,
+      "jevRequests": 5,
+      "jevUsd": 0.0016188480000000002,
+      "jevCostComplete": true
+    },
+    {
+      "task": "hsmu-scholarship",
+      "extra": true,
+      "attempts": 1,
+      "passed": 1,
+      "agentS": [
+        31.8
+      ],
+      "comparableS": [
+        22.4
+      ],
+      "loopS": [
+        8.3
+      ],
+      "opusUsd": 0.20212499999999997,
+      "jevRequests": 4,
+      "jevUsd": 0.0007399560000000001,
+      "jevCostComplete": true
+    },
+    {
+      "task": "hsmu-directions",
+      "extra": true,
+      "attempts": 1,
+      "passed": 0,
+      "agentS": [
+        27.6
+      ],
+      "comparableS": [
+        18.3
+      ],
+      "loopS": [
+        6.6
+      ],
+      "opusUsd": 0.17619959999999998,
+      "jevRequests": 4,
+      "jevUsd": 0.000766374,
+      "jevCostComplete": true
+    }
+  ]
+}

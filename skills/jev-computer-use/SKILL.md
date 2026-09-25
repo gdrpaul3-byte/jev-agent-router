@@ -1,6 +1,6 @@
 ---
 name: jev-computer-use
-description: Use for bounded Codex CUA or Claude browser goal loops and fixed workflows where JEV chooses among host-approved actions and observed elements. Known deterministic targets can use direct batched browser calls.
+description: Use for bounded Codex CUA browser goal loops and fixed workflows, or an isolated Playwright run, where JEV chooses among host-approved actions and observed elements. In Claude Code with Claude in Chrome, use jev-claude-chrome instead. Known deterministic targets can use direct batched browser calls.
 ---
 
 # JEV Computer Use
@@ -59,7 +59,7 @@ For fixed plans, use `workflow({target,goal,steps,...})`; each step retains `ins
 
 ## Claude Code + Claude in Chrome: existing browser
 
-Start `claude --chrome`, check `/chrome`, and use the official extension tools in that Claude session. The user deferred live Claude validation on 2026-09-19; do not claim this path is live-tested. The current implementation is host-assisted and requires host round trips between decisions.
+In Claude Code, use the separate `jev-claude-chrome` skill (install it with `--agent claude --skill claude-chrome`). It was live-tested on 2026-09-24 with the Claude in Chrome extension on two local fixtures (a two-click demo and a four-step Korean notice search with text input); both completed only after earlier attempts stopped at the confidence gate or a timing window, so treat it as working but not as a speed or reliability claim. It is host-assisted: Claude reads the page, JEV proposes, a local session ledger authorizes one official tool call, Claude executes it once, and the ledger verifies from a fresh read.
 
 Installed helper paths (JSON values, quote for the shell):
 
@@ -67,13 +67,7 @@ Installed helper paths (JSON values, quote for the shell):
 { "chromeHelper": __JEV_CHROME_CLI_PATH_JSON__, "package": __JEV_PACKAGE_PATH_JSON__ }
 ```
 
-Read `<package>/docs/claude-chrome.md` for the complete observation and file contracts before using this path. Use native tab metadata and actual `read_page`/`find` output to normalize visible refs, labels, roles and values. Raw read_page serialization is not assumed. Explicitly establish visibility; the interactive filter can contain hidden elements. Preserve completion evidence; do not fabricate an observation or URL.
-
-1. Write `{plan,observation,history}` and call `node -- <chromeHelper> decide --input <file> --env-file <package>/.env`. Save the returned proposal unchanged. One TypeSafe request, no browser execution.
-2. Re-read the same tab with current native URL. Call `authorize` with `{plan,proposal,observation}`. Only `authorized` yields an official toolCall. Execute it once through the extension using those exact arguments. `completed` requires fresh independent completion proof.
-3. Observe after the tool settles and call `verify` with `{plan,authorization,observation}`. Input must exactly equal the host value. Add verified historyEntry to history. Stop on errors/unknown outcomes; never replay automatically.
-
-Click maps to `computer({action:'left_click',ref,tabId})`; typeText in this bridge sets the complete host text via `form_input({ref,value,tabId})`. Keep extension permission controls. No private native-messaging or raw-CDP connection is used. Retain one overall workflow deadline and request/step budget across helper calls; a new CLI process does not reset the host's overall budget. Authorization expires after 60 seconds and cannot be reused after intervening browser activity.
+Summary of that loop (see `<package>/docs/claude-chrome.md`): `start --session DIR --input plan.json`, then per step `decide` → `authorize` → execute `toolCall` once → `verify`, each with `--raw <obs-dir> --tab-id N`, where a new observation directory holds the verbatim `tabs_context_mcp`, `read_page` (filter `interactive`) and `get_page_text` outputs as `tabs-context.txt`, `read-page.txt` and `page-text.txt`, plus `ref-check.txt` (`read_page` with the target's `ref_id`) before an action. Click maps to `computer({action:'left_click',ref,tabId})`; typeText sets the complete host text via `form_input({ref,value,tabId})`, and its result line is the input evidence in `tool-result.txt`. Take a small screenshot before each click observation: without one since the last navigation, ref clicks were reported as done but never reached the page. No private native-messaging or raw-CDP connection is used; extension permission controls stay in place.
 
 ## Optional isolated browser CLI
 

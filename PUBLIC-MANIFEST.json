@@ -1,5 +1,5 @@
 {
-  "createdAt": "2026-09-24T08:45:13.034Z",
+  "createdAt": "2026-09-25T01:53:04.209Z",
   "scope": "Reviewed allowlisted package; local secret values and personal paths checked; keys and state excluded.",
   "files": [
     {
@@ -26,6 +26,16 @@
       "path": "benchmarks/browser-llm-decider.mjs",
       "bytes": 14858,
       "sha256": "362155eb8952f229c2ea1318a3ac8733f540513cd55fa4973b21877cf0ee4fc0"
+    },
+    {
+      "path": "benchmarks/claude-playwright-goal.mjs",
+      "bytes": 13238,
+      "sha256": "bb11b78f372bb7bd3a69e40476a5ff7ec68f04927a8af4a015e3e17008250bde"
+    },
+    {
+      "path": "benchmarks/claude-playwright-goal.test.mjs",
+      "bytes": 15545,
+      "sha256": "b09852a101a599d44ac6fe673790613690eb953fdf69e8a1d6e6920df5b198c9"
     },
     {
       "path": "benchmarks/complex-mission-cases.mjs",
@@ -508,6 +518,56 @@
       "sha256": "aa6f26851762a913cedf17a70e644c1d3f96d3a389891c5dac4a386cb2279d35"
     },
     {
+      "path": "benchmarks/results/claude-ab-20260925/plans/github-results.json",
+      "bytes": 1538,
+      "sha256": "84d9e63f9153eee01d564b2d20b456b88bbee4cfb81252b53c7ecaf8af43e74b"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/plans/hsmu-directions.json",
+      "bytes": 2233,
+      "sha256": "7a38bf041e076ae11070d31d742bb4346c30072d8b10bc492e02436b2f9c3762"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/plans/hsmu-scholarship.json",
+      "bytes": 1434,
+      "sha256": "2ef6504c7dab048bb3f492adf4f03445ef0b6db910e58a9311f3fb98e672d608"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/protocol-playwright.json",
+      "bytes": 8965,
+      "sha256": "a510337260ed39de96beeafe261bc4e796b034952fa0bf7d5aee5c2c368e8f6e"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/protocol.json",
+      "bytes": 5304,
+      "sha256": "c3564afd6c32a41c2e1c62b324a14f17189b3d0e2c6862ece0b7a8c0ded07ed0"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/report-playwright.json",
+      "bytes": 60215,
+      "sha256": "b16576ad41078147c7620eb8039eb53639a96b169a0fa4a3aeece7b015086211"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/report.json",
+      "bytes": 27747,
+      "sha256": "a3c00551428ed020642db444a99f160416c2e02cc48c7a3f23c8f2b49b1015eb"
+    },
+    {
+      "path": "benchmarks/results/claude-ab-20260925/RESULTS.md",
+      "bytes": 17496,
+      "sha256": "9852db04c0d0b3cfa23030656d717e980eb58bbbfb835e39a4c5c93e6d726715"
+    },
+    {
+      "path": "benchmarks/results/claude-chrome-live-20260924/report.json",
+      "bytes": 13826,
+      "sha256": "90bfb4b821032071d77bf1964ea89bcccf344b117e4e3d39c681396c50ec5e58"
+    },
+    {
+      "path": "benchmarks/results/claude-chrome-live-20260924/RESULTS.md",
+      "bytes": 7230,
+      "sha256": "3fa2e2bc3837c6c2307db619674c5ece3bc6e5efeb69b237a658f862dca9c943"
+    },
+    {
       "path": "benchmarks/results/complex-missions-v1/INTERPRETATION.md",
       "bytes": 3308,
       "sha256": "51479bc361a4d30324c74bee041c64efa8c481ff902e4da0bf5418771ff10e73"
@@ -579,8 +639,8 @@
     },
     {
       "path": "docs/claude-chrome.md",
-      "bytes": 10398,
-      "sha256": "412bb2fae528c864207b7f32eedc5c89c7fa2ba21903f6164c7ba0e896fd462e"
+      "bytes": 26207,
+      "sha256": "c49b5eb8e4fa4aa056a344f843ef808d26a228fd5de0d2b6010c5086868a6210"
     },
     {
       "path": "docs/COMPARISON.md",
@@ -599,13 +659,13 @@
     },
     {
       "path": "docs/INSTALL.en.md",
-      "bytes": 13494,
-      "sha256": "f757b8f7fab19a6f8a9807093c67d0e1b5ebd706be6a86c9c07ea14371518d71"
+      "bytes": 14539,
+      "sha256": "b3a9ba5fcf5738c5ef0d3ad48709558eff9494044b0bc279331186aa591e0836"
     },
     {
       "path": "docs/INSTALL.ko.md",
-      "bytes": 15014,
-      "sha256": "debee05e2929fe9b620c98b5dcf4c8796ccee628f3521501457965d822a2230b"
+      "bytes": 16132,
+      "sha256": "e0ad6e80512b0f59da26e00367a708f16fabe08202246d58e14bc346821828cb"
     },
     {
       "path": "docs/task-router.md",
@@ -674,13 +734,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 17134,
-      "sha256": "42aaa709bda6bfe34d00f2c724f944e536a35a5bb2fcfc306c3ed8477de33a44"
+      "bytes": 23648,
+      "sha256": "902d3ae43ffd9e0a85fc562ce33037578a27b1cd0cd7ae0cef16bd166af141d0"
     },
     {
       "path": "scripts/install-skill.mjs",
-      "bytes": 8508,
-      "sha256": "c268bdcf9fa1d2e354b34f0195b280f2bcc039818788d12c8d825b1cff74b765"
+      "bytes": 8936,
+      "sha256": "c403c72bd11fd062c19f0521c2ecfb59c2edb47a3236a818218e42f7736b6bc0"
     },
     {
       "path": "skills/jev-adaptive-router/SKILL.md",
@@ -688,9 +748,14 @@
       "sha256": "69ce0fc18d665b3524caeb7128f38935bb26c913bee3246f207a0a26ce764533"
     },
     {
+      "path": "skills/jev-claude-chrome/SKILL.md",
+      "bytes": 15641,
+      "sha256": "a753e5968236673fbd1fb2d86e4ce1e17b1f0ac746d1f1ff38e84ea070e5992c"
+    },
+    {
       "path": "skills/jev-computer-use/SKILL.md",
-      "bytes": 12937,
-      "sha256": "e107271d389bd7b07437839565bc8bad2b5c9aff3c9225dfda7051bb38d7e9e2"
+      "bytes": 12694,
+      "sha256": "ad5f1f3f34dad4dabc2c3ba8d9dc7f439678a6a01c6cfdeeecc7d5a042b72a6e"
     },
     {
       "path": "skills/jev-task-router/SKILL.md",
@@ -719,13 +784,28 @@
     },
     {
       "path": "src/claude-chrome-cli.mjs",
-      "bytes": 4700,
-      "sha256": "0fe34a81fbb05fbe655b3939ae794e4a14cb455f6a3379dfdce8a0a4b0190603"
+      "bytes": 6911,
+      "sha256": "95dda0cb881552e3c56c74f8131b51616834ab1217633fbefbd627e8c1a6ba56"
+    },
+    {
+      "path": "src/claude-chrome-command.mjs",
+      "bytes": 2261,
+      "sha256": "65fa6d4d75759767a603ff808a5534aa696031953fd95560cc30286b556bc016"
+    },
+    {
+      "path": "src/claude-chrome-session.mjs",
+      "bytes": 18527,
+      "sha256": "c59247b6bc331b044225d214d7847289fe3a1e9eee05585bed3f5f056b8ac6f1"
     },
     {
       "path": "src/claude-chrome.mjs",
-      "bytes": 10962,
-      "sha256": "1016d4478cdfdd2d025496679ef32bfa0d5875d28e55a1d085dcc6a4eece67a2"
+      "bytes": 20504,
+      "sha256": "829785cc4af9e0b81e54ebd3b4999a65688a3185d013aa103bd3978a82875c2a"
+    },
+    {
+      "path": "src/claude-observation.mjs",
+      "bytes": 12174,
+      "sha256": "411b03ad0cba58ded8af9454ed33ab1f5aa54272b84201f2df80f3453406012a"
     },
     {
       "path": "src/cli.mjs",
@@ -749,8 +829,8 @@
     },
     {
       "path": "src/decider.mjs",
-      "bytes": 17559,
-      "sha256": "ea6a729a1315109b8750f53cfd0d7ba152040d2f674110ea20ee15d189671d6b"
+      "bytes": 17813,
+      "sha256": "1273520e7e0ac538229b37cf7f1477c4df268e8074d5f01e376c5be648380bf6"
     },
     {
       "path": "src/goal.mjs",
@@ -759,8 +839,8 @@
     },
     {
       "path": "src/index.mjs",
-      "bytes": 3807,
-      "sha256": "0623dcb22df1f007985ea360c4afbe901302822b8e8d0747bda080da9c5db0fd"
+      "bytes": 4098,
+      "sha256": "d9f645eba56dfdb01ccc2c0c6940531b757a91e8519c4e39f8064ac5c6780eba"
     },
     {
       "path": "src/inference-budget.mjs",
@@ -838,9 +918,24 @@
       "sha256": "c9da57c87f700fff8af6f202bc9d56cb23b828f90bdbefe2ff9ce771debf888a"
     },
     {
+      "path": "test/claude-chrome-evidence.test.mjs",
+      "bytes": 115447,
+      "sha256": "d1f6edb687f730de607b4163570820863ee2183c4f233d12b14f11a1486614f7"
+    },
+    {
+      "path": "test/claude-chrome-session.test.mjs",
+      "bytes": 124618,
+      "sha256": "f68334da478decba3d5c692f031caf6be6328147612c8a2d74d0c15b709eb588"
+    },
+    {
       "path": "test/claude-chrome.test.mjs",
       "bytes": 13085,
       "sha256": "71dd1eb8ea9d484db545390fa2436c1d09b203b7c86ab8fd12fe9955c3c5b09b"
+    },
+    {
+      "path": "test/claude-observation.test.mjs",
+      "bytes": 111406,
+      "sha256": "dd898d625e59f86d2855c8b92604673d0850b923546197e40dbf375d9d6542e5"
     },
     {
       "path": "test/cli.test.mjs",
@@ -909,13 +1004,13 @@
     },
     {
       "path": "test/installer-adaptive.test.mjs",
-      "bytes": 6720,
-      "sha256": "c2642d4b107dc30d2963234a830d73420278b3bcaa6253f64dfbc1d8d9be961d"
+      "bytes": 8089,
+      "sha256": "d42e4eeb02cafe8471632de0d51504f317de442353d3d306cc7fd5ec7c7f3855"
     },
     {
       "path": "test/installer.test.mjs",
-      "bytes": 5973,
-      "sha256": "a4583fe337729784528a8f02f1d951c9aa52a6a1be3cfb213ab9eeee04f2303a"
+      "bytes": 6244,
+      "sha256": "4616cbe90e132f8909181e3878c6b142b68098add74b6e966081f7e8fc8e71f3"
     },
     {
       "path": "test/live-demo-server.test.mjs",

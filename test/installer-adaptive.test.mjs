@@ -45,18 +45,35 @@ test('adaptive install has executable paths for both hosts and copies only instr
   });
 });
 
-test('all installs three distinct portable skills per host', async () => {
+test('all installs three portable skills per host plus the Claude-only Chrome skill', async () => {
   await withHome(async homeDirectory => {
     const result = await installSkills({ homeDirectory, skill: 'all' });
-    assert.equal(result.installed.length, 6);
+    assert.equal(result.installed.length, 7);
     for (const directory of result.installed) {
       assert.deepEqual(await readdir(directory), ['SKILL.md']);
       const content = await readFile(join(directory, 'SKILL.md'), 'utf8');
       assert.ok(!content.includes('__JEV_'));
     }
-    for (const agent of ['codex', 'claude']) assert.deepEqual(
-      (await readdir(join(homeDirectory, `.${agent}`, 'skills'))).sort(),
-      ['jev-adaptive-router', 'jev-computer-use', 'jev-task-router']);
+    assert.deepEqual((await readdir(join(homeDirectory, '.codex', 'skills'))).sort(), ['jev-adaptive-router', 'jev-computer-use', 'jev-task-router']);
+    assert.deepEqual((await readdir(join(homeDirectory, '.claude', 'skills'))).sort(),
+      ['jev-adaptive-router', 'jev-claude-chrome', 'jev-computer-use', 'jev-task-router']);
+  });
+});
+
+test('Claude Chrome skill installs only for Claude with an executable helper path', async () => {
+  await withHome(async homeDirectory => {
+    await assert.rejects(installSkills({ homeDirectory, skill: 'claude-chrome', agent: 'codex' }), /SKILL_NOT_FOR_AGENT/);
+    await assert.rejects(access(join(homeDirectory, '.codex')), /ENOENT/);
+    const result = await installSkills({ homeDirectory, skill: 'claude-chrome' });
+    assert.deepEqual(result.installed, [join(homeDirectory, '.claude', 'skills', 'jev-claude-chrome')]);
+    const content = await readFile(join(result.installed[0], 'SKILL.md'), 'utf8');
+    assert.ok(!content.includes('__JEV_'));
+    const paths = JSON.parse(content.match(/```json\s*(\{ "cli"[\s\S]*?)```/)[1]);
+    assert.equal(paths.envFile, join(paths.package, '.env'));
+    const { stdout } = await exec(process.execPath, ['--', paths.cli, 'help']);
+    assert.ok(JSON.parse(stdout).commands.some(command => command.startsWith('start --session')));
+    const updated = await installSkills({ homeDirectory, skill: 'claude-chrome', agent: 'claude', update: true });
+    assert.deepEqual(updated.backups, [join(result.installed[0], 'SKILL.md.before-playwright-ab-v1')]);
   });
 });
 
@@ -114,6 +131,6 @@ test('legacy CLI arguments remain valid; skill selection is explicit and order i
 
 test('help and invalid CLI invocations do not install any skills', async () => {
   const help = await exec(process.execPath, ['--', installer, '--help']);
-  assert.match(help.stdout, /--skill browser\|task-router\|adaptive\|all/);
+  assert.match(help.stdout, /--skill browser\|task-router\|adaptive\|claude-chrome\|all/);
   await assert.rejects(exec(process.execPath, ['--', installer, '--agent', 'codex', '--skill', 'unknown']), error => error.code === 1 && error.stderr.trim() === 'INVALID_SKILL');
 });
